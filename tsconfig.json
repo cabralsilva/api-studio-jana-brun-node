@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "ES2021.String"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "*.ts",
+    "config/Configs.ts", "../utils/Utils.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "buildOnSave": true,
+  "compileOnSave": true
+}

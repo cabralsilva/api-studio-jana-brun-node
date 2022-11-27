@@ -1,0 +1,502 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "0.0.1",
+    "title": "API Studio Jana Brun",
+    "description": "Aplicação back-end Studio Jana Brun",
+    "termsOfService": "{REPLACE_URL_TERMS_API_Studio Jana Brun}",
+    "contact": {
+      "name": "Daniel Cabral",
+      "email": "d.nadson@yahoo.com.br"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api-development.com.br/api/v1",
+      "description": "Development"
+    },
+    {
+      "url": "https://api-staging.com.br/api/v1",
+      "description": "Staging"
+    },
+    {
+      "url": "https://api.com.br/api/v1",
+      "description": "Production"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Create new users",
+        "operationId": "postUsers",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The user was created as successfully"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "oAuthApi": [
+              "user:read"
+            ]
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get all users",
+        "operationId": "getUsers",
+        "parameters": [
+          {
+            "name": "searchText",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "find the match in many fields of user"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc",
+              "description": "Direction of ordenation"
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Max number of register to returned"
+            }
+          },
+          {
+            "name": "properties",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Return only the properties into one"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The search was executed as successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{_id}": {
+      "get": {
+        "security": [
+          {
+            "oAuthApi": [
+              "user:read"
+            ]
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Get users existing",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user requested",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "oAuthApi": [
+              "user:write"
+            ]
+          }
+        ],
+        "tags": [
+          "Users"
+        ],
+        "description": "Edit users existing",
+        "operationId": "putUsers",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The user was edited as successfully"
+          }
+        }
+      }
+    },
+    "/user/update-password/{_id}": {
+      "put": {
+        "security": [
+          {
+            "oAuthApi": [
+              "user:write"
+            ]
+          }
+        ],
+        "tags": [
+          "User pass"
+        ],
+        "description": "Change current password of user by the new",
+        "operationId": "putChangePassword",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserChangePassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The password was changed as success"
+          }
+        }
+      }
+    },
+    "/user/forget-password/{_email}": {
+      "get": {
+        "tags": [
+          "User pass"
+        ],
+        "description": "Request access when not remember the current password",
+        "operationId": "requestNewPassword",
+        "parameters": [
+          {
+            "name": "_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An email with instructions was sent"
+          }
+        }
+      }
+    },
+    "/user/valid-access-forget-password/{_hash}": {
+      "get": {
+        "tags": [
+          "User pass"
+        ],
+        "description": "Check if hash is valid yet",
+        "operationId": "checkHash",
+        "parameters": [
+          {
+            "name": "_hash",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hash is valid"
+          }
+        }
+      }
+    },
+    "/user/new-password": {
+      "patch": {
+        "tags": [
+          "User pass"
+        ],
+        "description": "Set a new password for the user setted in token header authorization",
+        "operationId": "setNewPassword",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "The token received to reset password",
+            "example": "Bearer eybsd.....",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newPassword": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The password was setted"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oAuthApi": {
+        "type": "oauth2",
+        "description": "This API use OAuth2 with the credential client flow.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/api/v1/auth",
+            "refreshUrl": "/api/v1/auth",
+            "scopes": {
+              "user:write": "modify user in your account",
+              "user:read": "read your user"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Search": {
+        "type": "object",
+        "description": "Search",
+        "properties": {
+          "searchText": {
+            "type": "string",
+            "description": "find the match in many fields of user"
+          },
+          "order": {
+            "type": "string",
+            "example": "asc | desc",
+            "description": "Direction of ordenation"
+          },
+          "orderBy": {
+            "type": "string",
+            "description": "Property to be ordenation"
+          },
+          "page": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "string",
+            "description": "Max number of register to returned"
+          },
+          "properties": {
+            "type": "string",
+            "description": "Return only the properties into one"
+          }
+        }
+      },
+      "SearchUser": {
+        "type": "object",
+        "properties": {
+          "allOf": {
+            "$ref": "#/components/schemas/Search"
+          },
+          "socialId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "secondName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "socialId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "cellphone": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserChangePassword": {
+        "type": "object",
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ],
+        "properties": {
+          "currentPassword": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseDefault": {
+        "type": "object",
+        "description": "The object requested"
+      },
+      "ResponseSearch": {
+        "type": "object",
+        "description": "Response object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "description": "The list of object requested"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Specific data of a request"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oAuthApi": []
+    }
+  ]
+}
