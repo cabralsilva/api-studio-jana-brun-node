@@ -53,7 +53,6 @@ class StartUp {
     //ROUTES UNAUTHENTICATED ABOVE
     // this.app.use(AuthServiceHttp.validate)
     //ROUTES AUTHENTICATED BELOW
-    
   }
 }
 
