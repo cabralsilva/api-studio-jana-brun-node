@@ -17,7 +17,7 @@
   "include": [
     "**/*.ts",
     "*.ts",
-    "config/Configs.ts", "../utils/Utils.ts",
+    "src/utils/config/Configs.ts", "../utils/Utils.ts",
   ],
   "exclude": [
     "node_modules"

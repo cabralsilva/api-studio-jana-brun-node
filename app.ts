@@ -1,5 +1,5 @@
-import Server from './server'
-import { httpPort } from './config/Configs'
+import Server from './src/server'
+import { httpPort } from './src/config/Configs'
 
 let port = httpPort || '5000'
 

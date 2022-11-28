@@ -1,5 +1,5 @@
-import en from '../resources/messages/en'
-import pt_BR from '../resources/messages/pt_BR';
+import en from '../../resources/messages/en'
+import pt_BR from '../../resources/messages/pt_BR';
 
 const i18nCreate = require('express-rest-i18n')
 
