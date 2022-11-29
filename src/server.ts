@@ -5,10 +5,12 @@ import * as fs from 'fs'
 import * as swagger from 'swagger-ui-express'
 import Database from './config/Database'
 import i18n from './config/i18n'
+import AuthenticationController from './controller/AuthenticationController'
 import CityController from './controller/CityController'
 import CountryController from './controller/CountryController'
 import EmployeeController from './controller/EmployeeController'
 import StateController from './controller/StateController'
+import AuthorizationFlow from './flow/authentication/AuthorizationFlow'
 
 class StartUp {
   public app: express.Application
@@ -49,12 +51,15 @@ class StartUp {
       res.send({ application: "api-studio-jana-brun", version: '0.0.1' })
     })
     this.app.route('/api/v2/test').get((req: any, res: any) => {
-      // const response = req["polyglot"].t('emailRequiredField');
       const helloWorld = `${res.i18n.t('message.test', 'pt-br')} ${res.i18n.t('message.test', 'en')}`;
       res.status(200);
       res.send(helloWorld);
     })
 
+    this.app.route('/api/v2/authenticator').post(AuthenticationController.authenticate)
+    //ROUTES UNAUTHENTICATED ABOVE
+    this.app.use(AuthorizationFlow.authorization)
+    //ROUTES AUTHENTICATED BELOW
     this.app.route('/api/v2/country').get(CountryController.get)
     this.app.route('/api/v2/country/:id').get(CountryController.getById)
     this.app.route('/api/v2/country').post(CountryController.create)
@@ -78,10 +83,6 @@ class StartUp {
     this.app.route('/api/v2/employee').post(EmployeeController.create)
     this.app.route('/api/v2/employee/:id').patch(EmployeeController.update)
     this.app.route('/api/v2/employee/:id').delete(EmployeeController.delete)
-
-    //ROUTES UNAUTHENTICATED ABOVE
-    // this.app.use(AuthServiceHttp.validate)
-    //ROUTES AUTHENTICATED BELOW
   }
 }
 

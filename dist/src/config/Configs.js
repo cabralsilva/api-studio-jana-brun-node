@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendGridKey = exports.forgetPasswordLinkFormReset = exports.mailerAddress = exports.pagarMeSecretPrivate = exports.pagarMeSecretPublic = exports.pagarMeUrlBase = exports.sbaumToken = exports.sbaumEnv = exports.sbaumUrlBase = exports.dbCollation = exports.dbUrl = exports.jwtSecret = exports.httpPort = void 0;
+exports.sendGridKey = exports.forgetPasswordLinkFormReset = exports.mailerAddress = exports.pagarMeSecretPrivate = exports.pagarMeSecretPublic = exports.pagarMeUrlBase = exports.sbaumToken = exports.sbaumEnv = exports.sbaumUrlBase = exports.dbCollation = exports.dbUrl = exports.jwtExpireTimeInHour = exports.jwtSecret = exports.httpPort = void 0;
 exports.httpPort = process.env.PORT;
 exports.jwtSecret = process.env.JWT_SECRET;
+exports.jwtExpireTimeInHour = process.env.JWT_EXPIRE_TIME_IN_HOUR;
 exports.dbUrl = process.env.DB_URL;
 exports.dbCollation = process.env.DB_COLLACTION;
 exports.sbaumUrlBase = process.env.SBAUM_URL_BASE;

@@ -20,9 +20,10 @@ class CitySearch extends Search {
     super(_query)
     this.name = _query.name
     this.active = _query.active
+    this.buildFilters()
   }
 
-  filters() {
+  buildFilters() {
     let filters = { $and: [] } as any
     Object.entries(this).forEach(([key, value]) => {
       if (value) {
@@ -42,7 +43,7 @@ class CitySearch extends Search {
     })
     if (filters.$and.length === 0)
       delete filters['$and']
-    return filters
+    this.filters = filters
   }
 }
 

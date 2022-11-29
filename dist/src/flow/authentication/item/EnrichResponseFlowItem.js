@@ -9,15 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const State_1 = require("../../../model/schema/address/State");
-class FindByFilterFlowItem {
-    find(search) {
+class EnrichResponseFlowItem {
+    enrich(response) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (search.isPageable()) {
-                return yield search.findPageable(State_1.StateRepository);
-            }
-            return yield search.findNoPageable(State_1.StateRepository);
+            response.employee.salt = undefined;
+            response.employee.password = undefined;
+            response.employee.salaryValue = undefined;
+            response.employee.typeOfSalary = undefined;
+            return response;
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new EnrichResponseFlowItem;

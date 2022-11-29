@@ -19,8 +19,9 @@ class StateSearch extends Search_1.default {
         super(_query);
         this.name = _query.name;
         this.active = _query.active;
+        this.buildFilters();
     }
-    filters() {
+    buildFilters() {
         let filters = { $and: [] };
         Object.entries(this).forEach(([key, value]) => {
             if (value) {
@@ -41,7 +42,7 @@ class StateSearch extends Search_1.default {
         });
         if (filters.$and.length === 0)
             delete filters['$and'];
-        return filters;
+        this.filters = filters;
     }
 }
 exports.StateSearch = StateSearch;

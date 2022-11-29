@@ -7,10 +7,12 @@ const fs = require("fs");
 const swagger = require("swagger-ui-express");
 const Database_1 = require("./config/Database");
 const i18n_1 = require("./config/i18n");
+const AuthenticationController_1 = require("./controller/AuthenticationController");
 const CityController_1 = require("./controller/CityController");
 const CountryController_1 = require("./controller/CountryController");
 const EmployeeController_1 = require("./controller/EmployeeController");
 const StateController_1 = require("./controller/StateController");
+const AuthorizationFlow_1 = require("./flow/authentication/AuthorizationFlow");
 class StartUp {
     constructor() {
         this.swaggerFile = (process.cwd() + "/postman/schemas/schema.json");
@@ -42,11 +44,14 @@ class StartUp {
             res.send({ application: "api-studio-jana-brun", version: '0.0.1' });
         });
         this.app.route('/api/v2/test').get((req, res) => {
-            // const response = req["polyglot"].t('emailRequiredField');
             const helloWorld = `${res.i18n.t('message.test', 'pt-br')} ${res.i18n.t('message.test', 'en')}`;
             res.status(200);
             res.send(helloWorld);
         });
+        this.app.route('/api/v2/authenticator').post(AuthenticationController_1.default.authenticate);
+        //ROUTES UNAUTHENTICATED ABOVE
+        this.app.use(AuthorizationFlow_1.default.authorization);
+        //ROUTES AUTHENTICATED BELOW
         this.app.route('/api/v2/country').get(CountryController_1.default.get);
         this.app.route('/api/v2/country/:id').get(CountryController_1.default.getById);
         this.app.route('/api/v2/country').post(CountryController_1.default.create);
@@ -67,9 +72,6 @@ class StartUp {
         this.app.route('/api/v2/employee').post(EmployeeController_1.default.create);
         this.app.route('/api/v2/employee/:id').patch(EmployeeController_1.default.update);
         this.app.route('/api/v2/employee/:id').delete(EmployeeController_1.default.delete);
-        //ROUTES UNAUTHENTICATED ABOVE
-        // this.app.use(AuthServiceHttp.validate)
-        //ROUTES AUTHENTICATED BELOW
     }
 }
 exports.default = new StartUp();

@@ -2,12 +2,12 @@ import { CountryRepository, CountrySearch } from "../../../model/schema/address/
 
 class FindByFilterFlowItem {
   async find(search: CountrySearch) {
-    const filters = search.filters()
+    
     if (search.isPageable()) {
-      return await search.findPageable(CountryRepository, filters)
+      return await search.findPageable(CountryRepository)
     }
 
-    return await search.findNoPageable(CountryRepository, filters)
+    return await search.findNoPageable(CountryRepository)
   }
 }
 

@@ -13,11 +13,10 @@ const City_1 = require("../../../model/schema/address/City");
 class FindByFilterFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
-            const filters = search.filters();
             if (search.isPageable()) {
-                return yield search.findPageable(City_1.CityRepository, filters);
+                return yield search.findPageable(City_1.CityRepository);
             }
-            return yield search.findNoPageable(City_1.CityRepository, filters);
+            return yield search.findNoPageable(City_1.CityRepository);
         });
     }
 }

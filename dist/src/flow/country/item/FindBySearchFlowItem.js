@@ -13,11 +13,10 @@ const Country_1 = require("../../../model/schema/address/Country");
 class FindByFilterFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
-            const filters = search.filters();
             if (search.isPageable()) {
-                return yield search.findPageable(Country_1.CountryRepository, filters);
+                return yield search.findPageable(Country_1.CountryRepository);
             }
-            return yield search.findNoPageable(Country_1.CountryRepository, filters);
+            return yield search.findNoPageable(Country_1.CountryRepository);
         });
     }
 }

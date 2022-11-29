@@ -9,15 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const State_1 = require("../../../model/schema/address/State");
-class FindByFilterFlowItem {
-    find(search) {
+const jwt = require("jsonwebtoken");
+const Configs_1 = require("../../../config/Configs");
+class GenerateJWTFlowItem {
+    generate(credential) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (search.isPageable()) {
-                return yield search.findPageable(State_1.StateRepository);
-            }
-            return yield search.findNoPageable(State_1.StateRepository);
+            var now = new Date();
+            var exp = new Date(now);
+            exp.setMinutes(now.getMinutes() + (60 * Number(Configs_1.jwtExpireTimeInHour)));
+            let payload = {
+                iss: "api-studio-jana-brun",
+                iat: now.getTime(),
+                exp: exp.getTime()
+            };
+            return jwt.sign(payload, Configs_1.jwtSecret);
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new GenerateJWTFlowItem;

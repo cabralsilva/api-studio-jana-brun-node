@@ -2,12 +2,12 @@ import { EmployeeRepository, EmployeeSearch } from "../../../model/schema/Employ
 
 class FindByFilterFlowItem {
   async find(search: EmployeeSearch) {
-    const filters = search.filters()
+    
     if (search.isPageable()) {
-      return await search.findPageable(EmployeeRepository, filters)
+      return await search.findPageable(EmployeeRepository)
     }
 
-    return await search.findNoPageable(EmployeeRepository, filters)
+    return await search.findNoPageable(EmployeeRepository)
   }
 }
 

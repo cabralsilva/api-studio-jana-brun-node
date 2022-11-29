@@ -41,13 +41,13 @@ class Search {
             .replace(/[u|ü|ú|ù|U|Ú|Ü|Ù]/g, '[u,ü,ú,ù,U,Ú,Ü,Ù]')
             .replace(/[ç|Ç|c|C]/g, '[c,C,ç,Ç]');
     }
-    findPageable(model, filters) {
+    findPageable(model) {
         return __awaiter(this, void 0, void 0, function* () {
             let page = this.page - 1 || 0;
             let limit = this.limit || 10;
             const sort = this.sorter();
             var items = yield model
-                .find(filters, this.properties)
+                .find(this.filters, this.properties)
                 .skip(page * limit)
                 .limit(limit)
                 .populate(this.populate)
@@ -55,34 +55,34 @@ class Search {
                 .collation({
                 locale: Configs_1.dbCollation
             });
-            return this.result(model, items, filters);
+            return this.result(model, items);
         });
     }
-    findNoPageable(model, filters) {
+    findNoPageable(model) {
         return __awaiter(this, void 0, void 0, function* () {
             const sort = this.sorter();
             var items = yield model
-                .find(filters, this.properties)
+                .find(this.filters, this.properties)
                 .sort(sort)
                 .populate(this.populate)
                 .collation({
                 locale: Configs_1.dbCollation
             });
-            return this.result(model, items, filters);
+            return this.result(model, items);
         });
     }
-    result(model, items, filters) {
+    result(model, items) {
         return __awaiter(this, void 0, void 0, function* () {
-            var total = yield this.count(model, filters);
+            var total = yield this.count(model);
             return {
                 items,
                 total
             };
         });
     }
-    count(model, filters) {
+    count(model) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model.countDocuments(filters).exec();
+            return yield model.countDocuments(this.filters).exec();
         });
     }
 }

@@ -9,15 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const State_1 = require("../../../model/schema/address/State");
-class FindByFilterFlowItem {
-    find(search) {
+const crypto = require("crypto");
+const http_status_1 = require("http-status");
+const HttpError_1 = require("../../../model/HttpError");
+const StringUtils_1 = require("../../../utils/StringUtils");
+class AuthenticationFlowItem {
+    authenticate(employee, credential) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (search.isPageable()) {
-                return yield search.findPageable(State_1.StateRepository);
+            var hash = crypto.pbkdf2Sync(credential.password, employee.salt, 1000, 64, `sha512`).toString(`hex`);
+            if (employee.password !== hash) {
+                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
             }
-            return yield search.findNoPageable(State_1.StateRepository);
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new AuthenticationFlowItem;

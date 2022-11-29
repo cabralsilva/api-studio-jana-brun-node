@@ -1,5 +1,6 @@
 export const httpPort = process.env.PORT
 export const jwtSecret = process.env.JWT_SECRET
+export const jwtExpireTimeInHour = process.env.JWT_EXPIRE_TIME_IN_HOUR
 export const dbUrl = process.env.DB_URL
 export const dbCollation = process.env.DB_COLLACTION
 

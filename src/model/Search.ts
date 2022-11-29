@@ -10,6 +10,7 @@ abstract class Search {
   limit: number
   properties: string
   populate: string
+  filters: {}
 
   constructor(_query) {
     this.searchText = _query.searchText
@@ -46,12 +47,12 @@ abstract class Search {
       .replace(/[ç|Ç|c|C]/g, '[c,C,ç,Ç]')
   }
 
-  async findPageable(model: mongoose.Model<any>, filters: any) {
+  async findPageable(model: mongoose.Model<any>) {
     let page = this.page - 1 || 0
     let limit = this.limit || 10
     const sort = this.sorter()
     var items = await model
-      .find(filters, this.properties)
+      .find(this.filters, this.properties)
       .skip(page * limit)
       .limit(limit)
       .populate(this.populate)
@@ -60,32 +61,32 @@ abstract class Search {
         locale: dbCollation
       }) as []
 
-    return this.result(model, items, filters)
+    return this.result(model, items)
   }
 
-  async findNoPageable(model: mongoose.Model<any>, filters: any) {
+  async findNoPageable(model: mongoose.Model<any>) {
     const sort = this.sorter()
     var items = await model
-      .find(filters, this.properties)
+      .find(this.filters, this.properties)
       .sort(sort)
       .populate(this.populate)
       .collation({
         locale: dbCollation
       }) as []
 
-    return this.result(model, items, filters)
+    return this.result(model, items)
   }
 
-  private async result(model: mongoose.Model<any>, items: [], filters: any) {
-    var total = await this.count(model, filters)
+  private async result(model: mongoose.Model<any>, items: []) {
+    var total = await this.count(model)
     return {
       items,
       total
     }
   }
 
-  async count(model: mongoose.Model<any>, filters: any) {
-    return await model.countDocuments(filters).exec()
+  async count(model: mongoose.Model<any>) {
+    return await model.countDocuments(this.filters).exec()
   }
 }
 

@@ -9,15 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const State_1 = require("../../../model/schema/address/State");
-class FindByFilterFlowItem {
-    find(search) {
+const FlowHttp_1 = require("../../model/FlowHttp");
+const ResponseHttp_1 = require("../../model/ResponseHttp");
+const GetJWTFlowItem_1 = require("./item/GetJWTFlowItem");
+const ValidateJWTFlowItem_1 = require("./item/ValidateJWTFlowItem");
+class AuthorizationFlow extends FlowHttp_1.default {
+    authorization(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (search.isPageable()) {
-                return yield search.findPageable(State_1.StateRepository);
+            try {
+                const token = GetJWTFlowItem_1.default.get(req);
+                ValidateJWTFlowItem_1.default.validate(token);
+                next();
             }
-            return yield search.findNoPageable(State_1.StateRepository);
+            catch (error) {
+                ResponseHttp_1.default.sendResponseError(res, error);
+            }
+            finally {
+            }
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new AuthorizationFlow;

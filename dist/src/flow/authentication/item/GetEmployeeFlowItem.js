@@ -9,15 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const State_1 = require("../../../model/schema/address/State");
-class FindByFilterFlowItem {
-    find(search) {
+const http_status_1 = require("http-status");
+const HttpError_1 = require("../../../model/HttpError");
+const StringUtils_1 = require("../../../utils/StringUtils");
+const Utils_1 = require("../../../utils/Utils");
+const FindOneByModelFlowItem_1 = require("../../employee/item/FindOneByModelFlowItem");
+class GetEmployeeFlowItem {
+    get(credential) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (search.isPageable()) {
-                return yield search.findPageable(State_1.StateRepository);
+            const employee = yield FindOneByModelFlowItem_1.default.findOne({ email: credential.username });
+            if (Utils_1.default.isEmpty(employee)) {
+                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
             }
-            return yield search.findNoPageable(State_1.StateRepository);
+            return employee;
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new GetEmployeeFlowItem;
