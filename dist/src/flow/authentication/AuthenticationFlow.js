@@ -24,8 +24,8 @@ class AuthenticationFlow extends FlowHttp_1.default {
                 session.startTransaction();
                 const credential = DecryptCredentialsFlowItem_1.default.decrypt(req);
                 const employee = yield GetEmployeeFlowItem_1.default.get(credential);
-                yield AuthenticationFlowItem_1.default.authenticate(employee, credential);
-                const access_token = yield GenerateJWTFlowItem_1.default.generate(credential);
+                yield AuthenticationFlowItem_1.default.authenticate(employee, credential.password);
+                const access_token = yield GenerateJWTFlowItem_1.default.generate(employee);
                 const response = EnrichResponseFlowItem_1.default.enrich({ access_token, employee });
                 yield session.commitTransaction();
                 return response;

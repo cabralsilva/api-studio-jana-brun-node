@@ -12,7 +12,7 @@ const CityController_1 = require("./controller/CityController");
 const CountryController_1 = require("./controller/CountryController");
 const EmployeeController_1 = require("./controller/EmployeeController");
 const StateController_1 = require("./controller/StateController");
-const AuthorizationFlow_1 = require("./flow/authentication/AuthorizationFlow");
+const AuthorizationFlow_1 = require("./flow/authorization/AuthorizationFlow");
 class StartUp {
     constructor() {
         this.swaggerFile = (process.cwd() + "/postman/schemas/schema.json");
@@ -71,6 +71,7 @@ class StartUp {
         this.app.route('/api/v2/employee/:id').get(EmployeeController_1.default.getById);
         this.app.route('/api/v2/employee').post(EmployeeController_1.default.create);
         this.app.route('/api/v2/employee/:id').patch(EmployeeController_1.default.update);
+        this.app.route('/api/v2/employee/update/password').patch(EmployeeController_1.default.updatePassword);
         this.app.route('/api/v2/employee/:id').delete(EmployeeController_1.default.delete);
     }
 }

@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import FlowHttp from "../../model/FlowHttp"
 import CreateEmployeeFlowItem from "./item/CreateFlowItem"
 import * as crypto from 'crypto'
+import CryptoPasswordFlowItem from "./item/CryptoPasswordFlowItem"
 
 class CreateEmployeeFlow extends FlowHttp {
 
@@ -9,8 +10,9 @@ class CreateEmployeeFlow extends FlowHttp {
     const session = await mongoose.startSession()
     try {
       session.startTransaction()
-      req.body.salt = crypto.randomBytes(16).toString('hex')
-      req.body.password = crypto.pbkdf2Sync("123456", req.body.salt, 1000, 64, `sha512`).toString(`hex`)
+      const crypto = CryptoPasswordFlowItem.crypto("123456")
+      req.body.salt = crypto.salt
+      req.body.password = crypto.password
       await CreateEmployeeFlowItem.create(req.body, session)
       await session.commitTransaction()
     } catch (error) {

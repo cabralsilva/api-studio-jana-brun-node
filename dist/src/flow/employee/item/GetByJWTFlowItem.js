@@ -9,18 +9,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const crypto = require("crypto");
+const GetJWTFlowItem_1 = require("../../authorization/item/GetJWTFlowItem");
+const jwt = require("jsonwebtoken");
+const Configs_1 = require("../../../config/Configs");
+const GetByIdFlowItem_1 = require("./GetByIdFlowItem");
 const http_status_1 = require("http-status");
 const HttpError_1 = require("../../../model/HttpError");
 const StringUtils_1 = require("../../../utils/StringUtils");
-class AuthenticationFlowItem {
-    authenticate(employee, password) {
+const Utils_1 = require("../../../utils/Utils");
+class GetByJWTFlowItem {
+    get(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            var hash = crypto.pbkdf2Sync(password, employee.salt, 1000, 64, `sha512`).toString(`hex`);
-            if (employee.password !== hash) {
+            const token = GetJWTFlowItem_1.default.get(req);
+            let holder;
+            jwt.verify(token, Configs_1.jwtSecret, (error, decode) => {
+                if (error) {
+                    throw new HttpError_1.default(http_status_1.FORBIDDEN, StringUtils_1.default.message("message.http.invalidRequest"), error);
+                }
+                holder = decode.holder;
+            });
+            let employee = yield GetByIdFlowItem_1.default.get(holder);
+            if (Utils_1.default.isEmpty(employee)) {
                 throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
             }
+            return employee;
         });
     }
 }
-exports.default = new AuthenticationFlowItem;
+exports.default = new GetByJWTFlowItem;

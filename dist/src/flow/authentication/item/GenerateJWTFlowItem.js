@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = require("jsonwebtoken");
 const Configs_1 = require("../../../config/Configs");
 class GenerateJWTFlowItem {
-    generate(credential) {
+    generate(employee) {
         return __awaiter(this, void 0, void 0, function* () {
             var now = new Date();
             var exp = new Date(now);
@@ -20,7 +20,8 @@ class GenerateJWTFlowItem {
             let payload = {
                 iss: "api-studio-jana-brun",
                 iat: now.getTime(),
-                exp: exp.getTime()
+                exp: exp.getTime(),
+                holder: employee._id
             };
             return jwt.sign(payload, Configs_1.jwtSecret);
         });

@@ -9,30 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
 const FlowHttp_1 = require("../../model/FlowHttp");
-const CreateFlowItem_1 = require("./item/CreateFlowItem");
-const CryptoPasswordFlowItem_1 = require("./item/CryptoPasswordFlowItem");
-class CreateEmployeeFlow extends FlowHttp_1.default {
-    create(req, res) {
+const ResponseHttp_1 = require("../../model/ResponseHttp");
+const GetJWTFlowItem_1 = require("./item/GetJWTFlowItem");
+const ValidateJWTFlowItem_1 = require("./item/ValidateJWTFlowItem");
+class AuthorizationFlow extends FlowHttp_1.default {
+    authorization(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const session = yield mongoose_1.default.startSession();
             try {
-                session.startTransaction();
-                const crypto = CryptoPasswordFlowItem_1.default.crypto("123456");
-                req.body.salt = crypto.salt;
-                req.body.password = crypto.password;
-                yield CreateFlowItem_1.default.create(req.body, session);
-                yield session.commitTransaction();
+                const token = GetJWTFlowItem_1.default.get(req);
+                ValidateJWTFlowItem_1.default.validate(token);
+                next();
             }
             catch (error) {
-                yield session.abortTransaction();
-                this.processError(error);
+                ResponseHttp_1.default.sendResponseError(res, error);
             }
             finally {
-                yield session.endSession();
             }
         });
     }
 }
-exports.default = new CreateEmployeeFlow;
+exports.default = new AuthorizationFlow;

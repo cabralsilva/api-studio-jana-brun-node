@@ -10,7 +10,7 @@ import CityController from './controller/CityController'
 import CountryController from './controller/CountryController'
 import EmployeeController from './controller/EmployeeController'
 import StateController from './controller/StateController'
-import AuthorizationFlow from './flow/authentication/AuthorizationFlow'
+import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
 
 class StartUp {
   public app: express.Application
@@ -82,6 +82,7 @@ class StartUp {
     this.app.route('/api/v2/employee/:id').get(EmployeeController.getById)
     this.app.route('/api/v2/employee').post(EmployeeController.create)
     this.app.route('/api/v2/employee/:id').patch(EmployeeController.update)
+    this.app.route('/api/v2/employee/update/password').patch(EmployeeController.updatePassword)
     this.app.route('/api/v2/employee/:id').delete(EmployeeController.delete)
   }
 }

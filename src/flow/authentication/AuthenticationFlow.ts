@@ -14,8 +14,8 @@ class AuthenticationFlow extends FlowHttp {
       session.startTransaction()
       const credential = DecryptCredentialsFlowItem.decrypt(req)
       const employee = await GetEmployeeFlowItem.get(credential)
-      await AuthenticationFlowItem.authenticate(employee, credential)
-      const access_token = await GenerateJWTFlowItem.generate(credential)
+      await AuthenticationFlowItem.authenticate(employee, credential.password)
+      const access_token = await GenerateJWTFlowItem.generate(employee)
       const response = EnrichResponseFlowItem.enrich({ access_token, employee })
       await session.commitTransaction()
       return response

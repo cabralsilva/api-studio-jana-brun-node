@@ -5,6 +5,7 @@ const CreateFlow_1 = require("../flow/employee/CreateFlow");
 const DeleteFlow_1 = require("../flow/employee/DeleteFlow");
 const ReadFlow_1 = require("../flow/employee/ReadFlow");
 const UpdateFlow_1 = require("../flow/employee/UpdateFlow");
+const UpdatePasswordFlow_1 = require("../flow/employee/UpdatePasswordFlow");
 const ResponseHttp_1 = require("../model/ResponseHttp");
 class Controller {
     create(req, res) {
@@ -29,6 +30,11 @@ class Controller {
     }
     delete(req, res) {
         DeleteFlow_1.default.delete(req, res)
+            .then(employee => ResponseHttp_1.default.sendResponse(res, http_status_1.OK, employee))
+            .catch(error => ResponseHttp_1.default.sendResponseError(res, error));
+    }
+    updatePassword(req, res) {
+        UpdatePasswordFlow_1.default.update(req, res)
             .then(employee => ResponseHttp_1.default.sendResponse(res, http_status_1.OK, employee))
             .catch(error => ResponseHttp_1.default.sendResponseError(res, error));
     }

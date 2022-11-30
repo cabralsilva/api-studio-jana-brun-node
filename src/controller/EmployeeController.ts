@@ -3,6 +3,7 @@ import CreateFlow from '../flow/employee/CreateFlow'
 import DeleteFlow from '../flow/employee/DeleteFlow'
 import ReadFlow from '../flow/employee/ReadFlow'
 import UpdateFlow from '../flow/employee/UpdateFlow'
+import UpdatePasswordFlow from '../flow/employee/UpdatePasswordFlow'
 import ResponseHttp from '../model/ResponseHttp'
 
 class Controller {
@@ -32,6 +33,12 @@ class Controller {
 
   delete(req, res) {
     DeleteFlow.delete(req, res)
+      .then(employee => ResponseHttp.sendResponse(res, OK, employee))
+      .catch(error => ResponseHttp.sendResponseError(res, error))
+  }
+
+  updatePassword(req, res) {
+    UpdatePasswordFlow.update(req, res)
       .then(employee => ResponseHttp.sendResponse(res, OK, employee))
       .catch(error => ResponseHttp.sendResponseError(res, error))
   }
