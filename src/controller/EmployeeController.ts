@@ -6,7 +6,7 @@ import UpdateFlow from '../flow/employee/UpdateFlow'
 import UpdatePasswordFlow from '../flow/employee/UpdatePasswordFlow'
 import ResponseHttp from '../model/ResponseHttp'
 
-class Controller {
+class EmployeeController {
   create(req, res) {
     CreateFlow.create(req, res)
       .then(employee => ResponseHttp.sendResponse(res, OK, employee))
@@ -44,4 +44,4 @@ class Controller {
   }
 }
 
-export default new Controller()
+export default new EmployeeController()

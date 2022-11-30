@@ -7,7 +7,7 @@ const ReadFlow_1 = require("../flow/employee/ReadFlow");
 const UpdateFlow_1 = require("../flow/employee/UpdateFlow");
 const UpdatePasswordFlow_1 = require("../flow/employee/UpdatePasswordFlow");
 const ResponseHttp_1 = require("../model/ResponseHttp");
-class Controller {
+class EmployeeController {
     create(req, res) {
         CreateFlow_1.default.create(req, res)
             .then(employee => ResponseHttp_1.default.sendResponse(res, http_status_1.OK, employee))
@@ -39,4 +39,4 @@ class Controller {
             .catch(error => ResponseHttp_1.default.sendResponseError(res, error));
     }
 }
-exports.default = new Controller();
+exports.default = new EmployeeController();

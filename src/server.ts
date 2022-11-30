@@ -9,7 +9,10 @@ import AuthenticationController from './controller/AuthenticationController'
 import CityController from './controller/CityController'
 import CountryController from './controller/CountryController'
 import EmployeeController from './controller/EmployeeController'
+import NoticeController from './controller/NoticeController'
+import PaymentConditionController from './controller/PaymentConditionController'
 import StateController from './controller/StateController'
+import SupplierController from './controller/SupplierController'
 import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
 
 class StartUp {
@@ -84,6 +87,24 @@ class StartUp {
     this.app.route('/api/v2/employee/:id').patch(EmployeeController.update)
     this.app.route('/api/v2/employee/update/password').patch(EmployeeController.updatePassword)
     this.app.route('/api/v2/employee/:id').delete(EmployeeController.delete)
+
+    this.app.route('/api/v2/notice').get(NoticeController.get)
+    this.app.route('/api/v2/notice/:id').get(NoticeController.getById)
+    this.app.route('/api/v2/notice').post(NoticeController.create)
+    this.app.route('/api/v2/notice/:id').patch(NoticeController.update)
+    this.app.route('/api/v2/notice/:id').delete(NoticeController.delete)
+
+    this.app.route('/api/v2/payment-condition').get(PaymentConditionController.get)
+    this.app.route('/api/v2/payment-condition/:id').get(PaymentConditionController.getById)
+    this.app.route('/api/v2/payment-condition').post(PaymentConditionController.create)
+    this.app.route('/api/v2/payment-condition/:id').patch(PaymentConditionController.update)
+    this.app.route('/api/v2/payment-condition/:id').delete(PaymentConditionController.delete)
+
+    this.app.route('/api/v2/supplier').get(SupplierController.get)
+    this.app.route('/api/v2/supplier/:id').get(SupplierController.getById)
+    this.app.route('/api/v2/supplier').post(SupplierController.create)
+    this.app.route('/api/v2/supplier/:id').patch(SupplierController.update)
+    this.app.route('/api/v2/supplier/:id').delete(SupplierController.delete)
   }
 }
 

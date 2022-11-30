@@ -5,7 +5,7 @@ import ReadFlow from '../flow/country/ReadFlow'
 import UpdateFlow from '../flow/country/UpdateFlow'
 import ResponseHttp from '../model/ResponseHttp'
 
-class Controller {
+class CountryController {
   create(req, res) {
     CreateFlow.create(req, res)
       .then(country => ResponseHttp.sendResponse(res, OK, country))
@@ -37,4 +37,4 @@ class Controller {
   }
 }
 
-export default new Controller()
+export default new CountryController()

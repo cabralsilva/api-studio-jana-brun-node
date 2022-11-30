@@ -11,7 +11,10 @@ const AuthenticationController_1 = require("./controller/AuthenticationControlle
 const CityController_1 = require("./controller/CityController");
 const CountryController_1 = require("./controller/CountryController");
 const EmployeeController_1 = require("./controller/EmployeeController");
+const NoticeController_1 = require("./controller/NoticeController");
+const PaymentConditionController_1 = require("./controller/PaymentConditionController");
 const StateController_1 = require("./controller/StateController");
+const SupplierController_1 = require("./controller/SupplierController");
 const AuthorizationFlow_1 = require("./flow/authorization/AuthorizationFlow");
 class StartUp {
     constructor() {
@@ -73,6 +76,21 @@ class StartUp {
         this.app.route('/api/v2/employee/:id').patch(EmployeeController_1.default.update);
         this.app.route('/api/v2/employee/update/password').patch(EmployeeController_1.default.updatePassword);
         this.app.route('/api/v2/employee/:id').delete(EmployeeController_1.default.delete);
+        this.app.route('/api/v2/notice').get(NoticeController_1.default.get);
+        this.app.route('/api/v2/notice/:id').get(NoticeController_1.default.getById);
+        this.app.route('/api/v2/notice').post(NoticeController_1.default.create);
+        this.app.route('/api/v2/notice/:id').patch(NoticeController_1.default.update);
+        this.app.route('/api/v2/notice/:id').delete(NoticeController_1.default.delete);
+        this.app.route('/api/v2/payment-condition').get(PaymentConditionController_1.default.get);
+        this.app.route('/api/v2/payment-condition/:id').get(PaymentConditionController_1.default.getById);
+        this.app.route('/api/v2/payment-condition').post(PaymentConditionController_1.default.create);
+        this.app.route('/api/v2/payment-condition/:id').patch(PaymentConditionController_1.default.update);
+        this.app.route('/api/v2/payment-condition/:id').delete(PaymentConditionController_1.default.delete);
+        this.app.route('/api/v2/supplier').get(SupplierController_1.default.get);
+        this.app.route('/api/v2/supplier/:id').get(SupplierController_1.default.getById);
+        this.app.route('/api/v2/supplier').post(SupplierController_1.default.create);
+        this.app.route('/api/v2/supplier/:id').patch(SupplierController_1.default.update);
+        this.app.route('/api/v2/supplier/:id').delete(SupplierController_1.default.delete);
     }
 }
 exports.default = new StartUp();

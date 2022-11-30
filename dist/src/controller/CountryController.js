@@ -6,7 +6,7 @@ const DeleteFlow_1 = require("../flow/country/DeleteFlow");
 const ReadFlow_1 = require("../flow/country/ReadFlow");
 const UpdateFlow_1 = require("../flow/country/UpdateFlow");
 const ResponseHttp_1 = require("../model/ResponseHttp");
-class Controller {
+class CountryController {
     create(req, res) {
         CreateFlow_1.default.create(req, res)
             .then(country => ResponseHttp_1.default.sendResponse(res, http_status_1.OK, country))
@@ -33,4 +33,4 @@ class Controller {
             .catch(error => ResponseHttp_1.default.sendResponseError(res, error));
     }
 }
-exports.default = new Controller();
+exports.default = new CountryController();

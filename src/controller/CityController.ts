@@ -5,7 +5,7 @@ import ReadFlow from '../flow/city/ReadFlow'
 import UpdateFlow from '../flow/city/UpdateFlow'
 import ResponseHttp from '../model/ResponseHttp'
 
-class Controller {
+class CityController {
   create(req, res) {
     CreateFlow.create(req, res)
       .then(city => ResponseHttp.sendResponse(res, OK, city))
@@ -37,4 +37,4 @@ class Controller {
   }
 }
 
-export default new Controller()
+export default new CityController()
