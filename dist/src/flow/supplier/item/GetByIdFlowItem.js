@@ -11,9 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Supplier_1 = require("../../../model/schema/Supplier");
 class GetByIdFlowItem {
-    get(id, pop = "", sel = "") {
+    get(id, pop = undefined, sel = "") {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Supplier_1.SupplierRepository.findById(id).populate(pop).select(sel);
+            return yield Supplier_1.SupplierRepository.findById(id)
+                .populate(pop)
+                .select(sel);
         });
     }
 }

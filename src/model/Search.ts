@@ -2,7 +2,6 @@ import mongoose from "mongoose"
 import { dbCollation } from "../config/Configs"
 
 abstract class Search {
-  company: mongoose.Types.ObjectId
   searchText: string
   order: string
   orderBy: string

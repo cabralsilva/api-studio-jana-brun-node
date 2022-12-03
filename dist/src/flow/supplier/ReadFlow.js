@@ -24,7 +24,15 @@ class ReadFlow extends FlowHttp_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 if (Utils_1.default.isNotEmpty((_a = req.params) === null || _a === void 0 ? void 0 : _a.id)) {
-                    const supplier = yield GetByIdFlowItem_1.default.get(req.params.id);
+                    const supplier = yield GetByIdFlowItem_1.default.get(req.params.id, {
+                        path: 'person.address',
+                        populate: {
+                            path: 'city',
+                            populate: {
+                                path: 'state'
+                            }
+                        }
+                    });
                     if (Utils_1.default.isEmpty(supplier)) {
                         throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.registerNotFounded"));
                     }

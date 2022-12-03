@@ -11,8 +11,11 @@ const AuthenticationController_1 = require("./controller/AuthenticationControlle
 const CityController_1 = require("./controller/CityController");
 const CountryController_1 = require("./controller/CountryController");
 const EmployeeController_1 = require("./controller/EmployeeController");
+const GrateController_1 = require("./controller/GrateController");
 const NoticeController_1 = require("./controller/NoticeController");
 const PaymentConditionController_1 = require("./controller/PaymentConditionController");
+const ProductController_1 = require("./controller/ProductController");
+const RolePaymentController_1 = require("./controller/RolePaymentController");
 const StateController_1 = require("./controller/StateController");
 const SupplierController_1 = require("./controller/SupplierController");
 const AuthorizationFlow_1 = require("./flow/authorization/AuthorizationFlow");
@@ -91,6 +94,21 @@ class StartUp {
         this.app.route('/api/v2/supplier').post(SupplierController_1.default.create);
         this.app.route('/api/v2/supplier/:id').patch(SupplierController_1.default.update);
         this.app.route('/api/v2/supplier/:id').delete(SupplierController_1.default.delete);
+        this.app.route('/api/v2/grate').get(GrateController_1.default.get);
+        this.app.route('/api/v2/grate/:id').get(GrateController_1.default.getById);
+        this.app.route('/api/v2/grate').post(GrateController_1.default.create);
+        this.app.route('/api/v2/grate/:id').patch(GrateController_1.default.update);
+        this.app.route('/api/v2/grate/:id').delete(GrateController_1.default.delete);
+        this.app.route('/api/v2/product').get(ProductController_1.default.get);
+        this.app.route('/api/v2/product/:id').get(ProductController_1.default.getById);
+        this.app.route('/api/v2/product').post(ProductController_1.default.create);
+        this.app.route('/api/v2/product/:id').patch(ProductController_1.default.update);
+        this.app.route('/api/v2/product/:id').delete(ProductController_1.default.delete);
+        this.app.route('/api/v2/role-payment').get(RolePaymentController_1.default.get);
+        this.app.route('/api/v2/role-payment/:id').get(RolePaymentController_1.default.getById);
+        this.app.route('/api/v2/role-payment').post(RolePaymentController_1.default.create);
+        this.app.route('/api/v2/role-payment/:id').patch(RolePaymentController_1.default.update);
+        this.app.route('/api/v2/role-payment/:id').delete(RolePaymentController_1.default.delete);
     }
 }
 exports.default = new StartUp();

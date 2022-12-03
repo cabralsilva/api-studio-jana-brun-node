@@ -13,7 +13,17 @@ class ReadFlow extends FlowHttp {
   async read(req, res) {
     try {
       if (Utils.isNotEmpty(req.params?.id)){
-        const employee = await GetByIdFlowItem.get(req.params.id);
+        const employee = await GetByIdFlowItem.get(
+          req.params.id,
+          {
+            path: 'person.address',
+            populate: {
+              path: 'city',
+              populate: {
+                path: 'state'
+              }
+            }
+          });
         if (Utils.isEmpty(employee)) {
           throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
         }

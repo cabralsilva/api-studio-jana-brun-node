@@ -9,8 +9,11 @@ import AuthenticationController from './controller/AuthenticationController'
 import CityController from './controller/CityController'
 import CountryController from './controller/CountryController'
 import EmployeeController from './controller/EmployeeController'
+import GrateController from './controller/GrateController'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
+import ProductController from './controller/ProductController'
+import RolePaymentController from './controller/RolePaymentController'
 import StateController from './controller/StateController'
 import SupplierController from './controller/SupplierController'
 import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
@@ -105,6 +108,24 @@ class StartUp {
     this.app.route('/api/v2/supplier').post(SupplierController.create)
     this.app.route('/api/v2/supplier/:id').patch(SupplierController.update)
     this.app.route('/api/v2/supplier/:id').delete(SupplierController.delete)
+
+    this.app.route('/api/v2/grate').get(GrateController.get)
+    this.app.route('/api/v2/grate/:id').get(GrateController.getById)
+    this.app.route('/api/v2/grate').post(GrateController.create)
+    this.app.route('/api/v2/grate/:id').patch(GrateController.update)
+    this.app.route('/api/v2/grate/:id').delete(GrateController.delete)
+
+    this.app.route('/api/v2/product').get(ProductController.get)
+    this.app.route('/api/v2/product/:id').get(ProductController.getById)
+    this.app.route('/api/v2/product').post(ProductController.create)
+    this.app.route('/api/v2/product/:id').patch(ProductController.update)
+    this.app.route('/api/v2/product/:id').delete(ProductController.delete)
+
+    this.app.route('/api/v2/role-payment').get(RolePaymentController.get)
+    this.app.route('/api/v2/role-payment/:id').get(RolePaymentController.getById)
+    this.app.route('/api/v2/role-payment').post(RolePaymentController.create)
+    this.app.route('/api/v2/role-payment/:id').patch(RolePaymentController.update)
+    this.app.route('/api/v2/role-payment/:id').delete(RolePaymentController.delete)
   }
 }
 

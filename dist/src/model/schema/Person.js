@@ -9,7 +9,7 @@ const PersonModel = {
     tradeName: { type: String },
     socialId: { type: String, required: true },
     documentNumber: { type: String },
-    bornDate: { type: Date, required: true },
+    bornDate: { type: Date },
     genre: { type: String, enum: Object.keys(Genre_1.default), required: true, default: 'NSA' },
     type: { type: String, enum: Object.keys(TypeOfPerson_1.default), required: true, default: 'NATURAL' },
     address: Address_1.AddressModel
