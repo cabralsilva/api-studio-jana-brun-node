@@ -5,7 +5,6 @@ import Search from '../Search'
 const ProductModel = {
   code: { type: String },
   description: { type: String, required: true },
-  unitPrice: { type: Number, default: 1, required: true },
   category: { type: String, enum: Object.keys(Category), required: true, default: 'OTHERS' },
   grates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grate', required: true }],
   active: { type: Boolean, required: true, default: true }

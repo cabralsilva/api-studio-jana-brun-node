@@ -12,8 +12,12 @@ class ReadFlow extends FlowHttp {
 
   async read(req, res) {
     try {
-      if (Utils.isNotEmpty(req.params?.id)){
-        const product = await GetByIdFlowItem.get(req.params.id);
+      if (Utils.isNotEmpty(req.params?.id)) {
+        const product = await GetByIdFlowItem.get(
+          req.params.id, {
+            path: 'grates',
+            model: 'grate'
+        });
         if (Utils.isEmpty(product)) {
           throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
         }
