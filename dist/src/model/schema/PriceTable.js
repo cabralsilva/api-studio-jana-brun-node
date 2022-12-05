@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GrateSearch = exports.GrateRepository = exports.GrateModel = exports.Grate = void 0;
+exports.PriceTableSearch = exports.PriceTableRepository = exports.PriceTableModel = exports.PriceTable = void 0;
 const mongoose = require("mongoose");
-const TypeOfValue_1 = require("../enum/TypeOfValue");
 const Search_1 = require("../Search");
-const GrateItem_1 = require("./GrateItem");
-const GrateModel = {
+const PriceTableItem_1 = require("./PriceTableItem");
+const PriceTableModel = {
     description: { type: String, required: true },
-    typeOfValue: { type: String, enum: Object.keys(TypeOfValue_1.default), required: true, default: 'NUMBER' },
-    items: [GrateItem_1.GrateItem],
-    active: { type: Boolean, required: true, default: true }
+    beginDateTime: { type: Date, required: true },
+    endDateTime: { type: Date },
+    items: [PriceTableItem_1.PriceTableItem]
 };
-exports.GrateModel = GrateModel;
-const Grate = new mongoose.Schema(GrateModel);
-exports.Grate = Grate;
-Grate.index({ description: 1 }, { unique: true });
-class GrateSearch extends Search_1.default {
+exports.PriceTableModel = PriceTableModel;
+const PriceTable = new mongoose.Schema(PriceTableModel, {
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+});
+exports.PriceTable = PriceTable;
+class PriceTableSearch extends Search_1.default {
     constructor(_query) {
         super(_query);
+        this.code = _query.code;
         this.description = _query.description;
-        this.typeOfValue = _query.typeOfValue;
+        this.category = _query.category;
         this.active = _query.active;
-        this["items._id"] = _query.items;
         this.buildFilters();
     }
     buildFilters() {
@@ -33,8 +33,9 @@ class GrateSearch extends Search_1.default {
                     this.searchText = this.diacriticSensitiveRegex(this.searchText);
                     condition = {
                         $or: [
+                            { 'code': { $regex: this.searchText, $options: 'i' } },
                             { 'description': { $regex: this.searchText, $options: 'i' } },
-                            { 'typeOfValue': { $regex: this.searchText, $options: 'i' } }
+                            { 'category': { $regex: this.searchText, $options: 'i' } }
                         ]
                     };
                 }
@@ -49,6 +50,6 @@ class GrateSearch extends Search_1.default {
         this.filters = filters;
     }
 }
-exports.GrateSearch = GrateSearch;
-const GrateRepository = mongoose.model('grate', Grate);
-exports.GrateRepository = GrateRepository;
+exports.PriceTableSearch = PriceTableSearch;
+const PriceTableRepository = mongoose.model('priceTable', PriceTable);
+exports.PriceTableRepository = PriceTableRepository;

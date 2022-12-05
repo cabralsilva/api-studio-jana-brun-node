@@ -14,6 +14,7 @@ const EmployeeController_1 = require("./controller/EmployeeController");
 const GrateController_1 = require("./controller/GrateController");
 const NoticeController_1 = require("./controller/NoticeController");
 const PaymentConditionController_1 = require("./controller/PaymentConditionController");
+const PriceTableController_1 = require("./controller/PriceTableController");
 const ProductController_1 = require("./controller/ProductController");
 const RolePaymentController_1 = require("./controller/RolePaymentController");
 const StateController_1 = require("./controller/StateController");
@@ -109,6 +110,11 @@ class StartUp {
         this.app.route('/api/v2/role-payment').post(RolePaymentController_1.default.create);
         this.app.route('/api/v2/role-payment/:id').patch(RolePaymentController_1.default.update);
         this.app.route('/api/v2/role-payment/:id').delete(RolePaymentController_1.default.delete);
+        this.app.route('/api/v2/price-table').get(PriceTableController_1.default.get);
+        this.app.route('/api/v2/price-table/:id').get(PriceTableController_1.default.getById);
+        this.app.route('/api/v2/price-table').post(PriceTableController_1.default.create);
+        this.app.route('/api/v2/price-table/:id').patch(PriceTableController_1.default.update);
+        this.app.route('/api/v2/price-table/:id').delete(PriceTableController_1.default.delete);
     }
 }
 exports.default = new StartUp();

@@ -1,31 +1,30 @@
 import * as mongoose from 'mongoose'
-import TypeOfValue from '../enum/TypeOfValue'
 import Search from '../Search'
-import { GrateItem } from './GrateItem'
+import { PriceTableItem } from './PriceTableItem'
 
-const GrateModel = {
+const PriceTableModel = {
   description: { type: String, required: true },
-  typeOfValue: { type: String, enum: Object.keys(TypeOfValue), required: true, default: 'NUMBER' },
-  items: [GrateItem],
-  active: { type: Boolean, required: true, default: true }
+  beginDateTime: { type: Date, required: true },
+  endDateTime: { type: Date },
+  items: [PriceTableItem]
 }
 
-const Grate = new mongoose.Schema(GrateModel)
+const PriceTable = new mongoose.Schema(PriceTableModel, {
+  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+})
 
-Grate.index({ description: 1 }, { unique: true })
-
-class GrateSearch extends Search {
+class PriceTableSearch extends Search {
+  code: { type: String }
   description: { type: String }
-  typeOfValue: { type: String }
-  "items._id": { type: String }
+  category: { type: String }
   active: { type: Boolean }
 
   constructor(_query) {
     super(_query)
+    this.code = _query.code
     this.description = _query.description
-    this.typeOfValue = _query.typeOfValue
+    this.category = _query.category
     this.active = _query.active
-    this["items._id"] = _query.items
     this.buildFilters()
   }
 
@@ -38,8 +37,9 @@ class GrateSearch extends Search {
           this.searchText = this.diacriticSensitiveRegex(this.searchText)
           condition = {
             $or: [
+              { 'code': { $regex: this.searchText as any, $options: 'i' } },
               { 'description': { $regex: this.searchText as any, $options: 'i' } },
-              { 'typeOfValue': { $regex: this.searchText as any, $options: 'i' } }
+              { 'category': { $regex: this.searchText as any, $options: 'i' } }
             ]
           }
         } else {
@@ -54,7 +54,7 @@ class GrateSearch extends Search {
   }
 }
 
-const GrateRepository = mongoose.model('grate', Grate)
+const PriceTableRepository = mongoose.model('priceTable', PriceTable)
 
-export { Grate, GrateModel, GrateRepository, GrateSearch }
+export { PriceTable, PriceTableModel, PriceTableRepository, PriceTableSearch }
 

@@ -12,6 +12,7 @@ import EmployeeController from './controller/EmployeeController'
 import GrateController from './controller/GrateController'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
+import PriceTableController from './controller/PriceTableController'
 import ProductController from './controller/ProductController'
 import RolePaymentController from './controller/RolePaymentController'
 import StateController from './controller/StateController'
@@ -126,6 +127,12 @@ class StartUp {
     this.app.route('/api/v2/role-payment').post(RolePaymentController.create)
     this.app.route('/api/v2/role-payment/:id').patch(RolePaymentController.update)
     this.app.route('/api/v2/role-payment/:id').delete(RolePaymentController.delete)
+
+    this.app.route('/api/v2/price-table').get(PriceTableController.get)
+    this.app.route('/api/v2/price-table/:id').get(PriceTableController.getById)
+    this.app.route('/api/v2/price-table').post(PriceTableController.create)
+    this.app.route('/api/v2/price-table/:id').patch(PriceTableController.update)
+    this.app.route('/api/v2/price-table/:id').delete(PriceTableController.delete)
   }
 }
 
