@@ -7,6 +7,8 @@ import Database from './config/Database'
 import i18n from './config/i18n'
 import AuthenticationController from './controller/AuthenticationController'
 import CityController from './controller/CityController'
+import ClassController from './controller/ClassController'
+import ClassroomController from './controller/ClassroomController'
 import CountryController from './controller/CountryController'
 import EmployeeController from './controller/EmployeeController'
 import GrateController from './controller/GrateController'
@@ -133,6 +135,18 @@ class StartUp {
     this.app.route('/api/v2/price-table').post(PriceTableController.create)
     this.app.route('/api/v2/price-table/:id').patch(PriceTableController.update)
     this.app.route('/api/v2/price-table/:id').delete(PriceTableController.delete)
+
+    this.app.route('/api/v2/classroom').get(ClassroomController.get)
+    this.app.route('/api/v2/classroom/:id').get(ClassroomController.getById)
+    this.app.route('/api/v2/classroom').post(ClassroomController.create)
+    this.app.route('/api/v2/classroom/:id').patch(ClassroomController.update)
+    this.app.route('/api/v2/classroom/:id').delete(ClassroomController.delete)
+
+    this.app.route('/api/v2/class').get(ClassController.get)
+    this.app.route('/api/v2/class/:id').get(ClassController.getById)
+    this.app.route('/api/v2/class').post(ClassController.create)
+    this.app.route('/api/v2/class/:id').patch(ClassController.update)
+    this.app.route('/api/v2/class/:id').delete(ClassController.delete)
   }
 }
 

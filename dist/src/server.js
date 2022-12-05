@@ -9,6 +9,8 @@ const Database_1 = require("./config/Database");
 const i18n_1 = require("./config/i18n");
 const AuthenticationController_1 = require("./controller/AuthenticationController");
 const CityController_1 = require("./controller/CityController");
+const ClassController_1 = require("./controller/ClassController");
+const ClassroomController_1 = require("./controller/ClassroomController");
 const CountryController_1 = require("./controller/CountryController");
 const EmployeeController_1 = require("./controller/EmployeeController");
 const GrateController_1 = require("./controller/GrateController");
@@ -115,6 +117,16 @@ class StartUp {
         this.app.route('/api/v2/price-table').post(PriceTableController_1.default.create);
         this.app.route('/api/v2/price-table/:id').patch(PriceTableController_1.default.update);
         this.app.route('/api/v2/price-table/:id').delete(PriceTableController_1.default.delete);
+        this.app.route('/api/v2/classroom').get(ClassroomController_1.default.get);
+        this.app.route('/api/v2/classroom/:id').get(ClassroomController_1.default.getById);
+        this.app.route('/api/v2/classroom').post(ClassroomController_1.default.create);
+        this.app.route('/api/v2/classroom/:id').patch(ClassroomController_1.default.update);
+        this.app.route('/api/v2/classroom/:id').delete(ClassroomController_1.default.delete);
+        this.app.route('/api/v2/class').get(ClassController_1.default.get);
+        this.app.route('/api/v2/class/:id').get(ClassController_1.default.getById);
+        this.app.route('/api/v2/class').post(ClassController_1.default.create);
+        this.app.route('/api/v2/class/:id').patch(ClassController_1.default.update);
+        this.app.route('/api/v2/class/:id').delete(ClassController_1.default.delete);
     }
 }
 exports.default = new StartUp();
