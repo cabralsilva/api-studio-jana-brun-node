@@ -11,9 +11,11 @@ import ClassController from './controller/ClassController'
 import ClassroomController from './controller/ClassroomController'
 import CountryController from './controller/CountryController'
 import EmployeeController from './controller/EmployeeController'
+import FinancialController from './controller/FinancialController'
 import GrateController from './controller/GrateController'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
+import PersonController from './controller/PersonController'
 import PriceTableController from './controller/PriceTableController'
 import ProductController from './controller/ProductController'
 import RolePaymentController from './controller/RolePaymentController'
@@ -147,6 +149,14 @@ class StartUp {
     this.app.route('/api/v2/class').post(ClassController.create)
     this.app.route('/api/v2/class/:id').patch(ClassController.update)
     this.app.route('/api/v2/class/:id').delete(ClassController.delete)
+
+    this.app.route('/api/v2/person').get(PersonController.get)
+
+    this.app.route('/api/v2/financial').get(FinancialController.get)
+    this.app.route('/api/v2/financial/:id').get(FinancialController.getById)
+    this.app.route('/api/v2/financial').post(FinancialController.create)
+    this.app.route('/api/v2/financial/:id').patch(FinancialController.update)
+    this.app.route('/api/v2/financial/:id').delete(FinancialController.delete)
   }
 }
 

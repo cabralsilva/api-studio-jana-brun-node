@@ -11,7 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const FlowHttp_1 = require("../../model/FlowHttp");
-const CreateFlowItem_1 = require("./item/CreateFlowItem");
+const CreateFlowItem_1 = require("../person/item/CreateFlowItem");
+const CreateFlowItem_2 = require("./item/CreateFlowItem");
 const CryptoPasswordFlowItem_1 = require("./item/CryptoPasswordFlowItem");
 class CreateEmployeeFlow extends FlowHttp_1.default {
     create(req, res) {
@@ -22,7 +23,11 @@ class CreateEmployeeFlow extends FlowHttp_1.default {
                 const crypto = CryptoPasswordFlowItem_1.default.crypto("123456");
                 req.body.salt = crypto.salt;
                 req.body.password = crypto.password;
-                yield CreateFlowItem_1.default.create(req.body, session);
+                const person = yield CreateFlowItem_1.default.create(req.body.person, session);
+                req.body.person = person[0]._id;
+                console.log(person);
+                console.log(req.body);
+                yield CreateFlowItem_2.default.create(req.body, session);
                 yield session.commitTransaction();
             }
             catch (error) {

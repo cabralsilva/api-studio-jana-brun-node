@@ -1,10 +1,9 @@
 import * as mongoose from 'mongoose'
 import TypeOfSupplier from '../enum/TypeOfSupplier'
 import Search from '../Search'
-import { PersonModel } from './Person'
 
 const SupplierModel = {
-  person: PersonModel,
+  person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
   email: { type: String, required: true },
   phone1: { type: String, required: true },
   phone2: { type: String },

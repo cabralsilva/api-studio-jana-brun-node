@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PersonModel = void 0;
+exports.PersonSearch = exports.PersonRepository = exports.PersonModel = exports.Person = void 0;
+const mongoose_1 = require("mongoose");
 const Genre_1 = require("../enum/Genre");
 const TypeOfPerson_1 = require("../enum/TypeOfPerson");
+const Search_1 = require("../Search");
 const Address_1 = require("./address/Address");
 const PersonModel = {
     name: { type: String, required: true },
@@ -15,3 +17,40 @@ const PersonModel = {
     address: Address_1.AddressModel
 };
 exports.PersonModel = PersonModel;
+const Person = new mongoose_1.default.Schema(PersonModel);
+exports.Person = Person;
+class PersonSearch extends Search_1.default {
+    constructor(_query) {
+        super(_query);
+        this.name = _query.name;
+        this.tradeName = _query.tradeName;
+        this.buildFilters();
+    }
+    buildFilters() {
+        let filters = { $and: [] };
+        Object.entries(this).forEach(([key, value]) => {
+            if (value) {
+                let condition = {};
+                if (key === 'searchText') {
+                    this.searchText = this.diacriticSensitiveRegex(this.searchText);
+                    condition = {
+                        $or: [
+                            { 'name': { $regex: this.searchText, $options: 'i' } },
+                            { 'tradeName': { $regex: this.searchText, $options: 'i' } }
+                        ]
+                    };
+                }
+                else {
+                    condition[key] = value;
+                }
+                filters.$and.push(condition);
+            }
+        });
+        if (filters.$and.length === 0)
+            delete filters['$and'];
+        this.filters = filters;
+    }
+}
+exports.PersonSearch = PersonSearch;
+const PersonRepository = mongoose_1.default.model('person', Person);
+exports.PersonRepository = PersonRepository;

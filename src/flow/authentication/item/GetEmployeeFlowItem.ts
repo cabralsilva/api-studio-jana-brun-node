@@ -6,7 +6,8 @@ import FindOneByModelFlowItem from "../../employee/item/FindOneByModelFlowItem";
 
 class GetEmployeeFlowItem {
   async get(credential: { username: string; password: string }) {
-    const employee = await FindOneByModelFlowItem.findOne({ email: credential.username }) as any
+    const employee = await FindOneByModelFlowItem.findOne({ email: credential.username }, undefined, 'person')
+    console.log(employee)
     if (Utils.isEmpty(employee)) {
       throw new HttpError(UNAUTHORIZED, StringUtils.message("message.http.invalidCredentials"))
     }

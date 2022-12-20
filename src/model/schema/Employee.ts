@@ -3,10 +3,9 @@ import AccessProfile from '../enum/AccessProfile'
 import Job from '../enum/Job'
 import TypeOfSalary from '../enum/TypeOfSalary'
 import Search from '../Search'
-import { PersonModel } from './Person'
 
 const Employee = new mongoose.Schema({
-  person: PersonModel,
+  person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
   medicinContinuous: { type: Boolean, required: true, default: false },
   medicinNotes: { type: String },
   allergiesContinuous: { type: Boolean, required: true, default: false },
@@ -67,3 +66,4 @@ class EmployeeSearch extends Search {
 const EmployeeRepository = mongoose.model('employee', Employee)
 
 export { Employee, EmployeeRepository, EmployeeSearch }
+

@@ -6,9 +6,8 @@ const AccessProfile_1 = require("../enum/AccessProfile");
 const Job_1 = require("../enum/Job");
 const TypeOfSalary_1 = require("../enum/TypeOfSalary");
 const Search_1 = require("../Search");
-const Person_1 = require("./Person");
 const Employee = new mongoose.Schema({
-    person: Person_1.PersonModel,
+    person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
     medicinContinuous: { type: Boolean, required: true, default: false },
     medicinNotes: { type: String },
     allergiesContinuous: { type: Boolean, required: true, default: false },

@@ -11,14 +11,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const FlowHttp_1 = require("../../model/FlowHttp");
-const UpdateFlowItem_1 = require("./item/UpdateFlowItem");
+const UpdateFlowItem_1 = require("../person/item/UpdateFlowItem");
+const UpdateFlowItem_2 = require("./item/UpdateFlowItem");
 class UpdateFlow extends FlowHttp_1.default {
     update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const session = yield mongoose_1.default.startSession();
             try {
                 session.startTransaction();
-                yield UpdateFlowItem_1.default.update(req.params.id, req.body, session);
+                if (req.body.person) {
+                    yield UpdateFlowItem_1.default.update(req.body.person._id, req.body.person, session);
+                }
+                yield UpdateFlowItem_2.default.update(req.params.id, req.body, session);
                 yield session.commitTransaction();
             }
             catch (error) {

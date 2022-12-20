@@ -4,9 +4,8 @@ exports.SupplierSearch = exports.SupplierRepository = exports.SupplierModel = ex
 const mongoose = require("mongoose");
 const TypeOfSupplier_1 = require("../enum/TypeOfSupplier");
 const Search_1 = require("../Search");
-const Person_1 = require("./Person");
 const SupplierModel = {
-    person: Person_1.PersonModel,
+    person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
     email: { type: String, required: true },
     phone1: { type: String, required: true },
     phone2: { type: String },

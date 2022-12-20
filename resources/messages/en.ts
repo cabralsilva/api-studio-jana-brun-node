@@ -9,6 +9,9 @@ export default {
       invalidCredentials: "Usuário e/ou senha inválidos",
       invalidToken: "Token inválido",
       expiredToken: "Token expirado",
+    },
+    response:{
+      resourceNotFound: "{0} não encontrado."
     }
   }
 }

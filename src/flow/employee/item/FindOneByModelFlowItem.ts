@@ -1,8 +1,8 @@
 import { EmployeeRepository } from "../../../model/schema/Employee"
 
 class FindOneByModelFlowItem {
-  async findOne(model, sort = undefined) {
-    return await EmployeeRepository.findOne(model)
+  async findOne(model, sort = undefined, pop = undefined): Promise<any> {
+    return await EmployeeRepository.findOne(model).populate(pop)
       .sort(sort)
   }
 }
