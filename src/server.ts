@@ -157,6 +157,7 @@ class StartUp {
     this.app.route('/api/v2/financial').post(FinancialController.create)
     this.app.route('/api/v2/financial/:id').patch(FinancialController.update)
     this.app.route('/api/v2/financial/:id').delete(FinancialController.delete)
+    this.app.route('/api/v2/financial/payment/:id').patch(FinancialController.payment)
   }
 }
 

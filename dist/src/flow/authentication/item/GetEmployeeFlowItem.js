@@ -18,7 +18,6 @@ class GetEmployeeFlowItem {
     get(credential) {
         return __awaiter(this, void 0, void 0, function* () {
             const employee = yield FindOneByModelFlowItem_1.default.findOne({ email: credential.username }, undefined, 'person');
-            console.log(employee);
             if (Utils_1.default.isEmpty(employee)) {
                 throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
             }

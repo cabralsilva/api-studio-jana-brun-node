@@ -16,9 +16,10 @@ class PrepareFinancialFlowItem {
     }
 
     for (var installmentNumber = 1; installmentNumber <= paymentCondition.quantityInstallments; installmentNumber++) {
-
+      var c = moment(financialBase.movimentDate)
       const financial = {
         ...financialBase,
+        movimentDate: moment(financialBase.movimentDate),
         dueDate: moment(financialBase.dueDate).add(installmentNumber - 1, 'months'),
         value: GetValueOfInstallmenFlowItem.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value),
         installment: installmentNumber,

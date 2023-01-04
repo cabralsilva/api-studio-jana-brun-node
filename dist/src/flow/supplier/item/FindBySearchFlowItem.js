@@ -16,6 +16,7 @@ class FindByFilterFlowItem {
             if (search.isPageable()) {
                 return yield search.findPageable(Supplier_1.SupplierRepository);
             }
+            '';
             return yield search.findNoPageable(Supplier_1.SupplierRepository);
         });
     }

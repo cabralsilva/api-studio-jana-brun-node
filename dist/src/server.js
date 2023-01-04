@@ -135,6 +135,7 @@ class StartUp {
         this.app.route('/api/v2/financial').post(FinancialController_1.default.create);
         this.app.route('/api/v2/financial/:id').patch(FinancialController_1.default.update);
         this.app.route('/api/v2/financial/:id').delete(FinancialController_1.default.delete);
+        this.app.route('/api/v2/financial/payment/:id').patch(FinancialController_1.default.payment);
     }
 }
 exports.default = new StartUp();

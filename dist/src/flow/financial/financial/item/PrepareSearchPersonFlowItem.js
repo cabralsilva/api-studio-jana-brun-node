@@ -9,22 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Financial_1 = require("../../../../model/schema/Financial");
-class FindByFilterFlowItem {
-    find(search) {
+const Person_1 = require("../../../../model/schema/Person");
+const Utils_1 = require("../../../../utils/Utils");
+const FindBySearchFlowItem_1 = require("../../../person/item/FindBySearchFlowItem");
+class PrepareSearchPersonFlowItem {
+    prepare(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            var response = {};
-            if (search.isPageable()) {
-                response = yield search.findPageable(Financial_1.FinancialRepository);
+            if (Utils_1.default.isNotEmpty(req.query.searchText)) {
+                const people = yield FindBySearchFlowItem_1.default.find(new Person_1.PersonSearch({ searchText: req.query.searchText }));
+                req.query.person = '';
+                people.items.forEach((element) => {
+                    req.query.person += `${element._id} `;
+                });
             }
-            else {
-                response = yield search.findNoPageable(Financial_1.FinancialRepository);
-            }
-            response = Object.assign(Object.assign({}, response), { metadata: {
-                    totalizers: yield search.sumBy(Financial_1.FinancialRepository, "$value", "$type")
-                } });
-            return response;
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new PrepareSearchPersonFlowItem;

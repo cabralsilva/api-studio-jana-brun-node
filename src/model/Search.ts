@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import { dbCollation } from "../config/Configs"
+import Utils from "../utils/Utils"
 
 abstract class Search {
   searchText: string
@@ -8,7 +9,7 @@ abstract class Search {
   page: number
   limit: number
   properties: string
-  populate: string
+  populate: string | [] | any
   filters: {}
 
   constructor(_query) {
@@ -19,6 +20,32 @@ abstract class Search {
     this.populate = _query.populate
     this.page = parseInt(_query.page)
     this.limit = parseInt(_query.limit)
+    this.populateBuild()
+  }
+  populateBuild(): any {
+    if (Utils.isEmpty(this.populate)) {
+      return undefined
+    }
+    var propertiesArray = this.populate.split(' ')
+    var populates = [] as any
+    for (var property of propertiesArray) {
+      let [first, ...rest] = property.split('.')
+      let nested = rest.join('.')
+      populates.push(this.buildPath(first, nested))
+    }
+
+    this.populate = populates
+  }
+
+  buildPath(target, nested: string = undefined) {
+    var populate = {} as any
+    populate.path = target
+    if (nested) {
+      let [first, ...rest] = nested.split('.')
+      let nested2 = rest.join('.')
+      populate.populate = this.buildPath(first, nested2)
+    }
+    return populate
   }
 
   sorter() {
@@ -52,9 +79,9 @@ abstract class Search {
     const sort = this.sorter()
     var items = await model
       .find(this.filters, this.properties)
+      .populate(this.populate)
       .skip(page * limit)
       .limit(limit)
-      .populate(this.populate)
       .sort(sort)
       .collation({
         locale: dbCollation
@@ -67,8 +94,8 @@ abstract class Search {
     const sort = this.sorter()
     var items = await model
       .find(this.filters, this.properties)
-      .sort(sort)
       .populate(this.populate)
+      .sort(sort)
       .collation({
         locale: dbCollation
       }) as []
@@ -86,6 +113,24 @@ abstract class Search {
 
   async count(model: mongoose.Model<any>) {
     return await model.countDocuments(this.filters).exec()
+  }
+
+  async sumBy(model: mongoose.Model<any>, _sum: any, _by: any) {
+    const ret = await model.aggregate(
+      [
+        {
+          '$match': this.filters
+        },
+        {
+          $group: {
+            _id: _by,
+            totalValue: { "$sum": _sum },
+            count: { "$sum": 1 }
+          }
+        }
+      ]
+    )
+    return ret
   }
 }
 

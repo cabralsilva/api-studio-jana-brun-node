@@ -9,22 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Financial_1 = require("../../../../model/schema/Financial");
-class FindByFilterFlowItem {
-    find(search) {
+const HttpStatus = require("http-status");
+const HttpError_1 = require("../../../../model/HttpError");
+const StringUtils_1 = require("../../../../utils/StringUtils");
+class ValidateDeleteFlowItem {
+    validate(financial, payment) {
         return __awaiter(this, void 0, void 0, function* () {
-            var response = {};
-            if (search.isPageable()) {
-                response = yield search.findPageable(Financial_1.FinancialRepository);
+            var _totalPaid = this.getTotalPaid(financial, payment);
+            if (_totalPaid > financial.value) {
+                throw new HttpError_1.default(HttpStatus.NOT_ACCEPTABLE, StringUtils_1.default.message("message.financial.openValueLessThan"));
             }
-            else {
-                response = yield search.findNoPageable(Financial_1.FinancialRepository);
-            }
-            response = Object.assign(Object.assign({}, response), { metadata: {
-                    totalizers: yield search.sumBy(Financial_1.FinancialRepository, "$value", "$type")
-                } });
-            return response;
         });
     }
+    getTotalPaid(financial, _payment) {
+        var _totalPaid = financial.payments.reduce((acc, payment) => { return acc + payment.valuePaid; }, 0);
+        return _totalPaid + (_payment === null || _payment === void 0 ? void 0 : _payment.valuePaid);
+    }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new ValidateDeleteFlowItem;

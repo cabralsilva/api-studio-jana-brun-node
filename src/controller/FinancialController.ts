@@ -1,4 +1,5 @@
 import { OK } from 'http-status'
+import AddPaymentFlow from '../flow/financial/financial/AddPaymentFlow'
 import CreateFlow from '../flow/financial/financial/CreateFlow'
 import DeleteFlow from '../flow/financial/financial/DeleteFlow'
 import ReadFlow from '../flow/financial/financial/ReadFlow'
@@ -33,6 +34,12 @@ class FinancialController {
   delete(req, res) {
     DeleteFlow.delete(req, res)
       .then(financial => ResponseHttp.sendResponse(res, OK, financial))
+      .catch(error => ResponseHttp.sendResponseError(res, error))
+  }
+
+  payment(req, res) {
+    AddPaymentFlow.add(req, res)
+      .then(payment => ResponseHttp.sendResponse(res, OK, `Pagamento registrado com sucesso`))
       .catch(error => ResponseHttp.sendResponseError(res, error))
   }
 }

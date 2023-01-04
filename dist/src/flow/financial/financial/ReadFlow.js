@@ -18,6 +18,7 @@ const Utils_1 = require("../../../utils/Utils");
 const EnrichFindFlowItem_1 = require("./item/EnrichFindFlowItem");
 const FindBySearchFlowItem_1 = require("./item/FindBySearchFlowItem");
 const GetByIdFlowItem_1 = require("./item/GetByIdFlowItem");
+const PrepareSearchPersonFlowItem_1 = require("./item/PrepareSearchPersonFlowItem");
 class ReadFlow extends FlowHttp_1.default {
     read(req, res) {
         var _a;
@@ -30,6 +31,7 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return financial;
                 }
+                yield PrepareSearchPersonFlowItem_1.default.prepare(req);
                 var resultSearch = yield FindBySearchFlowItem_1.default.find(new Financial_1.FinancialSearch(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }

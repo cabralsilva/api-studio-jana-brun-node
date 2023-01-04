@@ -9,22 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Financial_1 = require("../../../../model/schema/Financial");
-class FindByFilterFlowItem {
-    find(search) {
+const mongoose_1 = require("mongoose");
+const FlowHttp_1 = require("../../../model/FlowHttp");
+const UpdateFlowItem_1 = require("./item/UpdateFlowItem");
+class UpdateFlow extends FlowHttp_1.default {
+    update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var response = {};
-            if (search.isPageable()) {
-                response = yield search.findPageable(Financial_1.FinancialRepository);
+            const session = yield mongoose_1.default.startSession();
+            try {
+                session.startTransaction();
+                yield UpdateFlowItem_1.default.update(req.params.id, req.body, session);
+                yield session.commitTransaction();
             }
-            else {
-                response = yield search.findNoPageable(Financial_1.FinancialRepository);
+            catch (error) {
+                yield session.abortTransaction();
+                this.processError(error);
             }
-            response = Object.assign(Object.assign({}, response), { metadata: {
-                    totalizers: yield search.sumBy(Financial_1.FinancialRepository, "$value", "$type")
-                } });
-            return response;
+            finally {
+                yield session.endSession();
+            }
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new UpdateFlow;

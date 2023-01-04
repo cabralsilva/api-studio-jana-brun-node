@@ -12,6 +12,9 @@ exports.default = {
             invalidToken: "Token inválido",
             expiredToken: "Token expirado",
         },
+        financial: {
+            openValueLessThan: "Valor em aberto é menor que o valor informado ou já esta quitado!"
+        },
         response: {
             resourceNotFound: "{0} não encontrado."
         }

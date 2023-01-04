@@ -15,8 +15,6 @@ class CreateEmployeeFlow extends FlowHttp {
       req.body.password = crypto.password
       const person = await CreateFlowItem.create(req.body.person, session)
       req.body.person = person[0]._id
-      console.log(person)
-      console.log(req.body)
       await CreateEmployeeFlowItem.create(req.body, session)
       await session.commitTransaction()
     } catch (error) {

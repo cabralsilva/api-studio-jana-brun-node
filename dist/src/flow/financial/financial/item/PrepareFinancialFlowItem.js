@@ -26,7 +26,8 @@ class PrepareFinancialFlowItem {
                 throw new HttpError_1.default(http_status_1.NOT_ACCEPTABLE, StringUtils_1.default.message("message.response.resourceNotFound"), StringUtils_1.default.message("message.paymentCondition"));
             }
             for (var installmentNumber = 1; installmentNumber <= paymentCondition.quantityInstallments; installmentNumber++) {
-                const financial = Object.assign(Object.assign({}, financialBase), { dueDate: moment(financialBase.dueDate).add(installmentNumber - 1, 'months'), value: GetValueOfInstallmenFlowItem_1.default.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value), installment: installmentNumber, installmentTotal: paymentCondition.quantityInstallments });
+                var c = moment(financialBase.movimentDate);
+                const financial = Object.assign(Object.assign({}, financialBase), { movimentDate: moment(financialBase.movimentDate), dueDate: moment(financialBase.dueDate).add(installmentNumber - 1, 'months'), value: GetValueOfInstallmenFlowItem_1.default.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value), installment: installmentNumber, installmentTotal: paymentCondition.quantityInstallments });
                 financial.sequence = yield GetSequenceFlowItem_1.default.get(financial, (installmentNumber - 1));
                 financial.description = financialBase.description || "AV-" + financial.sequence,
                     financials.push(financial);

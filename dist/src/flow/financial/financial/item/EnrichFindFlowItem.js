@@ -14,6 +14,7 @@ class EnrichFindFlowItem {
         return __awaiter(this, void 0, void 0, function* () {
             var response = {
                 total: payload.total,
+                metadata: payload.metadata,
                 items: []
             };
             for (var item of payload.items) {

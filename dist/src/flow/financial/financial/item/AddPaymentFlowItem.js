@@ -10,21 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Financial_1 = require("../../../../model/schema/Financial");
-class FindByFilterFlowItem {
-    find(search) {
+class AddPaymentFlowItem {
+    add(_id, _financial, _payment, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            var response = {};
-            if (search.isPageable()) {
-                response = yield search.findPageable(Financial_1.FinancialRepository);
-            }
-            else {
-                response = yield search.findNoPageable(Financial_1.FinancialRepository);
-            }
-            response = Object.assign(Object.assign({}, response), { metadata: {
-                    totalizers: yield search.sumBy(Financial_1.FinancialRepository, "$value", "$type")
-                } });
-            return response;
+            return yield Financial_1.FinancialRepository.findByIdAndUpdate(_id, { $set: _financial, $push: { payments: _payment } }, { returnDocument: 'after', session });
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new AddPaymentFlowItem;

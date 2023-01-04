@@ -1,13 +1,25 @@
-import { FinancialRepository, FinancialSearch } from "../../../../model/schema/Financial"
+import mongoose from "mongoose";
+import { FinancialRepository, FinancialSearch } from "../../../../model/schema/Financial";
 
 class FindByFilterFlowItem {
   async find(search: FinancialSearch) {
+
+    var response = {} as any
     
     if (search.isPageable()) {
-      return await search.findPageable(FinancialRepository)
+      response = await search.findPageable(FinancialRepository)
+    } else {
+      response = await search.findNoPageable(FinancialRepository)
+    }
+    
+    response = {
+      ...response,
+      metadata: {
+        totalizers: await search.sumBy(FinancialRepository, "$value", "$type")
+      }
     }
 
-    return await search.findNoPageable(FinancialRepository)
+    return response
   }
 }
 

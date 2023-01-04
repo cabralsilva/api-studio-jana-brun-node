@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Configs_1 = require("../config/Configs");
+const Utils_1 = require("../utils/Utils");
 class Search {
     constructor(_query) {
         this.searchText = _query.searchText;
@@ -19,6 +20,30 @@ class Search {
         this.populate = _query.populate;
         this.page = parseInt(_query.page);
         this.limit = parseInt(_query.limit);
+        this.populateBuild();
+    }
+    populateBuild() {
+        if (Utils_1.default.isEmpty(this.populate)) {
+            return undefined;
+        }
+        var propertiesArray = this.populate.split(' ');
+        var populates = [];
+        for (var property of propertiesArray) {
+            let [first, ...rest] = property.split('.');
+            let nested = rest.join('.');
+            populates.push(this.buildPath(first, nested));
+        }
+        this.populate = populates;
+    }
+    buildPath(target, nested = undefined) {
+        var populate = {};
+        populate.path = target;
+        if (nested) {
+            let [first, ...rest] = nested.split('.');
+            let nested2 = rest.join('.');
+            populate.populate = this.buildPath(first, nested2);
+        }
+        return populate;
     }
     sorter() {
         let order = {};
@@ -48,9 +73,9 @@ class Search {
             const sort = this.sorter();
             var items = yield model
                 .find(this.filters, this.properties)
+                .populate(this.populate)
                 .skip(page * limit)
                 .limit(limit)
-                .populate(this.populate)
                 .sort(sort)
                 .collation({
                 locale: Configs_1.dbCollation
@@ -63,8 +88,8 @@ class Search {
             const sort = this.sorter();
             var items = yield model
                 .find(this.filters, this.properties)
-                .sort(sort)
                 .populate(this.populate)
+                .sort(sort)
                 .collation({
                 locale: Configs_1.dbCollation
             });
@@ -83,6 +108,23 @@ class Search {
     count(model) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model.countDocuments(this.filters).exec();
+        });
+    }
+    sumBy(model, _sum, _by) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const ret = yield model.aggregate([
+                {
+                    '$match': this.filters
+                },
+                {
+                    $group: {
+                        _id: _by,
+                        totalValue: { "$sum": _sum },
+                        count: { "$sum": 1 }
+                    }
+                }
+            ]);
+            return ret;
         });
     }
 }

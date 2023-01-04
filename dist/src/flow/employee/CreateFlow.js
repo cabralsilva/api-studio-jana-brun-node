@@ -25,8 +25,6 @@ class CreateEmployeeFlow extends FlowHttp_1.default {
                 req.body.password = crypto.password;
                 const person = yield CreateFlowItem_1.default.create(req.body.person, session);
                 req.body.person = person[0]._id;
-                console.log(person);
-                console.log(req.body);
                 yield CreateFlowItem_2.default.create(req.body, session);
                 yield session.commitTransaction();
             }
