@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendGridKey = exports.forgetPasswordLinkFormReset = exports.mailerAddress = exports.pagarMeSecretPrivate = exports.pagarMeSecretPublic = exports.pagarMeUrlBase = exports.sbaumToken = exports.sbaumEnv = exports.sbaumUrlBase = exports.dbCollation = exports.dbUrl = exports.jwtExpireTimeInHour = exports.jwtSecret = exports.httpPort = void 0;
+exports.httpPort = process.env.PORT;
+exports.jwtSecret = process.env.JWT_SECRET;
+exports.jwtExpireTimeInHour = process.env.JWT_EXPIRE_TIME_IN_HOUR;
+exports.dbUrl = process.env.DB_URL;
+exports.dbCollation = process.env.DB_COLLACTION;
+exports.sbaumUrlBase = process.env.SBAUM_URL_BASE;
+exports.sbaumEnv = process.env.SBAUM_ENV;
+exports.sbaumToken = process.env.SBAUM_TOKEN;
+exports.pagarMeUrlBase = process.env.PAGAR_ME_URL_BASE;
+exports.pagarMeSecretPublic = process.env.PAGAR_ME_SECRET_PUBLIC;
+exports.pagarMeSecretPrivate = process.env.PAGAR_ME_SECRET_PRIVATE;
+exports.mailerAddress = process.env.MAILER_ADDRESS;
+exports.forgetPasswordLinkFormReset = process.env.FORGET_PASSWORD_LINK_FORM_RESET;
+exports.sendGridKey = process.env.SENDGRID_API_KEY;
+exports.default = process.env;
