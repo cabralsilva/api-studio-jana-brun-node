@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var SchoolLevel;
+(function (SchoolLevel) {
+    SchoolLevel["CHILD_EDUCATION_ONE"] = "label.child.education.one";
+    SchoolLevel["CHILD_EDUCATION_TWO"] = "label.child.education.two";
+    SchoolLevel["CHILD_EDUCATION_THREE"] = "label.child.education.three";
+    SchoolLevel["PRE_SCHOOL_ONE"] = "label.pre.school.one";
+    SchoolLevel["PRE_SCHOOL_TWO"] = "label.pre.school.two";
+    SchoolLevel["PRE_SCHOOL_THREE"] = "label.pre.school.three";
+    SchoolLevel["FUNDAMENTAL_ONE"] = "label.fundamental.one";
+    SchoolLevel["FUNDAMENTAL_TWO"] = "label.fundamental.two";
+    SchoolLevel["FUNDAMENTAL_THREE"] = "label.fundamental.three";
+    SchoolLevel["FUNDAMENTAL_FOUR"] = "label.fundamental.four";
+    SchoolLevel["FUNDAMENTAL_FIVE"] = "label.fundamental.five";
+    SchoolLevel["FUNDAMENTAL_SIX"] = "label.fundamental.six";
+    SchoolLevel["FUNDAMENTAL_SEVEN"] = "label.fundamental.seven";
+    SchoolLevel["FUNDAMENTAL_EIGHT"] = "label.fundamental.eight";
+    SchoolLevel["FUNDAMENTAL_NINE"] = "label.fundamental.nine";
+})(SchoolLevel || (SchoolLevel = {}));
+exports.default = SchoolLevel;
