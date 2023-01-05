@@ -13,11 +13,10 @@ const Employee_1 = require("../../../model/schema/Employee");
 class FindByFilterFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
-            const filters = search.filters();
             if (search.isPageable()) {
-                return yield search.findPageable(Employee_1.EmployeeRepository, filters);
+                return yield search.findPageable(Employee_1.EmployeeRepository);
             }
-            return yield search.findNoPageable(Employee_1.EmployeeRepository, filters);
+            return yield search.findNoPageable(Employee_1.EmployeeRepository);
         });
     }
 }

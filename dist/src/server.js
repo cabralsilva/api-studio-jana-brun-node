@@ -15,12 +15,14 @@ const CountryController_1 = require("./controller/CountryController");
 const EmployeeController_1 = require("./controller/EmployeeController");
 const FinancialController_1 = require("./controller/FinancialController");
 const GrateController_1 = require("./controller/GrateController");
+const MatriculationController_1 = require("./controller/MatriculationController");
 const NoticeController_1 = require("./controller/NoticeController");
 const PaymentConditionController_1 = require("./controller/PaymentConditionController");
 const PersonController_1 = require("./controller/PersonController");
 const PriceTableController_1 = require("./controller/PriceTableController");
 const ProductController_1 = require("./controller/ProductController");
 const RolePaymentController_1 = require("./controller/RolePaymentController");
+const SaleController_1 = require("./controller/SaleController");
 const StateController_1 = require("./controller/StateController");
 const SupplierController_1 = require("./controller/SupplierController");
 const AuthorizationFlow_1 = require("./flow/authorization/AuthorizationFlow");
@@ -136,6 +138,12 @@ class StartUp {
         this.app.route('/api/v2/financial/:id').patch(FinancialController_1.default.update);
         this.app.route('/api/v2/financial/:id').delete(FinancialController_1.default.delete);
         this.app.route('/api/v2/financial/payment/:id').patch(FinancialController_1.default.payment);
+        this.app.route('/api/v2/matriculation').get(MatriculationController_1.default.get);
+        this.app.route('/api/v2/matriculation/:id').get(MatriculationController_1.default.getById);
+        this.app.route('/api/v2/matriculation').post(MatriculationController_1.default.create);
+        this.app.route('/api/v2/matriculation/:id').patch(MatriculationController_1.default.update);
+        this.app.route('/api/v2/matriculation/:id').delete(MatriculationController_1.default.delete);
+        this.app.route('/api/v2/sale/price').get(SaleController_1.default.getValue);
     }
 }
 exports.default = new StartUp();

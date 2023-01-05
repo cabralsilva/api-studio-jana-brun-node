@@ -14,13 +14,16 @@ class ReadFlow extends FlowHttp {
     try {
       if (Utils.isNotEmpty(req.params?.id)) {
         const supplier = await GetByIdFlowItem.get(
-          req.params.id, 
+          req.params.id,
           {
-            path: 'person.address',
+            path: 'person',
             populate: {
-              path: 'city',
+              path: 'address',
               populate: {
-                path: 'state'
+                path: 'city',
+                populate: {
+                  path: 'state'
+                }
               }
             }
           });

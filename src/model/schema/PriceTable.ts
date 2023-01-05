@@ -1,4 +1,6 @@
+import moment = require('moment')
 import * as mongoose from 'mongoose'
+import Utils from '../../utils/Utils'
 import Search from '../Search'
 import { PriceTableItem } from './PriceTableItem'
 
@@ -18,6 +20,7 @@ class PriceTableSearch extends Search {
   description: { type: String }
   category: { type: String }
   active: { type: Boolean }
+  effectiveDate: Date
 
   constructor(_query) {
     super(_query)
@@ -25,12 +28,17 @@ class PriceTableSearch extends Search {
     this.description = _query.description
     this.category = _query.category
     this.active = _query.active
+    this.effectiveDate = _query.effectiveDate
+
     this.buildFilters()
   }
 
   buildFilters() {
     let filters = { $and: [] } as any
     Object.entries(this).forEach(([key, value]) => {
+      if (['order', 'orderBy', 'properties', 'populate', 'page', 'limit'].includes(key)) {
+        return
+      }
       if (value) {
         let condition = {}
         if (key === 'searchText' as any) {
@@ -43,11 +51,27 @@ class PriceTableSearch extends Search {
             ]
           }
         } else {
-          condition[key] = value
+          if (key === 'effectiveDate' && value) {
+            filters.$and.push({
+              beginDateTime: {
+                '$gte': value
+              },
+              endDateTime: {
+                '$lte': value
+              }
+            })
+          } else {
+            if (!Array.isArray(value)) {
+              condition[key] = value
+            } else {
+              condition[key] = { $in: value }
+            }
+            filters.$and.push(condition)
+          }
         }
-        filters.$and.push(condition)
       }
     })
+
     if (filters.$and.length === 0)
       delete filters['$and']
     this.filters = filters

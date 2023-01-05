@@ -13,12 +13,14 @@ import CountryController from './controller/CountryController'
 import EmployeeController from './controller/EmployeeController'
 import FinancialController from './controller/FinancialController'
 import GrateController from './controller/GrateController'
+import MatriculationController from './controller/MatriculationController'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
 import PersonController from './controller/PersonController'
 import PriceTableController from './controller/PriceTableController'
 import ProductController from './controller/ProductController'
 import RolePaymentController from './controller/RolePaymentController'
+import SaleController from './controller/SaleController'
 import StateController from './controller/StateController'
 import SupplierController from './controller/SupplierController'
 import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
@@ -158,6 +160,14 @@ class StartUp {
     this.app.route('/api/v2/financial/:id').patch(FinancialController.update)
     this.app.route('/api/v2/financial/:id').delete(FinancialController.delete)
     this.app.route('/api/v2/financial/payment/:id').patch(FinancialController.payment)
+
+    this.app.route('/api/v2/matriculation').get(MatriculationController.get)
+    this.app.route('/api/v2/matriculation/:id').get(MatriculationController.getById)
+    this.app.route('/api/v2/matriculation').post(MatriculationController.create)
+    this.app.route('/api/v2/matriculation/:id').patch(MatriculationController.update)
+    this.app.route('/api/v2/matriculation/:id').delete(MatriculationController.delete)
+    
+    this.app.route('/api/v2/sale/price').get(SaleController.getValue)
   }
 }
 

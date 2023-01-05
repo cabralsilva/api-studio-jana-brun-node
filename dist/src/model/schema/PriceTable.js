@@ -22,11 +22,15 @@ class PriceTableSearch extends Search_1.default {
         this.description = _query.description;
         this.category = _query.category;
         this.active = _query.active;
+        this.effectiveDate = _query.effectiveDate;
         this.buildFilters();
     }
     buildFilters() {
         let filters = { $and: [] };
         Object.entries(this).forEach(([key, value]) => {
+            if (['order', 'orderBy', 'properties', 'populate', 'page', 'limit'].includes(key)) {
+                return;
+            }
             if (value) {
                 let condition = {};
                 if (key === 'searchText') {
@@ -40,9 +44,26 @@ class PriceTableSearch extends Search_1.default {
                     };
                 }
                 else {
-                    condition[key] = value;
+                    if (key === 'effectiveDate' && value) {
+                        filters.$and.push({
+                            beginDateTime: {
+                                '$gte': value
+                            },
+                            endDateTime: {
+                                '$lte': value
+                            }
+                        });
+                    }
+                    else {
+                        if (!Array.isArray(value)) {
+                            condition[key] = value;
+                        }
+                        else {
+                            condition[key] = { $in: value };
+                        }
+                        filters.$and.push(condition);
+                    }
                 }
-                filters.$and.push(condition);
             }
         });
         if (filters.$and.length === 0)

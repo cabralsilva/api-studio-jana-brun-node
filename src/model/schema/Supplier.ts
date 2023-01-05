@@ -13,8 +13,6 @@ const SupplierModel = {
 
 const Supplier = new mongoose.Schema(SupplierModel)
 
-Supplier.index({ "person.socialId": 1 }, { unique: true })
-
 class SupplierSearch extends Search {
   name: { type: String }
   active: { type: Boolean }

@@ -18,7 +18,10 @@ class ReadFlow extends FlowHttp {
           {
             path: 'rolePayments',
             populate: {
-              path: 'employee'
+              path: 'employee',
+              populate: {
+                path: 'person'
+              }
             }
           });
         if (Utils.isEmpty(clazz)) {

@@ -27,7 +27,10 @@ class ReadFlow extends FlowHttp_1.default {
                     const clazz = yield GetByIdFlowItem_1.default.get(req.params.id, {
                         path: 'rolePayments',
                         populate: {
-                            path: 'employee'
+                            path: 'employee',
+                            populate: {
+                                path: 'person'
+                            }
                         }
                     });
                     if (Utils_1.default.isEmpty(clazz)) {

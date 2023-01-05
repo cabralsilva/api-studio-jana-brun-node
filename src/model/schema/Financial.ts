@@ -21,6 +21,7 @@ const FinancialModel = {
   payments: [{
     movimentDate: { type: Date, required: true, default: new Date() },
     targetDate: { type: Date, required: true },
+    paymentDate: { type: Date, required: true },
     valuePaid: { type: Number },
     paymentMethod: { type: String, enum: Object.keys(PaymentMethod), required: true, default: "CASH" }
   }]

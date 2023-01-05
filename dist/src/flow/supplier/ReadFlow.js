@@ -25,11 +25,14 @@ class ReadFlow extends FlowHttp_1.default {
             try {
                 if (Utils_1.default.isNotEmpty((_a = req.params) === null || _a === void 0 ? void 0 : _a.id)) {
                     const supplier = yield GetByIdFlowItem_1.default.get(req.params.id, {
-                        path: 'person.address',
+                        path: 'person',
                         populate: {
-                            path: 'city',
+                            path: 'address',
                             populate: {
-                                path: 'state'
+                                path: 'city',
+                                populate: {
+                                    path: 'state'
+                                }
                             }
                         }
                     });

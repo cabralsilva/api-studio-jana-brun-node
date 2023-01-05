@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Employee_1 = require("../../../model/schema/Employee");
 class FindOneByModelFlowItem {
-    findOne(model, sort = undefined) {
+    findOne(model, sort = undefined, pop = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Employee_1.EmployeeRepository.findOne(model)
+            return yield Employee_1.EmployeeRepository.findOne(model).populate(pop)
                 .sort(sort);
         });
     }

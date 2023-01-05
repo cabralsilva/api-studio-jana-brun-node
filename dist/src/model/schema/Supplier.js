@@ -15,7 +15,6 @@ const SupplierModel = {
 exports.SupplierModel = SupplierModel;
 const Supplier = new mongoose.Schema(SupplierModel);
 exports.Supplier = Supplier;
-Supplier.index({ "person.socialId": 1 }, { unique: true });
 class SupplierSearch extends Search_1.default {
     constructor(_query) {
         super(_query);

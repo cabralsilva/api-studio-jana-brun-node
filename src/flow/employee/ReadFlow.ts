@@ -16,11 +16,14 @@ class ReadFlow extends FlowHttp {
         const employee = await GetByIdFlowItem.get(
           req.params.id,
           {
-            path: 'person.address',
+            path: 'person',
             populate: {
-              path: 'city',
+              path: 'address',
               populate: {
-                path: 'state'
+                path: 'city',
+                populate: {
+                  path: 'state'
+                }
               }
             }
           });
