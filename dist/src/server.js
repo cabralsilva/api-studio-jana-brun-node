@@ -143,7 +143,7 @@ class StartUp {
         this.app.route('/api/v2/matriculation').post(MatriculationController_1.default.create);
         this.app.route('/api/v2/matriculation/:id').patch(MatriculationController_1.default.update);
         this.app.route('/api/v2/matriculation/:id').delete(MatriculationController_1.default.delete);
-        this.app.route('/api/v2/sale/price').get(SaleController_1.default.getValue);
+        this.app.route('/api/v2/sale/price').post(SaleController_1.default.searchPrice);
     }
 }
 exports.default = new StartUp();

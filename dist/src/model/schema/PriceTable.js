@@ -47,10 +47,10 @@ class PriceTableSearch extends Search_1.default {
                     if (key === 'effectiveDate' && value) {
                         filters.$and.push({
                             beginDateTime: {
-                                '$gte': value
+                                '$lte': value
                             },
                             endDateTime: {
-                                '$lte': value
+                                '$gte': value
                             }
                         });
                     }

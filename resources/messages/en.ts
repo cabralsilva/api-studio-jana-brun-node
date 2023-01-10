@@ -4,6 +4,7 @@ export default {
     brand: "Marca",
     category: "Categoria",
     paymentCondition: "Condição de pagamento",
+    priceTable: "Tabela de preço",
     http: {
       invalidRequest: "Requisição inválida",
       invalidCredentials: "Usuário e/ou senha inválidos",

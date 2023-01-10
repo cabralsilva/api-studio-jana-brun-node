@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose'
 import StatusOfMatriculation from '../enum/StatusOfMatriculation'
 import Search from '../Search'
 import { Class } from './Class'
+import { SkuItemModel } from './SkuItem'
 
 const MatriculationModel = {
   student: { type: mongoose.Schema.Types.ObjectId, ref: 'student', required: true },
@@ -11,15 +12,13 @@ const MatriculationModel = {
   observation: { type: String },
   status: { type: String, enum: Object.keys(StatusOfMatriculation), required: true, default: 'PRE_REGISTER' },
   classes: [Class],
-  skus: [
+  classesSkus: [
     {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
-      grateItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grateItem', required: true }],
-      quantityValue: { type: Number, required: true, default: 1 },
-      unitValue: { type: Number, required: true },
-      totalValue: { type: Number, required: true }
+      clazz: Class,
+      ...SkuItemModel
     }
-  ]
+  ],
+  extraSkus: [SkuItemModel]
 }
 
 const Matriculation = new mongoose.Schema(

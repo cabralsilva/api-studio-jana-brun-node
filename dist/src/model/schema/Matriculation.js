@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const StatusOfMatriculation_1 = require("../enum/StatusOfMatriculation");
 const Search_1 = require("../Search");
 const Class_1 = require("./Class");
+const SkuItem_1 = require("./SkuItem");
 const MatriculationModel = {
     student: { type: mongoose.Schema.Types.ObjectId, ref: 'student', required: true },
     responsibleFinancial: { type: mongoose.Schema.Types.ObjectId, ref: 'person' },
@@ -13,15 +14,10 @@ const MatriculationModel = {
     observation: { type: String },
     status: { type: String, enum: Object.keys(StatusOfMatriculation_1.default), required: true, default: 'PRE_REGISTER' },
     classes: [Class_1.Class],
-    skus: [
-        {
-            product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
-            grateItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grateItem', required: true }],
-            quantityValue: { type: Number, required: true, default: 1 },
-            unitValue: { type: Number, required: true },
-            totalValue: { type: Number, required: true }
-        }
-    ]
+    classesSkus: [
+        Object.assign({ clazz: Class_1.Class }, SkuItem_1.SkuItemModel)
+    ],
+    extraSkus: [SkuItem_1.SkuItemModel]
 };
 exports.MatriculationModel = MatriculationModel;
 const Matriculation = new mongoose.Schema(MatriculationModel, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
