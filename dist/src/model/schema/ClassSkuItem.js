@@ -1,21 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SupplierSearch = exports.SupplierRepository = exports.SupplierModel = exports.Supplier = void 0;
+exports.ClassSkuItemSearch = exports.ClassSkuItemRepository = exports.ClassSkuItemModel = exports.ClassSkuItemScheme = void 0;
 const mongoose = require("mongoose");
-const TypeOfSupplier_1 = require("../enum/TypeOfSupplier");
 const Search_1 = require("../Search");
-const SupplierModel = {
-    person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
-    email: { type: String, required: true },
-    phone1: { type: String, required: true },
-    phone2: { type: String },
-    type: { type: String, enum: Object.keys(TypeOfSupplier_1.default), required: true, default: 'OTHER' },
-    active: { type: Boolean, required: true, default: true }
-};
-exports.SupplierModel = SupplierModel;
-const Supplier = new mongoose.Schema(SupplierModel);
-exports.Supplier = Supplier;
-class SupplierSearch extends Search_1.default {
+const SkuItem_1 = require("./SkuItem");
+const ClassSkuItemModel = Object.assign({ clazz: { type: mongoose.Schema.Types.ObjectId, ref: 'class' } }, SkuItem_1.SkuItemModel);
+exports.ClassSkuItemModel = ClassSkuItemModel;
+const ClassSkuItemScheme = new mongoose.Schema(ClassSkuItemModel);
+exports.ClassSkuItemScheme = ClassSkuItemScheme;
+class ClassSkuItemSearch extends Search_1.default {
     constructor(_query) {
         super(_query);
         this.name = _query.name;
@@ -31,7 +24,8 @@ class SupplierSearch extends Search_1.default {
                     this.searchText = this.diacriticSensitiveRegex(this.searchText);
                     condition = {
                         $or: [
-                            { 'person.name': { $regex: this.searchText, $options: 'i' } }
+                            { 'student.person.name': { $regex: this.searchText, $options: 'i' } },
+                            { 'student.responsible.name': { $regex: this.searchText, $options: 'i' } },
                         ]
                     };
                 }
@@ -46,6 +40,6 @@ class SupplierSearch extends Search_1.default {
         this.filters = filters;
     }
 }
-exports.SupplierSearch = SupplierSearch;
-const SupplierRepository = mongoose.model('supplier', Supplier);
-exports.SupplierRepository = SupplierRepository;
+exports.ClassSkuItemSearch = ClassSkuItemSearch;
+const ClassSkuItemRepository = mongoose.model('classSkuItem', ClassSkuItemScheme);
+exports.ClassSkuItemRepository = ClassSkuItemRepository;

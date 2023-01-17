@@ -1,25 +1,23 @@
 import * as mongoose from 'mongoose'
 import StatusOfMatriculation from '../enum/StatusOfMatriculation'
 import Search from '../Search'
-import { Class } from './Class'
+import { ClassSkuItemScheme } from './ClassSkuItem'
+import { SkuItemModel } from './SkuItem'
 
 const MatriculationModel = {
+  sequence: { type: String },
   student: { type: mongoose.Schema.Types.ObjectId, ref: 'student', required: true },
   responsibleFinancial: { type: mongoose.Schema.Types.ObjectId, ref: 'person' },
   effectiveDateTime: { type: Date },
   dayOfMonthToPayment: { type: Number },
   observation: { type: String },
   status: { type: String, enum: Object.keys(StatusOfMatriculation), required: true, default: 'PRE_REGISTER' },
-  classes: [Class],
-  skus: [
-    {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
-      grateItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grateItem', required: true }],
-      quantityValue: { type: Number, required: true, default: 1 },
-      unitValue: { type: Number, required: true },
-      totalValue: { type: Number, required: true }
-    }
-  ]
+  clazzesSkus: [ClassSkuItemScheme],
+  extraSkus: [SkuItemModel],
+  paymentConditionClasses: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' },
+  paymentConditionExtra: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' },
+  classSkuFinancialCreated: { type: Boolean, default: false },
+  extraSkuFinancialCreated: { type: Boolean, default: false }
 }
 
 const Matriculation = new mongoose.Schema(

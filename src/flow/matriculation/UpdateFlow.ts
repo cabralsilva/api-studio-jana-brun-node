@@ -3,6 +3,7 @@ import FlowHttp from "../../model/FlowHttp"
 import UpdateStudenFlowItem from "../student/item/UpdateFlowItem"
 import UpdatePersonFlowItem from "../person/item/UpdateFlowItem"
 import UpdateFlowItem from "./item/UpdateFlowItem"
+import Utils from "../../utils/Utils"
 
 class UpdateFlow extends FlowHttp {
 
@@ -10,12 +11,25 @@ class UpdateFlow extends FlowHttp {
     const session = await mongoose.startSession()
     try {
       session.startTransaction()
-      if (req.body.student) {
-        if (req.body.student.person) {
-          await UpdatePersonFlowItem.update(req.body.student.person._id, req.body.student.person, session)
-        }
-        await UpdateStudenFlowItem.update(req.body.student._id, req.body.student, session)
+
+      if (Utils.isNotEmpty(req.body.student?.person)){
+        const person = await UpdatePersonFlowItem.update(req.body.student.person._id, req.body.student.person, session)
+        req.body.student.person = person._id
       }
+      if (Utils.isNotEmpty(req.body.student?.responsible)){
+        const person = await UpdatePersonFlowItem.update(req.body.student.responsible._id, req.body.student.responsible, session)
+        req.body.student.responsible = person._id
+      }
+      if (Utils.isEmpty(req.body.student?._id)){
+        const student = await UpdateStudenFlowItem.update(req.body.student.person._id, req.body.student, session)
+        req.body.student = student._id
+      }
+
+      req.body.effectiveDateTime = null
+      if (req.body.status == "EFFECTIVE") {
+        req.body.effectiveDateTime = new Date()
+      }
+      
       await UpdateFlowItem.update(req.params.id, req.body, session)
       await session.commitTransaction()
     } catch (error) {

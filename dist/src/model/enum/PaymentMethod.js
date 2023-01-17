@@ -9,6 +9,7 @@ var PaymentMethod;
     PaymentMethod["CREDIT"] = "message.paymentMethod.credit";
     PaymentMethod["TRADE_NOTE"] = "message.paymentMethod.tradeNote";
     PaymentMethod["BONUS"] = "message.paymentMethod.bonus";
+    PaymentMethod["ALLOWANCE"] = "message.paymentMethod.allowance";
     PaymentMethod["PIX"] = "message.paymentMethod.pix";
 })(PaymentMethod || (PaymentMethod = {}));
 exports.default = PaymentMethod;
