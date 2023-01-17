@@ -3,7 +3,7 @@ import GetProductValueFlow from '../flow/sale/GetProductValueFlow'
 import ResponseHttp from '../model/ResponseHttp'
 
 class SaleController {
-  getValue(req, res) {
+  searchPrice(req, res) {
     GetProductValueFlow.get(req, res)
       .then(state => ResponseHttp.sendResponse(res, OK, state))
       .catch(error => ResponseHttp.sendResponseError(res, error))

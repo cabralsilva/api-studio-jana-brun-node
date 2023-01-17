@@ -166,8 +166,10 @@ class StartUp {
     this.app.route('/api/v2/matriculation').post(MatriculationController.create)
     this.app.route('/api/v2/matriculation/:id').patch(MatriculationController.update)
     this.app.route('/api/v2/matriculation/:id').delete(MatriculationController.delete)
+    this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationController.generateFinancialClassSku)
+    this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationController.generateFinancialExtraSku)
     
-    this.app.route('/api/v2/sale/price').get(SaleController.getValue)
+    this.app.route('/api/v2/sale/price').post(SaleController.searchPrice)
   }
 }
 

@@ -9,12 +9,12 @@ const Address_1 = require("./address/Address");
 const PersonModel = {
     name: { type: String, required: true },
     tradeName: { type: String },
-    socialId: { type: String, required: true },
+    socialId: { type: String },
     documentNumber: { type: String },
     bornDate: { type: Date },
     genre: { type: String, enum: Object.keys(Genre_1.default), required: true, default: 'NSA' },
     type: { type: String, enum: Object.keys(TypeOfPerson_1.default), required: true, default: 'NATURAL' },
-    address: Address_1.AddressModel
+    address: { type: Address_1.AddressModel, required: false }
 };
 exports.PersonModel = PersonModel;
 const Person = new mongoose_1.default.Schema(PersonModel);

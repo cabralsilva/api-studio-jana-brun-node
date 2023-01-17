@@ -5,7 +5,7 @@ import Search from '../Search'
 const StudentModel = {
   person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
   responsible: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
-  school: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
+  school: { type: mongoose.Schema.Types.ObjectId, ref: 'person' },
   schoolLevel: { type: String, enum: Object.keys(SchoolLevel), required: true, default: 'CHILD_EDUCATION_ONE' },
   medicinContinuous: { type: Boolean, required: true, default: false },
   medicinNotes: { type: String },

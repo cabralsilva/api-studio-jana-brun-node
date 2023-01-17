@@ -6,6 +6,7 @@ exports.default = {
         brand: "Marca",
         category: "Categoria",
         paymentCondition: "Condição de pagamento",
+        priceTable: "Tabela de preço",
         http: {
             invalidRequest: "Requisição inválida",
             invalidCredentials: "Usuário e/ou senha inválidos",
@@ -16,7 +17,10 @@ exports.default = {
             openValueLessThan: "Valor em aberto é menor que o valor informado ou já esta quitado!"
         },
         response: {
-            resourceNotFound: "{0} não encontrado."
+            resourceNotFound: "{0} não encontrado.",
+            matriculation: {
+                financialAlreadyCreated: "Registros financeiros já foram gerados anteriorment. {0}"
+            }
         }
     }
 };

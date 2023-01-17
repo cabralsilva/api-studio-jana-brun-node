@@ -9,20 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
 const FlowHttp_1 = require("../../model/FlowHttp");
+const HttpError_1 = require("../../model/HttpError");
 const PriceTable_1 = require("../../model/schema/PriceTable");
+const StringUtils_1 = require("../../utils/StringUtils");
+const Utils_1 = require("../../utils/Utils");
 const FindBySearchFlowItem_1 = require("../priceTable/item/FindBySearchFlowItem");
+const HttpStatus = require("http-status");
+const GetPriceFlowItem_1 = require("./item/GetPriceFlowItem");
 class GetProductValueFlow extends FlowHttp_1.default {
     get(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                mongoose_1.default.set('debug', true);
-                var priceTable = yield FindBySearchFlowItem_1.default.find(new PriceTable_1.PriceTableSearch({
-                    effectiveDate: new Date()
+                var searchResultPriceTables = yield FindBySearchFlowItem_1.default.find(new PriceTable_1.PriceTableSearch({
+                    effectiveDate: new Date(),
+                    orderBy: 'created_at',
+                    order: 'desc'
                 }));
-                mongoose_1.default.set('debug', false);
-                return priceTable;
+                if (Utils_1.default.isEmpty(searchResultPriceTables === null || searchResultPriceTables === void 0 ? void 0 : searchResultPriceTables.items)) {
+                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.response.resourceNotFound", StringUtils_1.default.message("message.priceTable")));
+                }
+                let priceTable = searchResultPriceTables.items[0];
+                let itemPrice = GetPriceFlowItem_1.default.get(req.body, priceTable);
+                if (Utils_1.default.isEmpty(itemPrice)) {
+                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.response.resourceNotFound", StringUtils_1.default.message("message.priceTable")));
+                }
+                return itemPrice;
             }
             catch (error) {
                 this.processError(error);
