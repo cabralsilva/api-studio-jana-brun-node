@@ -4,7 +4,6 @@ exports.MatriculationSearch = exports.MatriculationRepository = exports.Matricul
 const mongoose = require("mongoose");
 const StatusOfMatriculation_1 = require("../enum/StatusOfMatriculation");
 const Search_1 = require("../Search");
-const ClassSkuItem_1 = require("./ClassSkuItem");
 const SkuItem_1 = require("./SkuItem");
 const MatriculationModel = {
     sequence: { type: String },
@@ -14,12 +13,20 @@ const MatriculationModel = {
     dayOfMonthToPayment: { type: Number },
     observation: { type: String },
     status: { type: String, enum: Object.keys(StatusOfMatriculation_1.default), required: true, default: 'PRE_REGISTER' },
-    clazzesSkus: [ClassSkuItem_1.ClassSkuItemScheme],
+    clazzesSkus: [
+        {
+            clazz: { type: mongoose.Schema.Types.ObjectId, ref: 'class' },
+            // ...SkuItemModel
+            product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
+            grateItemList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grateItem', required: true }],
+            quantityValue: { type: Number, required: true, default: 1 },
+            unitValue: { type: Number, required: true },
+            totalValue: { type: Number, required: true }
+        }
+    ],
     extraSkus: [SkuItem_1.SkuItemModel],
     paymentConditionClasses: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' },
-    paymentConditionExtra: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' },
-    classSkuFinancialCreated: { type: Boolean, default: false },
-    extraSkuFinancialCreated: { type: Boolean, default: false }
+    paymentConditionExtra: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' }
 };
 exports.MatriculationModel = MatriculationModel;
 const Matriculation = new mongoose.Schema(MatriculationModel, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });

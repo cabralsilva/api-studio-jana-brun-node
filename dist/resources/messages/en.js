@@ -17,7 +17,10 @@ exports.default = {
             openValueLessThan: "Valor em aberto é menor que o valor informado ou já esta quitado!"
         },
         response: {
-            resourceNotFound: "{0} não encontrado."
+            resourceNotFound: "{0} não encontrado.",
+            matriculation: {
+                financialAlreadyCreated: "Registros financeiros já foram gerados anteriorment. {0}"
+            }
         }
     }
 };

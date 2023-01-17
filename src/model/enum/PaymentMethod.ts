@@ -6,6 +6,7 @@ enum PaymentMethod {
   CREDIT = "message.paymentMethod.credit",
   TRADE_NOTE = "message.paymentMethod.tradeNote",
   BONUS = "message.paymentMethod.bonus",
+  ALLOWANCE = "message.paymentMethod.allowance",
   PIX = "message.paymentMethod.pix"
 }
 

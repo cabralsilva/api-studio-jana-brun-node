@@ -8,12 +8,12 @@ import { AddressModel } from './address/Address'
 const PersonModel = {
   name: { type: String, required: true },
   tradeName: { type: String },
-  socialId: { type: String, required: true },
+  socialId: { type: String },
   documentNumber: { type: String },
   bornDate: { type: Date },
   genre: { type: String, enum: Object.keys(Genre), required: true, default: 'NSA' },
   type: { type: String, enum: Object.keys(TypeOfPerson), required: true, default: 'NATURAL' },
-  address: AddressModel
+  address: {type: AddressModel, required: false}
 }
 
 const Person = new mongoose.Schema(PersonModel)

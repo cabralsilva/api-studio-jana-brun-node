@@ -15,6 +15,7 @@ const HttpError_1 = require("../../model/HttpError");
 const Matriculation_1 = require("../../model/schema/Matriculation");
 const StringUtils_1 = require("../../utils/StringUtils");
 const Utils_1 = require("../../utils/Utils");
+const AdjustGrateItemFlowItem_1 = require("./item/AdjustGrateItemFlowItem");
 const EnrichFindFlowItem_1 = require("./item/EnrichFindFlowItem");
 const FindBySearchFlowItem_1 = require("./item/FindBySearchFlowItem");
 const GetByIdFlowItem_1 = require("./item/GetByIdFlowItem");
@@ -24,16 +25,77 @@ class ReadFlow extends FlowHttp_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 if (Utils_1.default.isNotEmpty((_a = req.params) === null || _a === void 0 ? void 0 : _a.id)) {
-                    const matriculation = yield GetByIdFlowItem_1.default.get(req.params.id);
+                    const matriculation = yield GetByIdFlowItem_1.default.get(req.params.id, [
+                        {
+                            path: 'student',
+                            populate: {
+                                path: 'responsible',
+                                populate: {
+                                    path: 'address',
+                                    populate: {
+                                        path: 'city',
+                                        populate: {
+                                            path: 'state'
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            path: 'student',
+                            populate: {
+                                path: 'person'
+                            }
+                        },
+                        {
+                            path: 'clazzesSkus',
+                            populate: {
+                                path: 'clazz'
+                            }
+                        },
+                        {
+                            path: 'clazzesSkus',
+                            populate: {
+                                path: 'product',
+                                populate: {
+                                    path: 'grates'
+                                }
+                            }
+                        },
+                        {
+                            path: 'paymentConditionClasses'
+                        },
+                        {
+                            path: 'paymentConditionExtra'
+                        },
+                        {
+                            path: 'extraSkus',
+                            populate: {
+                                path: 'product',
+                                populate: {
+                                    path: 'grates'
+                                }
+                            }
+                        }
+                    ]);
                     if (Utils_1.default.isEmpty(matriculation)) {
                         throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.registerNotFounded"));
                     }
+                    matriculation._doc.clazzesSkus.forEach((classSku, index) => {
+                        let newArrayGrateItems = AdjustGrateItemFlowItem_1.default.adjust(classSku);
+                        matriculation._doc.clazzesSkus[index]._doc.grateItemList = newArrayGrateItems;
+                    });
+                    matriculation._doc.extraSkus.forEach((extraSku, index) => {
+                        let newArrayGrateItems = AdjustGrateItemFlowItem_1.default.adjust(extraSku);
+                        matriculation._doc.extraSkus[index]._doc.grateItemList = newArrayGrateItems;
+                    });
                     return matriculation;
                 }
                 var resultSearch = yield FindBySearchFlowItem_1.default.find(new Matriculation_1.MatriculationSearch(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {
+                console.log(error);
                 this.processError(error);
             }
         });
