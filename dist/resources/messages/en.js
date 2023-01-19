@@ -12,6 +12,7 @@ exports.default = {
             invalidCredentials: "Usuário e/ou senha inválidos",
             invalidToken: "Token inválido",
             expiredToken: "Token expirado",
+            updatePasswordInvalid: "Não foi possível alterar a senha atual. Verifique as credenciais informadas!"
         },
         financial: {
             openValueLessThan: "Valor em aberto é menor que o valor informado ou já esta quitado!"

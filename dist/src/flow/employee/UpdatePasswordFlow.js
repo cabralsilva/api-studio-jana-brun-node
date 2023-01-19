@@ -9,8 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const http_status_1 = require("http-status");
 const mongoose_1 = require("mongoose");
 const FlowHttp_1 = require("../../model/FlowHttp");
+const HttpError_1 = require("../../model/HttpError");
+const StringUtils_1 = require("../../utils/StringUtils");
 const AuthenticationFlowItem_1 = require("../authentication/item/AuthenticationFlowItem");
 const CryptoPasswordFlowItem_1 = require("./item/CryptoPasswordFlowItem");
 const GetByJWTFlowItem_1 = require("./item/GetByJWTFlowItem");
@@ -29,7 +32,7 @@ class UpdatePasswordFlow extends FlowHttp_1.default {
             }
             catch (error) {
                 yield session.abortTransaction();
-                this.processError(error);
+                this.processError(new HttpError_1.default(http_status_1.NOT_ACCEPTABLE, StringUtils_1.default.message("message.http.updatePasswordInvalid")));
             }
             finally {
                 yield session.endSession();
