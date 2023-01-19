@@ -18,6 +18,7 @@ class CitySearch extends Search_1.default {
         super(_query);
         this.name = _query.name;
         this.active = _query.active;
+        this.state = _query.state ? new mongoose.Types.ObjectId(_query.state) : null;
         this.buildFilters();
     }
     buildFilters() {

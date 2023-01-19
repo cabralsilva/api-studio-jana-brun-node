@@ -15,11 +15,13 @@ City.index({ abbreviation: 1 }, { unique: true })
 class CitySearch extends Search {
   name: { type: String }
   active: { type: Boolean }
+  state: mongoose.Types.ObjectId
 
   constructor(_query) {
     super(_query)
     this.name = _query.name
     this.active = _query.active
+    this.state = _query.state ? new mongoose.Types.ObjectId(_query.state) : null
     this.buildFilters()
   }
 
