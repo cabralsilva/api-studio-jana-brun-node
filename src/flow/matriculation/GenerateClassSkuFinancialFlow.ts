@@ -34,8 +34,9 @@ class GenerateClassSkuFinancial extends FlowHttp {
         value: matriculation.clazzesSkus.reduce((acc, clazzSku) => { return acc + clazzSku.totalValue }, 0),
         dayFixedOfPayment: moment(req.body.dueDate).date(),
         type: 'RECEIPT',
-        person: matriculation.student.responsible.toString()
+        person: matriculation.student.person.toString()
       }
+      
       const financials = await BuildFinancialsByPaymentConditionFlowItem.build(matriculation.paymentConditionClasses, financialBase)
       
       for (var financial of financials) {

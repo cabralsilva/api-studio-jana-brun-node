@@ -40,7 +40,7 @@ class GenerateClassSkuFinancial extends FlowHttp_1.default {
                     value: matriculation.clazzesSkus.reduce((acc, clazzSku) => { return acc + clazzSku.totalValue; }, 0),
                     dayFixedOfPayment: moment(req.body.dueDate).date(),
                     type: 'RECEIPT',
-                    person: matriculation.student.responsible.toString()
+                    person: matriculation.student.person.toString()
                 };
                 const financials = yield BuildFinancialsByPaymentConditionFlowItem_1.default.build(matriculation.paymentConditionClasses, financialBase);
                 for (var financial of financials) {
