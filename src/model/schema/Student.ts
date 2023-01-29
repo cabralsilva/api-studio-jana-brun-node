@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose'
+import Utils from '../../utils/Utils'
 import SchoolLevel from '../enum/SchoolLevel'
 import Search from '../Search'
 
@@ -24,11 +25,21 @@ const Student = new mongoose.Schema(StudentModel)
 class StudentSearch extends Search {
   name: { type: String }
   active: { type: Boolean }
+  person: mongoose.Types.ObjectId[]
+  responsible: mongoose.Types.ObjectId[]
 
   constructor(_query) {
     super(_query)
     this.name = _query.name
     this.active = _query.active
+    if (Utils.isNotEmpty(_query.person)) {
+      var personArray = _query.person.trim().split(' ')
+      this.person = personArray.map(p => new mongoose.Types.ObjectId(p))
+    }
+    if (Utils.isNotEmpty(_query.responsible)) {
+      var personArray = _query.responsible.trim().split(' ')
+      this.responsible = personArray.map(p => new mongoose.Types.ObjectId(p))
+    }
     this.buildFilters()
   }
 
@@ -37,15 +48,26 @@ class StudentSearch extends Search {
     Object.entries(this).forEach(([key, value]) => {
       if (value) {
         let condition = {}
+        if (['order', 'orderBy', 'properties', 'populate', 'page', 'limit'].includes(key)) {
+          return
+        }
         if (key === 'searchText' as any) {
           this.searchText = this.diacriticSensitiveRegex(this.searchText)
           condition = {
             $or: [
-              { 'person.name': { $regex: this.searchText as any, $options: 'i' } }
             ]
           }
         } else {
-          condition[key] = value
+          if (!Array.isArray(value)) {
+            condition[key] = value
+          } else {
+            condition = {
+              $or: [
+                { 'person': { $in: this.person || [] } },
+                { 'responsible': { $in: this.responsible || [] } }
+              ]
+            }
+          }
         }
         filters.$and.push(condition)
       }
