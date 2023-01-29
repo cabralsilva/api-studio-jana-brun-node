@@ -35,10 +35,10 @@ class GenerateExtraSkuFinancial extends FlowHttp_1.default {
                 const financialBase = {
                     movimentDate: new Date(),
                     dueDate: req.body.dueDate,
-                    description: `ADDMAT-${matriculation.sequence}`,
+                    description: `MAT/EX-${matriculation.sequence}`,
                     value: matriculation.extraSkus.reduce((acc, extraSku) => { return acc + extraSku.totalValue; }, 0),
                     type: 'RECEIPT',
-                    person: matriculation.student.responsible.toString()
+                    person: matriculation.student.person.toString()
                 };
                 const financials = yield BuildFinancialsByPaymentConditionFlowItem_1.default.build(matriculation.paymentConditionExtra, financialBase);
                 for (var financial of financials) {

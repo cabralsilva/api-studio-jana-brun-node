@@ -30,10 +30,10 @@ class GenerateExtraSkuFinancial extends FlowHttp {
       const financialBase = {
         movimentDate: new Date(),
         dueDate: req.body.dueDate,
-        description: `ADDMAT-${matriculation.sequence}`,
+        description: `MAT/EX-${matriculation.sequence}`,
         value: matriculation.extraSkus.reduce((acc, extraSku) => { return acc + extraSku.totalValue }, 0),
         type: 'RECEIPT',
-        person: matriculation.student.responsible.toString()
+        person: matriculation.student.person.toString()
       }
       const financials = await BuildFinancialsByPaymentConditionFlowItem.build(matriculation.paymentConditionExtra, financialBase)
       

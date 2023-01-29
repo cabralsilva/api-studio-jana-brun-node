@@ -3,6 +3,7 @@ import { dbUrl } from './Configs'
 
 class Database {
   createConnection() {
+    mongoose.set("strictQuery", true);
     mongoose.connect(dbUrl)
   }
 }
