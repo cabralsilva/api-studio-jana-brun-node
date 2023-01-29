@@ -17,7 +17,7 @@ const UpdateFlowItem_3 = require("./item/UpdateFlowItem");
 const Utils_1 = require("../../utils/Utils");
 class UpdateFlow extends FlowHttp_1.default {
     update(req, res) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function* () {
             const session = yield mongoose_1.default.startSession();
             try {
@@ -31,10 +31,11 @@ class UpdateFlow extends FlowHttp_1.default {
                     req.body.student.responsible = person._id;
                 }
                 if (Utils_1.default.isEmpty((_c = req.body.student) === null || _c === void 0 ? void 0 : _c._id)) {
-                    const student = yield UpdateFlowItem_1.default.update(req.body.student.person._id, req.body.student, session);
-                    req.body.student = student._id;
+                    if (Utils_1.default.isNotEmpty((_d = req.body.student) === null || _d === void 0 ? void 0 : _d.person)) {
+                        const student = yield UpdateFlowItem_1.default.update(req.body.student.person._id, req.body.student, session);
+                        req.body.student = student._id;
+                    }
                 }
-                req.body.effectiveDateTime = null;
                 if (req.body.status == "EFFECTIVE") {
                     req.body.effectiveDateTime = new Date();
                 }
@@ -42,6 +43,7 @@ class UpdateFlow extends FlowHttp_1.default {
                 yield session.commitTransaction();
             }
             catch (error) {
+                console.log(error);
                 yield session.abortTransaction();
                 this.processError(error);
             }

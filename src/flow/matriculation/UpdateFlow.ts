@@ -21,11 +21,12 @@ class UpdateFlow extends FlowHttp {
         req.body.student.responsible = person._id
       }
       if (Utils.isEmpty(req.body.student?._id)){
-        const student = await UpdateStudenFlowItem.update(req.body.student.person._id, req.body.student, session)
-        req.body.student = student._id
+        if (Utils.isNotEmpty(req.body.student?.person)){
+          const student = await UpdateStudenFlowItem.update(req.body.student.person._id, req.body.student, session)
+          req.body.student = student._id
+        }
       }
 
-      req.body.effectiveDateTime = null
       if (req.body.status == "EFFECTIVE") {
         req.body.effectiveDateTime = new Date()
       }
@@ -33,6 +34,7 @@ class UpdateFlow extends FlowHttp {
       await UpdateFlowItem.update(req.params.id, req.body, session)
       await session.commitTransaction()
     } catch (error) {
+      console.log(error)
       await session.abortTransaction()
       this.processError(error)
     } finally {

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentSearch = exports.StudentRepository = exports.StudentModel = exports.Student = void 0;
 const mongoose = require("mongoose");
+const Utils_1 = require("../../utils/Utils");
 const SchoolLevel_1 = require("../enum/SchoolLevel");
 const Search_1 = require("../Search");
 const StudentModel = {
@@ -28,6 +29,14 @@ class StudentSearch extends Search_1.default {
         super(_query);
         this.name = _query.name;
         this.active = _query.active;
+        if (Utils_1.default.isNotEmpty(_query.person)) {
+            var personArray = _query.person.trim().split(' ');
+            this.person = personArray.map(p => new mongoose.Types.ObjectId(p));
+        }
+        if (Utils_1.default.isNotEmpty(_query.responsible)) {
+            var personArray = _query.responsible.trim().split(' ');
+            this.responsible = personArray.map(p => new mongoose.Types.ObjectId(p));
+        }
         this.buildFilters();
     }
     buildFilters() {
@@ -35,16 +44,27 @@ class StudentSearch extends Search_1.default {
         Object.entries(this).forEach(([key, value]) => {
             if (value) {
                 let condition = {};
+                if (['order', 'orderBy', 'properties', 'populate', 'page', 'limit'].includes(key)) {
+                    return;
+                }
                 if (key === 'searchText') {
                     this.searchText = this.diacriticSensitiveRegex(this.searchText);
                     condition = {
-                        $or: [
-                            { 'person.name': { $regex: this.searchText, $options: 'i' } }
-                        ]
+                        $or: []
                     };
                 }
                 else {
-                    condition[key] = value;
+                    if (!Array.isArray(value)) {
+                        condition[key] = value;
+                    }
+                    else {
+                        condition = {
+                            $or: [
+                                { 'person': { $in: this.person || [] } },
+                                { 'responsible': { $in: this.responsible || [] } }
+                            ]
+                        };
+                    }
                 }
                 filters.$and.push(condition);
             }

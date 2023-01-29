@@ -4,10 +4,12 @@ import HttpError from '../../model/HttpError'
 import { MatriculationSearch } from '../../model/schema/Matriculation'
 import StringUtils from "../../utils/StringUtils"
 import Utils from '../../utils/Utils'
+import PrepareSearchPersonFlowItem from './item/PrepareSearchPersonFlowItem'
 import AdjustGrateItemFlowItem from './item/AdjustGrateItemFlowItem'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
 import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
+import mongoose from 'mongoose'
 
 class ReadFlow extends FlowHttp {
 
@@ -83,11 +85,10 @@ class ReadFlow extends FlowHttp {
         })
         return matriculation
       }
-
+      await PrepareSearchPersonFlowItem.prepare(req)
       var resultSearch = await FindBySearchFlowItem.find(new MatriculationSearch(req.query)) as any
       return EnrichFindFlowItem.enrich(resultSearch)
     } catch (error) {
-      console.log(error)
       this.processError(error)
     }
   }

@@ -15,6 +15,7 @@ const HttpError_1 = require("../../model/HttpError");
 const Matriculation_1 = require("../../model/schema/Matriculation");
 const StringUtils_1 = require("../../utils/StringUtils");
 const Utils_1 = require("../../utils/Utils");
+const PrepareSearchPersonFlowItem_1 = require("./item/PrepareSearchPersonFlowItem");
 const AdjustGrateItemFlowItem_1 = require("./item/AdjustGrateItemFlowItem");
 const EnrichFindFlowItem_1 = require("./item/EnrichFindFlowItem");
 const FindBySearchFlowItem_1 = require("./item/FindBySearchFlowItem");
@@ -91,11 +92,11 @@ class ReadFlow extends FlowHttp_1.default {
                     });
                     return matriculation;
                 }
+                yield PrepareSearchPersonFlowItem_1.default.prepare(req);
                 var resultSearch = yield FindBySearchFlowItem_1.default.find(new Matriculation_1.MatriculationSearch(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {
-                console.log(error);
                 this.processError(error);
             }
         });
