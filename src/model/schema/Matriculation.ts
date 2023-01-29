@@ -12,7 +12,7 @@ const MatriculationModel = {
   effectiveDateTime: { type: Date },
   dayOfMonthToPayment: { type: Number },
   observation: { type: String },
-  status: { type: String, enum: Object.keys(StatusOfMatriculation), required: true, default: 'EFFECTIVE' },
+  status: { type: String, enum: Object.keys(StatusOfMatriculation), default: 'EFFECTIVE' },
   clazzesSkus: [ClassSkuItemScheme],
   extraSkus: [SkuItemModel],
   paymentConditionClasses: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' },
@@ -27,7 +27,6 @@ const Matriculation = new mongoose.Schema(
 )
 
 Matriculation.index({ "student": 1 }, { unique: false })
-Matriculation.index({ 'student.person.name': 'text', 'student.responsible.name': 'text' })
 
 class MatriculationSearch extends Search {
   name: { type: String }
