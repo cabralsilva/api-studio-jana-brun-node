@@ -18,6 +18,7 @@ const GrateController_1 = require("./controller/GrateController");
 const MatriculationController_1 = require("./controller/MatriculationController");
 const NoticeController_1 = require("./controller/NoticeController");
 const PaymentConditionController_1 = require("./controller/PaymentConditionController");
+const PayrollController_1 = require("./controller/PayrollController");
 const PersonController_1 = require("./controller/PersonController");
 const PriceTableController_1 = require("./controller/PriceTableController");
 const ProductController_1 = require("./controller/ProductController");
@@ -145,6 +146,11 @@ class StartUp {
         this.app.route('/api/v2/matriculation/:id').delete(MatriculationController_1.default.delete);
         this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationController_1.default.generateFinancialClassSku);
         this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationController_1.default.generateFinancialExtraSku);
+        this.app.route('/api/v2/payroll').get(PayrollController_1.default.get);
+        this.app.route('/api/v2/payroll/:id').get(PayrollController_1.default.getById);
+        this.app.route('/api/v2/payroll').post(PayrollController_1.default.create);
+        this.app.route('/api/v2/payroll/:id').patch(PayrollController_1.default.update);
+        this.app.route('/api/v2/payroll/:id').delete(PayrollController_1.default.delete);
         this.app.route('/api/v2/sale/price').post(SaleController_1.default.searchPrice);
     }
 }

@@ -62,7 +62,6 @@ class MatriculationSearch extends Search {
           } else {
             condition[key] = { $in: value }
           }
-          filters.$and.push(condition)
         }
         filters.$and.push(condition)
       }

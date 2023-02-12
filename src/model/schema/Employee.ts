@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose'
+import Utils from '../../utils/Utils'
 import AccessProfile from '../enum/AccessProfile'
 import Job from '../enum/Job'
 import TypeOfSalary from '../enum/TypeOfSalary'
@@ -31,11 +32,16 @@ Employee.index({ email: 1 }, { unique: true })
 class EmployeeSearch extends Search {
   name: { type: String }
   active: { type: Boolean }
+  person: mongoose.Types.ObjectId[]
 
   constructor(_query) {
     super(_query)
     this.name = _query.name
     this.active = _query.active
+    if (Utils.isNotEmpty(_query.person)) {
+      var personArray = _query.person.trim().split(' ')
+      this.person = personArray.map(p => new mongoose.Types.ObjectId(p))
+    }
     this.buildFilters()
   }
 
@@ -44,15 +50,14 @@ class EmployeeSearch extends Search {
     Object.entries(this).forEach(([key, value]) => {
       if (value) {
         let condition = {}
-        if (key === 'searchText' as any) {
-          this.searchText = this.diacriticSensitiveRegex(this.searchText)
-          condition = {
-            $or: [
-              { 'person.name': { $regex: this.searchText as any, $options: 'i' } }
-            ]
-          }
+        if (key === 'person') {
+          condition[key] = { $in: value }
         } else {
-          condition[key] = value
+          if (!Array.isArray(value)) {
+            condition[key] = value
+          } else {
+            condition[key] = { $in: value }
+          }
         }
         filters.$and.push(condition)
       }

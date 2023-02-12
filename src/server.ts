@@ -16,6 +16,7 @@ import GrateController from './controller/GrateController'
 import MatriculationController from './controller/MatriculationController'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
+import PayrollController from './controller/PayrollController'
 import PersonController from './controller/PersonController'
 import PriceTableController from './controller/PriceTableController'
 import ProductController from './controller/ProductController'
@@ -169,6 +170,12 @@ class StartUp {
     this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationController.generateFinancialClassSku)
     this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationController.generateFinancialExtraSku)
     
+    this.app.route('/api/v2/payroll').get(PayrollController.get)
+    this.app.route('/api/v2/payroll/:id').get(PayrollController.getById)
+    this.app.route('/api/v2/payroll').post(PayrollController.create)
+    this.app.route('/api/v2/payroll/:id').patch(PayrollController.update)
+    this.app.route('/api/v2/payroll/:id').delete(PayrollController.delete)
+
     this.app.route('/api/v2/sale/price').post(SaleController.searchPrice)
   }
 }
