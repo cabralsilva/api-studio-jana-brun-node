@@ -1,4 +1,5 @@
 import * as HttpStatus from 'http-status'
+import mongoose from 'mongoose'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
 import { EmployeeSearch } from '../../model/schema/Employee'
@@ -7,6 +8,7 @@ import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
 import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
+import PrepareEmployeeSearchTextFlowItem from './item/PrepareEmployeeSearchTextFlowItem'
 
 class ReadFlow extends FlowHttp {
 
@@ -32,7 +34,10 @@ class ReadFlow extends FlowHttp {
         }
         return employee
       }
-
+      
+      mongoose.set('debug', true)
+      await PrepareEmployeeSearchTextFlowItem.prepare(req)
+      console.log(req.query)
       var resultSearch = await FindBySearchFlowItem.find(new EmployeeSearch(req.query)) as any
       return EnrichFindFlowItem.enrich(resultSearch)
     } catch (error) {
