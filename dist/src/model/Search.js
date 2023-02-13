@@ -86,6 +86,7 @@ class Search {
     findNoPageable(model) {
         return __awaiter(this, void 0, void 0, function* () {
             const sort = this.sorter();
+            console.log('search ', this.filters);
             var items = yield model
                 .find(this.filters, this.properties)
                 .populate(this.populate)
@@ -126,6 +127,38 @@ class Search {
             ]);
             return ret;
         });
+    }
+    getFilters(objectSearch) {
+        let filters = { $and: [] };
+        Object.entries(objectSearch).forEach(([key, value]) => {
+            if (Utils_1.default.isNotEmpty(value)) {
+                let condition = {};
+                if (['order', 'orderBy', 'properties', 'populate', 'page', 'limit', 'model', 'searchText'].includes(key)) {
+                    return;
+                }
+                if (key.endsWith('DateRange')) {
+                    var keyAux = key.replace('Range', '');
+                    if (Utils_1.default.isNotEmpty(value[0])) {
+                        condition[keyAux] = Object.assign(Object.assign({}, condition[keyAux]), { $gte: new Date(value[0]) });
+                    }
+                    if (Utils_1.default.isNotEmpty(value[1])) {
+                        condition[keyAux] = Object.assign(Object.assign({}, condition[keyAux]), { $lte: new Date(value[1]) });
+                    }
+                }
+                else {
+                    if (!Array.isArray(value)) {
+                        condition[key] = value;
+                    }
+                    else {
+                        condition[key] = { $in: value };
+                    }
+                }
+                filters.$and.push(condition);
+            }
+        });
+        if (filters.$and.length === 0)
+            delete filters['$and'];
+        return filters;
     }
 }
 exports.default = Search;

@@ -23,7 +23,9 @@ class GetByIdFlowItem {
                     var gratesItems = [];
                     for (var grateItemId of priceTableItem.gratesItems) {
                         var grateItemAux = yield Grate_1.GrateRepository.find({ "items._id": grateItemId }, { 'items.$': 1 });
-                        gratesItems.push(grateItemAux[0].items[0]);
+                        if (Utils_1.default.isNotEmpty(grateItemAux)) {
+                            gratesItems.push(grateItemAux[0].items[0]);
+                        }
                     }
                     priceTableItem._doc.gratesItems = gratesItems;
                 }

@@ -16,7 +16,7 @@ const Class_1 = require("../../model/schema/Class");
 const StringUtils_1 = require("../../utils/StringUtils");
 const Utils_1 = require("../../utils/Utils");
 const EnrichFindFlowItem_1 = require("./item/EnrichFindFlowItem");
-const FindBySearchFlowItem_1 = require("./item/FindBySearchFlowItem");
+const FindClassByFilterFlowItem_1 = require("./item/FindClassByFilterFlowItem");
 const GetByIdFlowItem_1 = require("./item/GetByIdFlowItem");
 class ReadFlow extends FlowHttp_1.default {
     read(req, res) {
@@ -44,7 +44,7 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return clazz;
                 }
-                var resultSearch = yield FindBySearchFlowItem_1.default.find(new Class_1.ClassSearch(req.query));
+                var resultSearch = yield FindClassByFilterFlowItem_1.default.find(new Class_1.ClassSearch(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {

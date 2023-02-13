@@ -7,7 +7,7 @@ import StringUtils from "../../utils/StringUtils"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
 import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
-import GetByIdFlowItem from "./item/GetByIdFlowItem"
+import GetEmployeeByIdFlowItem from "./item/GetEmployeeByIdFlowItem"
 import PrepareEmployeeSearchTextFlowItem from './item/PrepareEmployeeSearchTextFlowItem'
 
 class ReadFlow extends FlowHttp {
@@ -15,7 +15,7 @@ class ReadFlow extends FlowHttp {
   async read(req, res) {
     try {
       if (Utils.isNotEmpty(req.params?.id)){
-        const employee = await GetByIdFlowItem.get(
+        const employee = await GetEmployeeByIdFlowItem.get(
           req.params.id,
           {
             path: 'person',
@@ -35,7 +35,6 @@ class ReadFlow extends FlowHttp {
         return employee
       }
       
-      mongoose.set('debug', true)
       await PrepareEmployeeSearchTextFlowItem.prepare(req)
       console.log(req.query)
       var resultSearch = await FindBySearchFlowItem.find(new EmployeeSearch(req.query)) as any

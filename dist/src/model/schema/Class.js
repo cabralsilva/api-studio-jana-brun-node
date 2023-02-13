@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClassSearch = exports.ClassRepository = exports.ClassModel = exports.Class = void 0;
+const moment = require("moment");
 const mongoose = require("mongoose");
+const Utils_1 = require("../../utils/Utils");
 const Often_1 = require("../enum/Often");
 const Search_1 = require("../Search");
 const RolePayment_1 = require("./RolePayment");
@@ -30,31 +32,42 @@ exports.Class = Class;
 class ClassSearch extends Search_1.default {
     constructor(_query) {
         super(_query);
-        this.description = _query.description;
-        this.active = _query.active;
+        this.model = _query;
+        if (Utils_1.default.isNotEmpty(_query === null || _query === void 0 ? void 0 : _query.endDateRange)) {
+            if (!Array.isArray(_query.endDateRange)) {
+                _query.endDateRange = _query.endDateRange.toString().split(',');
+            }
+            this.endDateRange = _query.endDateRange.map(data => moment(data));
+        }
+        if (Utils_1.default.isNotEmpty(_query === null || _query === void 0 ? void 0 : _query.employee)) {
+            if (!Array.isArray(_query.employee)) {
+                _query.employee = _query.employee.toString().split(',');
+            }
+            this.employee = _query.employee.map(data => new mongoose.Types.ObjectId(data));
+        }
         this.buildFilters();
     }
     buildFilters() {
-        let filters = { $and: [] };
-        Object.entries(this).forEach(([key, value]) => {
-            if (value) {
-                let condition = {};
-                if (key === 'searchText') {
-                    this.searchText = this.diacriticSensitiveRegex(this.searchText);
-                    condition = {
-                        $or: [
-                            { 'description': { $regex: this.searchText, $options: 'i' } }
-                        ]
-                    };
-                }
-                else {
-                    condition[key] = value;
-                }
-                filters.$and.push(condition);
-            }
-        });
+        let filters = super.getFilters(this);
+        if (Utils_1.default.isEmpty(filters.$and)) {
+            filters = { $and: [] };
+        }
+        if (Utils_1.default.isNotEmpty(this.searchText)) {
+            this.searchText = this.diacriticSensitiveRegex(this.searchText);
+            let condition = {
+                $or: [
+                    { 'description': { $regex: this.searchText, $options: 'i' } }
+                ]
+            };
+            filters.$and.push(condition);
+        }
+        if (Utils_1.default.isNotEmpty(this.employee)) {
+            let condition = { schedulesDetails: { '$elemMatch': { employee: { $in: this.employee || [] } } } };
+            filters.$and.push(condition);
+        }
         if (filters.$and.length === 0)
             delete filters['$and'];
+        console.log('filter', JSON.stringify(filters));
         this.filters = filters;
     }
 }

@@ -23,7 +23,8 @@ class ReadFlow extends FlowHttp {
                 path: 'grates'
               }
             }
-          }]);
+          }]
+          );
         if (Utils.isEmpty(priceTable)) {
           throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
         }
@@ -33,6 +34,7 @@ class ReadFlow extends FlowHttp {
       var resultSearch = await FindBySearchFlowItem.find(new PriceTableSearch(req.query)) as any
       return EnrichFindFlowItem.enrich(resultSearch)
     } catch (error) {
+      console.log(error)
       this.processError(error)
     }
   }

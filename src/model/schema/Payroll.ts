@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose'
 import StatusOfPayroll from '../enum/StatusOfPayroll'
 import Search from '../Search'
+import { EmployeeModel } from './Employee'
 
 const PayrollDetailModel = {
   description: { type: String, required: true },
@@ -8,9 +9,9 @@ const PayrollDetailModel = {
     _id: { type: String, required: true },
     name: { type: String, required: true }
   },
-  baseValue: { type: String, required: true },
-  variableValue: { type: String, required: true },
-  finalValue: { type: String, required: true }
+  baseValue: { type: Number, required: true },
+  variableValue: { type: Number, required: true },
+  finalValue: { type: Number, required: true }
 }
 
 const PayrollModel = {
@@ -18,8 +19,14 @@ const PayrollModel = {
   initDate: { type: String, required: true },
   endDate: { type: String, required: true },
   targetDate: { type: String, required: true },
+  regularPayroll: { type: Boolean, default: true },
   status: { type: String, enum: Object.keys(StatusOfPayroll), required: true, default: 'OPENED' },
   payrollDetails: [PayrollDetailModel]
+}
+
+const PayrollPreProcessRequest = {
+  ...PayrollModel,
+  employees: [EmployeeModel as any]
 }
 
 const Payroll = new mongoose.Schema(PayrollModel)
@@ -66,5 +73,5 @@ class PayrollSearch extends Search {
 
 const PayrollRepository = mongoose.model('payroll', Payroll)
 
-export { Payroll, PayrollModel, PayrollRepository, PayrollSearch }
+export { Payroll, PayrollModel, PayrollDetailModel, PayrollPreProcessRequest, PayrollRepository, PayrollSearch }
 

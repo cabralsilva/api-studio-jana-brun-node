@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const GetJWTFlowItem_1 = require("../../authorization/item/GetJWTFlowItem");
 const jwt = require("jsonwebtoken");
 const Configs_1 = require("../../../config/Configs");
-const GetByIdFlowItem_1 = require("./GetByIdFlowItem");
+const GetEmployeeByIdFlowItem_1 = require("./GetEmployeeByIdFlowItem");
 const http_status_1 = require("http-status");
 const HttpError_1 = require("../../../model/HttpError");
 const StringUtils_1 = require("../../../utils/StringUtils");
@@ -28,7 +28,7 @@ class GetByJWTFlowItem {
                 }
                 holder = decode.holder;
             });
-            let employee = yield GetByIdFlowItem_1.default.get(holder);
+            let employee = yield GetEmployeeByIdFlowItem_1.default.get(holder);
             if (Utils_1.default.isEmpty(employee)) {
                 throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
             }

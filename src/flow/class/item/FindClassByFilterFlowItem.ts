@@ -1,6 +1,6 @@
 import { ClassRepository, ClassSearch } from "../../../model/schema/Class"
 
-class FindByFilterFlowItem {
+class FindClassByFilterFlowItem {
   async find(search: ClassSearch) {
     
     if (search.isPageable()) {
@@ -11,4 +11,4 @@ class FindByFilterFlowItem {
   }
 }
 
-export default new FindByFilterFlowItem
+export default new FindClassByFilterFlowItem

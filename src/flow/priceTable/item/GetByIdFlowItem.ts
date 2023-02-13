@@ -17,8 +17,10 @@ class GetByIdFlowItem {
       for (var priceTableItem of priceTable.items) {
         var gratesItems = []
         for (var grateItemId of priceTableItem.gratesItems) {
-          var grateItemAux = await GrateRepository.find({"items._id": grateItemId}, {'items.$': 1})
-          gratesItems.push(grateItemAux[0].items[0])
+          var grateItemAux = await GrateRepository.find({ "items._id": grateItemId }, { 'items.$': 1 })
+          if (Utils.isNotEmpty(grateItemAux)) {
+            gratesItems.push(grateItemAux[0].items[0])
+          }
         }
         priceTableItem._doc.gratesItems = gratesItems
       }

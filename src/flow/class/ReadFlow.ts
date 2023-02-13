@@ -5,7 +5,7 @@ import { ClassSearch } from '../../model/schema/Class'
 import StringUtils from "../../utils/StringUtils"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
-import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
+import FindBySearchFlowItem from "./item/FindClassByFilterFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
 
 class ReadFlow extends FlowHttp {

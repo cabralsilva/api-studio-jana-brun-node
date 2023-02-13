@@ -1,6 +1,7 @@
 import { OK } from 'http-status'
 import CreateFlow from '../flow/payroll/CreateFlow'
 import DeleteFlow from '../flow/payroll/DeleteFlow'
+import PreProcessPayrollFlow from '../flow/payroll/PreProcessPayrollFlow'
 import ReadFlow from '../flow/payroll/ReadFlow'
 import UpdateFlow from '../flow/payroll/UpdateFlow'
 import ResponseHttp from '../model/ResponseHttp'
@@ -32,6 +33,12 @@ class PayrollController {
 
   delete(req, res) {
     DeleteFlow.delete(req, res)
+      .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
+      .catch(error => ResponseHttp.sendResponseError(res, error))
+  }
+
+  preProcess(req, res) {
+    PreProcessPayrollFlow.preProcess(req, res)
       .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
       .catch(error => ResponseHttp.sendResponseError(res, error))
   }

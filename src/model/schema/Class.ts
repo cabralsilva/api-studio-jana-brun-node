@@ -1,4 +1,6 @@
+import moment = require('moment')
 import * as mongoose from 'mongoose'
+import Utils from '../../utils/Utils'
 import Often from '../enum/Often'
 import Search from '../Search'
 import { RolePayment } from './RolePayment'
@@ -26,37 +28,55 @@ const Class = new mongoose.Schema(ClassModel, {
 })
 
 class ClassSearch extends Search {
-  description: { type: String }
-  type: { type: String }
-  active: { type: Boolean }
+  model: { type: typeof ClassModel }
+  beginDateRange: [moment.Moment, moment.Moment]
+  endDateRange: [moment.Moment, moment.Moment]
+  employee: [mongoose.Types.ObjectId]
 
   constructor(_query) {
     super(_query)
-    this.description = _query.description
-    this.active = _query.active
+    this.model = _query
+    if (Utils.isNotEmpty(_query?.endDateRange)) {
+      if (!Array.isArray(_query.endDateRange)) {
+        _query.endDateRange = _query.endDateRange.toString().split(',')
+      }
+      this.endDateRange = _query.endDateRange.map(data => moment(data))
+    }
+
+    if (Utils.isNotEmpty(_query?.employee)) {
+      if (!Array.isArray(_query.employee)) {
+        _query.employee = _query.employee.toString().split(',')
+      }
+      this.employee = _query.employee.map(data => new mongoose.Types.ObjectId(data))
+    }
     this.buildFilters()
   }
 
   buildFilters() {
-    let filters = { $and: [] } as any
-    Object.entries(this).forEach(([key, value]) => {
-      if (value) {
-        let condition = {}
-        if (key === 'searchText' as any) {
-          this.searchText = this.diacriticSensitiveRegex(this.searchText)
-          condition = {
-            $or: [
-              { 'description': { $regex: this.searchText as any, $options: 'i' } }
-            ]
-          }
-        } else {
-          condition[key] = value
-        }
-        filters.$and.push(condition)
+    let filters = super.getFilters(this)
+    if (Utils.isEmpty(filters.$and)) {
+      filters = { $and: [] } as any
+    }
+
+    if (Utils.isNotEmpty(this.searchText)) {
+      this.searchText = this.diacriticSensitiveRegex(this.searchText)
+      let condition = {
+        $or: [
+          { 'description': { $regex: this.searchText as any, $options: 'i' } }
+        ]
       }
-    })
+      filters.$and.push(condition)
+    }
+
+    if (Utils.isNotEmpty(this.employee)) {
+      let condition = { schedulesDetails: { '$elemMatch': { employee: { $in: this.employee || [] } } } }
+      filters.$and.push(condition)
+    }
+
+
     if (filters.$and.length === 0)
       delete filters['$and']
+    console.log('filter', JSON.stringify(filters))
     this.filters = filters
   }
 }

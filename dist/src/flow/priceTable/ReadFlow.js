@@ -42,6 +42,7 @@ class ReadFlow extends FlowHttp_1.default {
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {
+                console.log(error);
                 this.processError(error);
             }
         });
