@@ -1,28 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PayrollSearch = exports.PayrollRepository = exports.PayrollModel = exports.Payroll = void 0;
+exports.PayrollSearch = exports.PayrollRepository = exports.PayrollPreProcessRequest = exports.PayrollDetailModel = exports.PayrollModel = exports.Payroll = void 0;
 const mongoose = require("mongoose");
 const StatusOfPayroll_1 = require("../enum/StatusOfPayroll");
 const Search_1 = require("../Search");
+const Employee_1 = require("./Employee");
 const PayrollDetailModel = {
     description: { type: String, required: true },
     employee: {
         _id: { type: String, required: true },
         name: { type: String, required: true }
     },
-    baseValue: { type: String, required: true },
-    variableValue: { type: String, required: true },
-    finalValue: { type: String, required: true }
+    baseValue: { type: Number, required: true },
+    variableValue: { type: Number, required: true },
+    finalValue: { type: Number, required: true }
 };
+exports.PayrollDetailModel = PayrollDetailModel;
 const PayrollModel = {
     description: { type: String, required: true },
     initDate: { type: String, required: true },
     endDate: { type: String, required: true },
     targetDate: { type: String, required: true },
+    regularPayroll: { type: Boolean, default: true },
     status: { type: String, enum: Object.keys(StatusOfPayroll_1.default), required: true, default: 'OPENED' },
     payrollDetails: [PayrollDetailModel]
 };
 exports.PayrollModel = PayrollModel;
+const PayrollPreProcessRequest = Object.assign(Object.assign({}, PayrollModel), { employees: [Employee_1.EmployeeModel] });
+exports.PayrollPreProcessRequest = PayrollPreProcessRequest;
 const Payroll = new mongoose.Schema(PayrollModel);
 exports.Payroll = Payroll;
 class PayrollSearch extends Search_1.default {

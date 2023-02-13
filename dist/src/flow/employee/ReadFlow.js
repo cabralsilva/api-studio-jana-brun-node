@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = require("http-status");
-const mongoose_1 = require("mongoose");
 const FlowHttp_1 = require("../../model/FlowHttp");
 const HttpError_1 = require("../../model/HttpError");
 const Employee_1 = require("../../model/schema/Employee");
@@ -18,7 +17,7 @@ const StringUtils_1 = require("../../utils/StringUtils");
 const Utils_1 = require("../../utils/Utils");
 const EnrichFindFlowItem_1 = require("./item/EnrichFindFlowItem");
 const FindBySearchFlowItem_1 = require("./item/FindBySearchFlowItem");
-const GetByIdFlowItem_1 = require("./item/GetByIdFlowItem");
+const GetEmployeeByIdFlowItem_1 = require("./item/GetEmployeeByIdFlowItem");
 const PrepareEmployeeSearchTextFlowItem_1 = require("./item/PrepareEmployeeSearchTextFlowItem");
 class ReadFlow extends FlowHttp_1.default {
     read(req, res) {
@@ -26,7 +25,7 @@ class ReadFlow extends FlowHttp_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 if (Utils_1.default.isNotEmpty((_a = req.params) === null || _a === void 0 ? void 0 : _a.id)) {
-                    const employee = yield GetByIdFlowItem_1.default.get(req.params.id, {
+                    const employee = yield GetEmployeeByIdFlowItem_1.default.get(req.params.id, {
                         path: 'person',
                         populate: {
                             path: 'address',
@@ -43,7 +42,6 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return employee;
                 }
-                mongoose_1.default.set('debug', true);
                 yield PrepareEmployeeSearchTextFlowItem_1.default.prepare(req);
                 console.log(req.query);
                 var resultSearch = yield FindBySearchFlowItem_1.default.find(new Employee_1.EmployeeSearch(req.query));

@@ -1,7 +1,7 @@
 import GetJWTFlowItem from "../../authorization/item/GetJWTFlowItem"
 import * as jwt from 'jsonwebtoken'
 import { jwtSecret } from "../../../config/Configs"
-import GetByIdFlowItem from "./GetByIdFlowItem"
+import GetEmployeeByIdFlowItem from "./GetEmployeeByIdFlowItem"
 import { FORBIDDEN, UNAUTHORIZED } from "http-status"
 import HttpError from "../../../model/HttpError"
 import StringUtils from "../../../utils/StringUtils"
@@ -17,7 +17,7 @@ class GetByJWTFlowItem {
       }
       holder = decode.holder
     })
-    let employee = await GetByIdFlowItem.get(holder)
+    let employee = await GetEmployeeByIdFlowItem.get(holder)
     if (Utils.isEmpty(employee)) {
       throw new HttpError(UNAUTHORIZED, StringUtils.message("message.http.invalidCredentials"))
     }

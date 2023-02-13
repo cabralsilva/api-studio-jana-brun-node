@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmployeeSearch = exports.EmployeeRepository = exports.Employee = void 0;
+exports.EmployeeSearch = exports.EmployeeRepository = exports.EmployeeModel = exports.Employee = void 0;
 const mongoose = require("mongoose");
 const Utils_1 = require("../../utils/Utils");
 const AccessProfile_1 = require("../enum/AccessProfile");
 const Job_1 = require("../enum/Job");
 const TypeOfSalary_1 = require("../enum/TypeOfSalary");
 const Search_1 = require("../Search");
-const Employee = new mongoose.Schema({
+const EmployeeModel = {
     person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
     medicinContinuous: { type: Boolean, required: true, default: false },
     medicinNotes: { type: String },
@@ -27,7 +27,9 @@ const Employee = new mongoose.Schema({
     accessProfile: { type: String, enum: Object.keys(AccessProfile_1.default), required: true, default: 'BASIC' },
     password: { type: String },
     salt: { type: String }
-});
+};
+exports.EmployeeModel = EmployeeModel;
+const Employee = new mongoose.Schema(EmployeeModel);
 exports.Employee = Employee;
 Employee.index({ email: 1 }, { unique: true });
 class EmployeeSearch extends Search_1.default {
