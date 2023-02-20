@@ -1,8 +1,8 @@
 import { ClassRepository, ClassSearch } from "../../../model/schema/Class"
 
 class FindClassByFilterFlowItem {
-  async find(search: ClassSearch) {
-    
+  async find(search: ClassSearch): Promise<any> {
+
     if (search.isPageable()) {
       return await search.findPageable(ClassRepository)
     }

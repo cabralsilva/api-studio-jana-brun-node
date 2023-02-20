@@ -1,6 +1,6 @@
 import { MatriculationRepository, MatriculationSearch } from "../../../model/schema/Matriculation"
 
-class FindByFilterFlowItem {
+class FindMatriculationBySearchFlowItem {
   async find(search: MatriculationSearch) {
     
     if (search.isPageable()) {
@@ -11,4 +11,4 @@ class FindByFilterFlowItem {
   }
 }
 
-export default new FindByFilterFlowItem
+export default new FindMatriculationBySearchFlowItem

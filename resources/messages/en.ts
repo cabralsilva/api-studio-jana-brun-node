@@ -5,6 +5,7 @@ export default {
     category: "Categoria",
     paymentCondition: "Condição de pagamento",
     priceTable: "Tabela de preço",
+    methodNotImplemented: "Funcionalidade não implementada. {0}",
     http: {
       invalidRequest: "Requisição inválida",
       invalidCredentials: "Usuário e/ou senha inválidos",

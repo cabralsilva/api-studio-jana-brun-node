@@ -1,7 +1,7 @@
 import { MatriculationSearch, MatriculationRepository } from "../../../model/schema/Matriculation";
 import StringUtils from "../../../utils/StringUtils";
 import Utils from "../../../utils/Utils";
-import FindBySearchFlowItem from "./FindBySearchFlowItem";
+import FindBySearchFlowItem from "./FindMatriculationBySearchFlowItem";
 
 class GetSequenceFlowItem {
   async get(offset: number = 0) {
