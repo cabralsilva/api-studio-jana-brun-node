@@ -69,14 +69,13 @@ class ClassSearch extends Search {
     }
 
     if (Utils.isNotEmpty(this.employee)) {
-      let condition = { schedulesDetails: { '$elemMatch': { employee: { $in: this.employee || [] } } } }
+      let condition = { 'rolePayments.employee': { $in: this.employee || [] } }
       filters.$and.push(condition)
     }
 
 
     if (filters.$and.length === 0)
       delete filters['$and']
-    console.log('filter', JSON.stringify(filters))
     this.filters = filters
   }
 }

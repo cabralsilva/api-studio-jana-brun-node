@@ -29,38 +29,31 @@ Matriculation.index({ "student": 1 }, { unique: false });
 class MatriculationSearch extends Search_1.default {
     constructor(_query) {
         super(_query);
-        this.name = _query.name;
-        this.active = _query.active;
-        if (Utils_1.default.isNotEmpty(_query.student)) {
-            var personArray = _query.student.trim().split(' ');
-            this.student = personArray.map(p => new mongoose.Types.ObjectId(p));
+        this.model = _query;
+        // this.name = _query.name
+        // this.active = _query.active
+        // if (Utils.isNotEmpty(_query.student)) {
+        //   var personArray = _query.student.trim().split(' ')
+        //   this.student = personArray.map(p => new mongoose.Types.ObjectId(p))
+        // }
+        if (Utils_1.default.isNotEmpty(_query === null || _query === void 0 ? void 0 : _query.classes)) {
+            if (!Array.isArray(_query.classes)) {
+                _query.classes = _query.classes.toString().split(',');
+            }
+            this.classes = _query.classes.map(data => new mongoose.Types.ObjectId(data));
         }
         this.buildFilters();
     }
     buildFilters() {
-        let filters = { $and: [] };
-        Object.entries(this).forEach(([key, value]) => {
-            if (value) {
-                let condition = {};
-                if (key === 'searchText') {
-                    this.searchText = this.diacriticSensitiveRegex(this.searchText);
-                    condition = {
-                        $or: [
-                            { 'sequence': { $regex: this.searchText, $options: 'i' } }
-                        ]
-                    };
-                }
-                else {
-                    if (!Array.isArray(value)) {
-                        condition[key] = value;
-                    }
-                    else {
-                        condition[key] = { $in: value };
-                    }
-                }
-                filters.$and.push(condition);
-            }
-        });
+        let filters = super.getFilters(this);
+        if (Utils_1.default.isEmpty(filters.$and)) {
+            filters = { $and: [] };
+        }
+        super.addFilterModel(this.model, filters);
+        if (Utils_1.default.isNotEmpty(this.classes)) {
+            let condition = { 'clazzesSkus.clazz': { $in: this.classes || [] } };
+            filters.$and.push(condition);
+        }
         if (filters.$and.length === 0)
             delete filters['$and'];
         this.filters = filters;

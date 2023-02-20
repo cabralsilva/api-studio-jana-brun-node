@@ -92,7 +92,6 @@ abstract class Search {
 
   async findNoPageable(model: mongoose.Model<any>) {
     const sort = this.sorter()
-    console.log('search ', this.filters)
     var items = await model
       .find(this.filters, this.properties)
       .populate(this.populate)
@@ -172,6 +171,16 @@ abstract class Search {
       delete filters['$and']
 
     return filters
+  }
+
+  addFilterModel(model: any, filters: any) {
+    Object.entries(model).forEach(([key, value]) => {
+      if (Utils.isNotEmpty(value)) {
+        let condition = {}
+        condition[key] = value
+        filters.$and.push(condition)
+      }
+    })
   }
 }
 

@@ -86,7 +86,6 @@ class Search {
     findNoPageable(model) {
         return __awaiter(this, void 0, void 0, function* () {
             const sort = this.sorter();
-            console.log('search ', this.filters);
             var items = yield model
                 .find(this.filters, this.properties)
                 .populate(this.populate)
@@ -159,6 +158,15 @@ class Search {
         if (filters.$and.length === 0)
             delete filters['$and'];
         return filters;
+    }
+    addFilterModel(model, filters) {
+        Object.entries(model).forEach(([key, value]) => {
+            if (Utils_1.default.isNotEmpty(value)) {
+                let condition = {};
+                condition[key] = value;
+                filters.$and.push(condition);
+            }
+        });
     }
 }
 exports.default = Search;

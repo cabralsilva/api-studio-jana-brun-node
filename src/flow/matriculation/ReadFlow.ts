@@ -4,12 +4,11 @@ import HttpError from '../../model/HttpError'
 import { MatriculationSearch } from '../../model/schema/Matriculation'
 import StringUtils from "../../utils/StringUtils"
 import Utils from '../../utils/Utils'
-import PrepareSearchPersonFlowItem from './item/PrepareSearchPersonFlowItem'
 import AdjustGrateItemFlowItem from './item/AdjustGrateItemFlowItem'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
-import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
+import FindBySearchFlowItem from "./item/FindMatriculationBySearchFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
-import mongoose from 'mongoose'
+import PrepareSearchPersonFlowItem from './item/PrepareSearchPersonFlowItem'
 
 class ReadFlow extends FlowHttp {
 

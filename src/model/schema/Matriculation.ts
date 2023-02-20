@@ -29,45 +29,45 @@ const Matriculation = new mongoose.Schema(
 Matriculation.index({ "student": 1 }, { unique: false })
 
 class MatriculationSearch extends Search {
-  name: { type: String }
-  active: { type: Boolean }
-  student: mongoose.Types.ObjectId[]
+  model: { type: typeof MatriculationModel }
+  // name: { type: String }
+  // active: { type: Boolean }
+  // student: mongoose.Types.ObjectId[]
+  classes: [mongoose.Types.ObjectId]
 
   constructor(_query) {
     super(_query)
-    this.name = _query.name
-    this.active = _query.active
-    if (Utils.isNotEmpty(_query.student)) {
-      var personArray = _query.student.trim().split(' ')
-      this.student = personArray.map(p => new mongoose.Types.ObjectId(p))
+    this.model = _query
+    // this.name = _query.name
+    // this.active = _query.active
+    // if (Utils.isNotEmpty(_query.student)) {
+    //   var personArray = _query.student.trim().split(' ')
+    //   this.student = personArray.map(p => new mongoose.Types.ObjectId(p))
+    // }
+    if (Utils.isNotEmpty(_query?.classes)) {
+      if (!Array.isArray(_query.classes)) {
+        _query.classes = _query.classes.toString().split(',')
+      }
+      this.classes = _query.classes.map(data => new mongoose.Types.ObjectId(data))
     }
     this.buildFilters()
   }
 
   buildFilters() {
-    let filters = { $and: [] } as any
-    Object.entries(this).forEach(([key, value]) => {
-      if (value) {
-        let condition = {}
-        if (key === 'searchText' as any) {
-          this.searchText = this.diacriticSensitiveRegex(this.searchText)
-          condition = {
-            $or: [
-              { 'sequence': { $regex: this.searchText as any, $options: 'i' } }
-            ]
-          }
-        } else {
-          if (!Array.isArray(value)) {
-            condition[key] = value
-          } else {
-            condition[key] = { $in: value }
-          }
-        }
-        filters.$and.push(condition)
-      }
-    })
+    let filters = super.getFilters(this)
+    if (Utils.isEmpty(filters.$and)) {
+      filters = { $and: [] } as any
+    }
+    super.addFilterModel(this.model, filters)
+
+    if (Utils.isNotEmpty(this.classes)) {
+      let condition = { 'clazzesSkus.clazz': { $in: this.classes || [] } }
+      filters.$and.push(condition)
+    }
+
     if (filters.$and.length === 0)
       delete filters['$and']
+      
     this.filters = filters
   }
 }
