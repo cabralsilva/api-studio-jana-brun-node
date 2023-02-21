@@ -1,33 +1,69 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PayrollSearch = exports.PayrollRepository = exports.PayrollPreProcessRequest = exports.PayrollDetailModel = exports.PayrollModel = exports.Payroll = void 0;
+exports.PayrollSearch = exports.PayrollRepository = exports.PayrollEmployeeDetail = exports.PayrollMonthly = exports.PayrollModel = exports.Payroll = void 0;
 const mongoose = require("mongoose");
-const StatusOfPayroll_1 = require("../enum/StatusOfPayroll");
+const TypeOfPayroll_1 = require("../enum/TypeOfPayroll");
+const TypeOfSalary_1 = require("../enum/TypeOfSalary");
 const Search_1 = require("../Search");
-const Employee_1 = require("./Employee");
-const PayrollDetailModel = {
+const PayrollMonthlyDetail = {
+    label: { type: String },
+    quantityOfDays: { type: Number },
+    total: { type: Number }
+};
+const PayrollMonthly = {
+    details: [PayrollMonthlyDetail],
+    total: { type: Number }
+};
+exports.PayrollMonthly = PayrollMonthly;
+const PayrollEmployeeDetail = {
     description: { type: String, required: true },
     employee: {
-        _id: { type: String, required: true },
+        _id: { type: mongoose.Types.ObjectId },
         name: { type: String, required: true }
     },
-    baseValue: { type: Number, required: true },
-    variableValue: { type: Number, required: true },
-    finalValue: { type: Number, required: true }
+    payments: [
+        {
+            type: { type: String, enum: Object.keys(TypeOfPayroll_1.default), required: true },
+            total: { type: Number },
+            monthly: PayrollMonthly,
+            classes: [{
+                    clazz: {
+                        _id: { type: mongoose.Types.ObjectId },
+                        name: { type: String }
+                    },
+                    type: { type: String, enum: Object.keys(TypeOfSalary_1.default), required: true },
+                    percentDetails: {
+                        quantityOfMatriculation: { type: Number },
+                        percent: { type: Number },
+                        baseValue: { type: Number },
+                        total: { type: Number }
+                    },
+                    hoursDetails: [{
+                            day: { type: Date },
+                            hoursFactor: { type: Number },
+                            hourValue: { type: Number },
+                            hoursLabel: { type: String },
+                            total: { type: Number }
+                        }],
+                    total: { type: Number }
+                }]
+        }
+    ],
+    variableValueTotal: { type: Number, default: 0 },
+    regularValueTotal: { type: Number, default: 0 },
+    total: { type: Number, required: true, default: 0 },
 };
-exports.PayrollDetailModel = PayrollDetailModel;
+exports.PayrollEmployeeDetail = PayrollEmployeeDetail;
 const PayrollModel = {
     description: { type: String, required: true },
     initDate: { type: String, required: true },
     endDate: { type: String, required: true },
     targetDate: { type: String, required: true },
     regularPayroll: { type: Boolean, default: true },
-    status: { type: String, enum: Object.keys(StatusOfPayroll_1.default), required: true, default: 'OPENED' },
-    payrollDetails: [PayrollDetailModel]
+    variablePayroll: { type: Boolean, default: true },
+    payrollEmployeeDetails: [PayrollEmployeeDetail]
 };
 exports.PayrollModel = PayrollModel;
-const PayrollPreProcessRequest = Object.assign(Object.assign({}, PayrollModel), { employees: [Employee_1.EmployeeModel] });
-exports.PayrollPreProcessRequest = PayrollPreProcessRequest;
 const Payroll = new mongoose.Schema(PayrollModel);
 exports.Payroll = Payroll;
 class PayrollSearch extends Search_1.default {

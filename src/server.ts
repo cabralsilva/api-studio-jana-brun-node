@@ -173,9 +173,8 @@ class StartUp {
     this.app.route('/api/v2/payroll').get(PayrollController.get)
     this.app.route('/api/v2/payroll/:id').get(PayrollController.getById)
     this.app.route('/api/v2/payroll').post(PayrollController.create)
-    this.app.route('/api/v2/payroll/:id').patch(PayrollController.update)
     this.app.route('/api/v2/payroll/:id').delete(PayrollController.delete)
-    this.app.route('/api/v2/payroll/process').post(PayrollController.preProcess)
+    this.app.route('/api/v2/payroll/pre-process').post(PayrollController.preProcess)
 
     this.app.route('/api/v2/sale/price').post(SaleController.searchPrice)
   }

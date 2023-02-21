@@ -149,9 +149,8 @@ class StartUp {
         this.app.route('/api/v2/payroll').get(PayrollController_1.default.get);
         this.app.route('/api/v2/payroll/:id').get(PayrollController_1.default.getById);
         this.app.route('/api/v2/payroll').post(PayrollController_1.default.create);
-        this.app.route('/api/v2/payroll/:id').patch(PayrollController_1.default.update);
         this.app.route('/api/v2/payroll/:id').delete(PayrollController_1.default.delete);
-        this.app.route('/api/v2/payroll/process').post(PayrollController_1.default.preProcess);
+        this.app.route('/api/v2/payroll/pre-process').post(PayrollController_1.default.preProcess);
         this.app.route('/api/v2/sale/price').post(SaleController_1.default.searchPrice);
     }
 }

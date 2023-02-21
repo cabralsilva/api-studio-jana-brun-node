@@ -9,26 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-const FlowHttp_1 = require("../../model/FlowHttp");
-const CreatePayrollFlowItem_1 = require("./item/CreatePayrollFlowItem");
-class CreatePayrollFlow extends FlowHttp_1.default {
-    create(req, res) {
+const Payroll_1 = require("../../../model/schema/Payroll");
+class CreatePayrollFlowItem {
+    create(payroll, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            const session = yield mongoose_1.default.startSession();
-            try {
-                session.startTransaction();
-                yield CreatePayrollFlowItem_1.default.create(req.body, session);
-                yield session.commitTransaction();
-            }
-            catch (error) {
-                yield session.abortTransaction();
-                this.processError(error);
-            }
-            finally {
-                yield session.endSession();
-            }
+            return yield Payroll_1.PayrollRepository.create([payroll], { session });
         });
     }
 }
-exports.default = new CreatePayrollFlow;
+exports.default = new CreatePayrollFlowItem;
