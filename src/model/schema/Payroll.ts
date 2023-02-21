@@ -1,17 +1,112 @@
 import * as mongoose from 'mongoose'
 import StatusOfPayroll from '../enum/StatusOfPayroll'
+import TypeOfPayroll from '../enum/TypeOfPayroll'
+import TypeOfSalary from '../enum/TypeOfSalary'
 import Search from '../Search'
-import { EmployeeModel } from './Employee'
 
-const PayrollDetailModel = {
+interface PaymentMonthDetail {
+  label: String,
+  quantityOfDays: Number,
+  total: Number
+}
+
+interface PaymentMonthly {
+  details: PaymentMonthDetail[],
+  total: Number
+}
+
+interface PaymentByPercentDetail {
+  quantityOfMatriculation: Number,
+  percent: Number,
+  baseValue: Number,
+  total: Number
+}
+
+interface PaymentByHourDetail {
+  day: String,
+  hoursFactor: Number,
+  hourValue: Number,
+  hoursLabel: String,
+  total: Number
+}
+
+interface PaymentClass {
+  clazz: {
+    _id: mongoose.Types.ObjectId,
+    name: String
+  },
+  type?: String,
+  percentDetails?: PaymentByPercentDetail,
+  hoursDetails?: PaymentByHourDetail[],
+  total?: Number
+}
+interface EmployeePayment {
+  type?: String,
+  total?: Number,
+  regularValueTotal?: Number,
+  variableValueTotal?: Number,
+  monthly?: PaymentMonthly,
+  classes?: PaymentClass[]
+}
+interface PayrollEmployeeDetail {
+  description: String,
+  employee: {
+    _id: mongoose.Types.ObjectId,
+    name: String
+  },
+  payments?: EmployeePayment[],
+  regularValueTotal?: Number,
+  variableValueTotal?: Number,
+  total?: Number
+}
+
+const PayrollMonthlyDetail = {
+  label: { type: String },
+  quantityOfDays: { type: Number },
+  total: { type: Number }
+}
+const PayrollMonthly = {
+  details: [PayrollMonthlyDetail],
+  total: { type: Number }
+}
+
+const PayrollEmployeeDetail = {
   description: { type: String, required: true },
   employee: {
-    _id: { type: String, required: true },
+    _id: { type: mongoose.Types.ObjectId },
     name: { type: String, required: true }
   },
-  baseValue: { type: Number, required: true },
-  variableValue: { type: Number, required: true },
-  finalValue: { type: Number, required: true }
+  payments: [
+    {
+      type: { type: String, enum: Object.keys(TypeOfPayroll), required: true },
+      total: { type: Number },
+      monthly: PayrollMonthly,
+      classes: [{
+        clazz: {
+          _id: { type: mongoose.Types.ObjectId },
+          name: { type: String }
+        },
+        type: { type: String, enum: Object.keys(TypeOfSalary), required: true },
+        percentDetails: {
+          quantityOfMatriculation: { type: Number },
+          percent: { type: Number },
+          baseValue: { type: Number },
+          total: { type: Number }
+        },
+        hoursDetails: [{
+          day: { type: Date },
+          hoursFactor: { type: Number },
+          hourValue: { type: Number },
+          hoursLabel: { type: String },
+          total: { type: Number }
+        }],
+        total: { type: Number }
+      }]
+    }
+  ],
+  variableValueTotal: { type: Number, default: 0 },
+  regularValueTotal: { type: Number, default: 0 },
+  total: { type: Number, required: true, default: 0 },
 }
 
 const PayrollModel = {
@@ -20,13 +115,8 @@ const PayrollModel = {
   endDate: { type: String, required: true },
   targetDate: { type: String, required: true },
   regularPayroll: { type: Boolean, default: true },
-  status: { type: String, enum: Object.keys(StatusOfPayroll), required: true, default: 'OPENED' },
-  payrollDetails: [PayrollDetailModel]
-}
-
-const PayrollPreProcessRequest = {
-  ...PayrollModel,
-  employees: [EmployeeModel as any]
+  variablePayroll: { type: Boolean, default: true },
+  payrollEmployeeDetails: [PayrollEmployeeDetail]
 }
 
 const Payroll = new mongoose.Schema(PayrollModel)
@@ -73,5 +163,8 @@ class PayrollSearch extends Search {
 
 const PayrollRepository = mongoose.model('payroll', Payroll)
 
-export { Payroll, PayrollModel, PayrollDetailModel, PayrollPreProcessRequest, PayrollRepository, PayrollSearch }
+export {
+  Payroll, PayrollModel, PayrollMonthly, PayrollEmployeeDetail, EmployeePayment, PaymentMonthly, PaymentClass, PaymentMonthDetail, PaymentByHourDetail, PaymentByPercentDetail,
+  PayrollRepository, PayrollSearch
+}
 

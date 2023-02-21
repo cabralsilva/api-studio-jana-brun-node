@@ -1,14 +1,13 @@
 import { OK } from 'http-status'
-import CreateFlow from '../flow/payroll/CreateFlow'
+import CreatePayrollFlow from '../flow/payroll/CreatePayrollFlow'
 import DeleteFlow from '../flow/payroll/DeleteFlow'
 import PreProcessPayrollFlow from '../flow/payroll/PreProcessPayrollFlow'
 import ReadFlow from '../flow/payroll/ReadFlow'
-import UpdateFlow from '../flow/payroll/UpdateFlow'
 import ResponseHttp from '../model/ResponseHttp'
 
 class PayrollController {
   create(req, res) {
-    CreateFlow.create(req, res)
+    CreatePayrollFlow.create(req, res)
       .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
       .catch(error => ResponseHttp.sendResponseError(res, error))
   }
@@ -21,12 +20,6 @@ class PayrollController {
 
   getById(req, res) {
     ReadFlow.read(req, res)
-      .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
-      .catch(error => ResponseHttp.sendResponseError(res, error))
-  }
-
-  update(req, res) {
-    UpdateFlow.update(req, res)
       .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
       .catch(error => ResponseHttp.sendResponseError(res, error))
   }

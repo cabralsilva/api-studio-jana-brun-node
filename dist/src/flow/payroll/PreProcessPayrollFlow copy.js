@@ -55,7 +55,6 @@ class PreProcessPayrollFlow extends FlowHttp_1.default {
                         monthly: CalculateRegularSalaryFlowItem_1.default.calculate(moment(requestPayroll.initDate), moment(requestPayroll.endDate), employee.salaryValue)
                     };
                     employeePaymentRegular.total = employeePaymentRegular.monthly.total;
-                    payrollEmployeeDetail.regularValueTotal = employeePaymentRegular.total;
                     payrollEmployeeDetail.payments.push(employeePaymentRegular);
                 }
                 if (requestPayroll === null || requestPayroll === void 0 ? void 0 : requestPayroll.variablePayroll) {
@@ -65,7 +64,6 @@ class PreProcessPayrollFlow extends FlowHttp_1.default {
                         classes: yield CalculateVariableSalaryFlowItem_1.default.calculate(moment(requestPayroll.initDate), moment(requestPayroll.endDate), employee)
                     };
                     employeePaymentVariable.total = employeePaymentVariable.classes.reduce((acc, paymentClass) => { return acc + Number(paymentClass.total); }, 0);
-                    payrollEmployeeDetail.variableValueTotal = employeePaymentVariable.total;
                     payrollEmployeeDetail.payments.push(employeePaymentVariable);
                 }
                 payrollEmployeeDetail.total = payrollEmployeeDetail.payments.reduce((acc, payrollEmployee) => acc += Number(payrollEmployee.total), 0);
