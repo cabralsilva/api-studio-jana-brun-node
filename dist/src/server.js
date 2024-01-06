@@ -139,6 +139,7 @@ class StartUp {
         this.app.route('/api/v2/financial/:id').patch(FinancialController_1.default.update);
         this.app.route('/api/v2/financial/:id').delete(FinancialController_1.default.delete);
         this.app.route('/api/v2/financial/payment/:id').patch(FinancialController_1.default.payment);
+        this.app.route('/api/v2/financial/print-receipt/:id').get(FinancialController_1.default.printReceipt);
         this.app.route('/api/v2/matriculation').get(MatriculationController_1.default.get);
         this.app.route('/api/v2/matriculation/:id').get(MatriculationController_1.default.getById);
         this.app.route('/api/v2/matriculation').post(MatriculationController_1.default.create);

@@ -4,6 +4,7 @@ const http_status_1 = require("http-status");
 const AddPaymentFlow_1 = require("../flow/financial/financial/AddPaymentFlow");
 const CreateFlow_1 = require("../flow/financial/financial/CreateFlow");
 const DeleteFlow_1 = require("../flow/financial/financial/DeleteFlow");
+const PrintReceiptFlow_1 = require("../flow/financial/financial/PrintReceiptFlow");
 const ReadFlow_1 = require("../flow/financial/financial/ReadFlow");
 const UpdateFlow_1 = require("../flow/financial/financial/UpdateFlow");
 const ResponseHttp_1 = require("../model/ResponseHttp");
@@ -36,6 +37,11 @@ class FinancialController {
     payment(req, res) {
         AddPaymentFlow_1.default.add(req, res)
             .then(payment => ResponseHttp_1.default.sendResponse(res, http_status_1.OK, `Pagamento registrado com sucesso`))
+            .catch(error => ResponseHttp_1.default.sendResponseError(res, error));
+    }
+    printReceipt(req, res) {
+        PrintReceiptFlow_1.default.print(req, res)
+            .then(print => ResponseHttp_1.default.sendResponse(res, http_status_1.OK, print))
             .catch(error => ResponseHttp_1.default.sendResponseError(res, error));
     }
 }

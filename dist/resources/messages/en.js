@@ -16,7 +16,8 @@ exports.default = {
             updatePasswordInvalid: "Não foi possível alterar a senha atual. Verifique as credenciais informadas!"
         },
         financial: {
-            openValueLessThan: "Valor em aberto é menor que o valor informado ou já esta quitado!"
+            openValueLessThan: "Valor em aberto é menor que o valor informado ou já esta quitado!",
+            printReceiptPaymentsStatusIllegal: "Só é possível imprimir título pagos ou parcialmente pagos."
         },
         response: {
             resourceNotFound: "{0} não encontrado.",
