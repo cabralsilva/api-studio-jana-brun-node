@@ -50,6 +50,7 @@ class ReadFlow extends FlowHttp {
       })
       return ret
     } catch (error) {
+      console.log(error)
       this.processError(error)
     }
   }

@@ -15,11 +15,13 @@ const HttpError_1 = require("../../../model/HttpError");
 const Financial_1 = require("../../../model/schema/Financial");
 const StringUtils_1 = require("../../../utils/StringUtils");
 const Utils_1 = require("../../../utils/Utils");
-const EnrichFindFlowItem_1 = require("./item/EnrichFindFlowItem");
-const FindBySearchFlowItem_1 = require("./item/FindBySearchFlowItem");
 const GetByIdFlowItem_1 = require("./item/GetByIdFlowItem");
-const PrepareSearchPersonFlowItem_1 = require("./item/PrepareSearchPersonFlowItem");
+const c2_mongoose_1 = require("c2-mongoose");
 class ReadFlow extends FlowHttp_1.default {
+    constructor() {
+        super(...arguments);
+        this.searcherFinancial = new c2_mongoose_1.CrudFlow(Financial_1.FinancialRepository);
+    }
     read(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,11 +33,31 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return financial;
                 }
-                yield PrepareSearchPersonFlowItem_1.default.prepare(req);
-                var resultSearch = yield FindBySearchFlowItem_1.default.find(new Financial_1.FinancialSearch(req.query));
-                return EnrichFindFlowItem_1.default.enrich(resultSearch);
+                const searcher = new Financial_1.FinancialSearch(Object.assign({}, req.query));
+                // await PrepareSearchPersonFlowItem.prepare(req)
+                // var resultSearch = await FindBySearchFlowItem.find(new FinancialSearchOLD(req.query)) as any
+                // return EnrichFindFlowItem.enrich(resultSearch)
+                this.searcherFinancial.prepareSearch(searcher);
+                const ret = yield this.searcherFinancial.find({
+                    metadata: [{
+                            id: "metadata-totalizers",
+                            conditions: [
+                                {
+                                    $match: searcher.filters
+                                },
+                                {
+                                    $group: {
+                                        _id: "$type",
+                                        total: { $sum: '$value' },
+                                    }
+                                }
+                            ]
+                        }]
+                });
+                return ret;
             }
             catch (error) {
+                console.log(error);
                 this.processError(error);
             }
         });
