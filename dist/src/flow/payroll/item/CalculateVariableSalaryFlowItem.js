@@ -23,7 +23,7 @@ class CalculateRegularSalaryFlowItem {
         return __awaiter(this, void 0, void 0, function* () {
             const classes = yield FindClassByFilterFlowItem_1.default.find(new Class_1.ClassSearch({
                 populate: 'rolePayments.employee',
-                endDateRange: [moment()],
+                // endDateRange: [moment()],
                 employee: [employee]
             }));
             var paymentClasses = [];
@@ -97,7 +97,7 @@ class CalculateRegularSalaryFlowItem {
                             hoursFactor: value,
                             hourValue: rule.paymentValue,
                             hoursLabel: time,
-                            total: (value * rule.paymentValue)
+                            total: Utils_1.default.round(value * rule.paymentValue)
                         };
                     });
                     paymentClass.total = paymentClass.hoursDetails.reduce((acc, day) => { return acc + Number(day.total); }, 0);
@@ -111,7 +111,7 @@ class CalculateRegularSalaryFlowItem {
                         quantityOfMatriculation: matriculations.total,
                         percent: rule.paymentValue,
                         baseValue: totalValueOfMatriculation,
-                        total: (totalValueOfMatriculation * rule.paymentValue) / 10000
+                        total: Utils_1.default.round((totalValueOfMatriculation * rule.paymentValue) / 10000)
                     };
                     paymentClass.total = paymentClass.percentDetails.total;
                 }

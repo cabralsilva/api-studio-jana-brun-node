@@ -24,5 +24,22 @@ class Utils {
     isNotIterable(input) {
         return !this.isIterable(input);
     }
+    trunc(value, decimalPlates = 0) {
+        if (value === undefined || isNaN(value)) {
+            return value;
+        }
+        const factor = Math.pow(10, decimalPlates);
+        let rounded = Math.trunc(value * factor) / factor;
+        return rounded;
+    }
+    round(value, decimalPlates = 0) {
+        if (value === undefined || isNaN(value)) {
+            return value;
+        }
+        value = this.trunc(value, decimalPlates + 1);
+        const factor = Math.pow(10, decimalPlates);
+        let rounded = Math.round(value * factor) / factor;
+        return rounded;
+    }
 }
 exports.default = new Utils;
