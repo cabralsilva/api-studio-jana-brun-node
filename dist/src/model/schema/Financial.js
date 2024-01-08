@@ -25,6 +25,7 @@ const FinancialModel = {
             targetDate: { type: Date, required: true },
             paymentDate: { type: Date, required: true },
             valuePaid: { type: Number },
+            employee: { type: mongoose.Schema.Types.ObjectId, ref: 'employee' },
             paymentMethod: { type: String, enum: Object.keys(PaymentMethod_1.default), required: true, default: "CASH" }
         }]
 };

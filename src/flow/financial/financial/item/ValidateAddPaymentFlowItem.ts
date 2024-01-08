@@ -3,7 +3,7 @@ import HttpError from "../../../../model/HttpError"
 import StringUtils from "../../../../utils/StringUtils"
 import GetValueTotalPaidFlowItem from "./GetValueTotalPaidFlowItem"
 
-class ValidateDeleteFlowItem {
+class ValidateAddPaymentFlowItem {
   validate(financial: any, payment: any) {
     var _totalPaid = GetValueTotalPaidFlowItem.get(financial, payment)
 
@@ -13,4 +13,4 @@ class ValidateDeleteFlowItem {
   }
 }
 
-export default new ValidateDeleteFlowItem
+export default new ValidateAddPaymentFlowItem

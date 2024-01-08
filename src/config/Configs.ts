@@ -3,6 +3,7 @@ export const jwtSecret = process.env.JWT_SECRET
 export const jwtExpireTimeInHour = process.env.JWT_EXPIRE_TIME_IN_HOUR
 export const dbUrl = process.env.DB_URL
 export const dbCollation = process.env.DB_COLLACTION
+export const modeDebug = process.env.MODE_DEBUG as string
 
 export const sbaumUrlBase = process.env.SBAUM_URL_BASE
 export const sbaumEnv = process.env.SBAUM_ENV

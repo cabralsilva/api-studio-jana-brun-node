@@ -7,7 +7,7 @@ import Utils from "../../../utils/Utils"
 import AddPaymentFlowItem from "./item/AddPaymentFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
 import GetValueTotalPaidFlowItem from "./item/GetValueTotalPaidFlowItem"
-import ValidatePaymentFlowItem from "./item/ValidatePaymentFlowItem"
+import ValidateAddPaymentFlowItem from "./item/ValidateAddPaymentFlowItem"
 
 class AddPaymentFlow extends FlowHttp {
 
@@ -19,7 +19,7 @@ class AddPaymentFlow extends FlowHttp {
       if (Utils.isEmpty(financial)) {
         throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
       }
-      ValidatePaymentFlowItem.validate(financial, req.body)
+      ValidateAddPaymentFlowItem.validate(financial, req.body)
       var finacialToUpdate = {
         status: GetValueTotalPaidFlowItem.get(financial, req.body) < financial.value ? "OPENED" : "PAID"
       }

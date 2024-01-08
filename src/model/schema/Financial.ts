@@ -5,6 +5,8 @@ import PaymentMethod from '../enum/PaymentMethod'
 import StatusOfFinancial from '../enum/StatusOfFinancial'
 import TypeOfFinancial from '../enum/TypeOfFinancial'
 import Search from '../Search'
+import { SearchFlow } from 'c2-mongoose'
+import { isEmpty, isNotEmpty } from 'c2-mongoose/dist/utils/Utils'
 
 const FinancialModel = {
   sequence: { type: String, required: true },
@@ -23,6 +25,7 @@ const FinancialModel = {
     targetDate: { type: Date, required: true },
     paymentDate: { type: Date, required: true },
     valuePaid: { type: Number },
+    employee: { type: mongoose.Schema.Types.ObjectId, ref: 'employee' },
     paymentMethod: { type: String, enum: Object.keys(PaymentMethod), required: true, default: "CASH" }
   }]
 }
@@ -31,7 +34,7 @@ const Financial = new mongoose.Schema(FinancialModel, {
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 })
 
-class FinancialSearch extends Search {
+class FinancialSearchOLD extends Search {
   description: { type: String }
   sequence: { type: String }
   type: []
@@ -124,6 +127,38 @@ class FinancialSearch extends Search {
   }
 }
 
+class FinancialSearch extends SearchFlow {
+  constructor(params: any) {
+    super(params)
+
+    this.buildFilters()
+  }
+
+  buildFilters() {
+    let filters = this.buildDefaultFilters(this)
+    if (isEmpty(filters.$and)) {
+      filters = { $and: [] } as any
+    }
+
+    if (isNotEmpty(this.searchText)) {
+      let regex = this.buildRegex(this.searchText)
+      let condition = {
+        $or: [
+          { 'description': { $regex: regex } },
+          { 'sequence': { $regex: regex } },
+          { 'status': { $regex: regex } },
+          { 'type': { $regex: regex } },
+        ]
+      }
+      filters.$and.push(condition)
+    }
+
+    if (filters.$and.length === 0)
+      delete filters['$and']
+    this.filters = filters
+  }
+}
+
 const FinancialRepository = mongoose.model('financial', Financial)
 
-export { Financial, FinancialModel, FinancialRepository, FinancialSearch }
+export { Financial, FinancialModel, FinancialRepository, FinancialSearch, FinancialSearchOLD }

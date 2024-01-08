@@ -18,7 +18,7 @@ const Utils_1 = require("../../../utils/Utils");
 const AddPaymentFlowItem_1 = require("./item/AddPaymentFlowItem");
 const GetByIdFlowItem_1 = require("./item/GetByIdFlowItem");
 const GetValueTotalPaidFlowItem_1 = require("./item/GetValueTotalPaidFlowItem");
-const ValidatePaymentFlowItem_1 = require("./item/ValidatePaymentFlowItem");
+const ValidateAddPaymentFlowItem_1 = require("./item/ValidateAddPaymentFlowItem");
 class AddPaymentFlow extends FlowHttp_1.default {
     add(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -29,7 +29,7 @@ class AddPaymentFlow extends FlowHttp_1.default {
                 if (Utils_1.default.isEmpty(financial)) {
                     throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.registerNotFounded"));
                 }
-                ValidatePaymentFlowItem_1.default.validate(financial, req.body);
+                ValidateAddPaymentFlowItem_1.default.validate(financial, req.body);
                 var finacialToUpdate = {
                     status: GetValueTotalPaidFlowItem_1.default.get(financial, req.body) < financial.value ? "OPENED" : "PAID"
                 };

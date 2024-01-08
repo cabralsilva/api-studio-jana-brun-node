@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { FinancialRepository, FinancialSearch } from "../../../../model/schema/Financial";
+import { FinancialRepository, FinancialSearchOLD } from "../../../../model/schema/Financial";
 
 class FindByFilterFlowItem {
-  async find(search: FinancialSearch) {
+  async find(search: FinancialSearchOLD) {
 
     var response = {} as any
     

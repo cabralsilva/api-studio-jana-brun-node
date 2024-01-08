@@ -1,4 +1,4 @@
-import { FinancialSearch } from "../../../../model/schema/Financial";
+import { FinancialSearchOLD } from "../../../../model/schema/Financial";
 import StringUtils from "../../../../utils/StringUtils";
 import Utils from "../../../../utils/Utils";
 import FindBySearchFlowItem from "./FindBySearchFlowItem";
@@ -6,7 +6,7 @@ import FindBySearchFlowItem from "./FindBySearchFlowItem";
 class GetSequenceFlowItem {
   async get(financial: any, offset: number = 0) {
     var sequence = StringUtils.padToLeft("0", 6, 1)
-    var historicalCompany = await FindBySearchFlowItem.find(new FinancialSearch({
+    var historicalCompany = await FindBySearchFlowItem.find(new FinancialSearchOLD({
       orderBy: "created_at",
       order: "desc",
       page: 1,

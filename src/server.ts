@@ -161,6 +161,7 @@ class StartUp {
     this.app.route('/api/v2/financial/:id').patch(FinancialController.update)
     this.app.route('/api/v2/financial/:id').delete(FinancialController.delete)
     this.app.route('/api/v2/financial/payment/:id').patch(FinancialController.payment)
+    this.app.route('/api/v2/financial/print-receipt/:id').get(FinancialController.printReceipt)
 
     this.app.route('/api/v2/matriculation').get(MatriculationController.get)
     this.app.route('/api/v2/matriculation/:id').get(MatriculationController.getById)
