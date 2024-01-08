@@ -14,7 +14,7 @@ class CalculateRegularSalaryFlowItem {
   async calculate(initDate: Moment, endDate: Moment, employee: any): Promise<PaymentClass[]> {
     const classes = await FindClassByFilterFlowItem.find(new ClassSearch({
       populate: 'rolePayments.employee',
-      endDateRange: [moment()],
+      // endDateRange: [moment()],
       employee: [employee]
     }))
 
@@ -95,7 +95,7 @@ class CalculateRegularSalaryFlowItem {
             hoursFactor: value,
             hourValue: rule.paymentValue,
             hoursLabel: time,
-            total: (value * rule.paymentValue)
+            total: Utils.round(value * rule.paymentValue)
           } as unknown as PaymentByHourDetail
         }) as PaymentByHourDetail[]
 
@@ -110,7 +110,7 @@ class CalculateRegularSalaryFlowItem {
           quantityOfMatriculation: matriculations.total,
           percent: rule.paymentValue,
           baseValue: totalValueOfMatriculation,
-          total: (totalValueOfMatriculation * rule.paymentValue) / 10000
+          total: Utils.round((totalValueOfMatriculation * rule.paymentValue) / 10000)
         } as PaymentByPercentDetail
         paymentClass.total = paymentClass.percentDetails.total
       }
