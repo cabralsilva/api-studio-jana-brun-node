@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FinancialSearch = exports.FinancialRepository = exports.FinancialModel = exports.Financial = void 0;
+exports.FinancialSearchOLD = exports.FinancialSearch = exports.FinancialRepository = exports.FinancialModel = exports.Financial = void 0;
 const moment = require("moment");
 const mongoose = require("mongoose");
 const Utils_1 = require("../../utils/Utils");
@@ -8,6 +8,8 @@ const PaymentMethod_1 = require("../enum/PaymentMethod");
 const StatusOfFinancial_1 = require("../enum/StatusOfFinancial");
 const TypeOfFinancial_1 = require("../enum/TypeOfFinancial");
 const Search_1 = require("../Search");
+const c2_mongoose_1 = require("c2-mongoose");
+const Utils_2 = require("c2-mongoose/dist/utils/Utils");
 const FinancialModel = {
     sequence: { type: String, required: true },
     description: { type: String },
@@ -34,7 +36,7 @@ const Financial = new mongoose.Schema(FinancialModel, {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 exports.Financial = Financial;
-class FinancialSearch extends Search_1.default {
+class FinancialSearchOLD extends Search_1.default {
     constructor(_query) {
         super(_query);
         this.description = _query.description;
@@ -113,6 +115,34 @@ class FinancialSearch extends Search_1.default {
         }
         if (Utils_1.default.isNotEmpty(rangeMovimentDate.$gte) || Utils_1.default.isNotEmpty(rangeMovimentDate.$lte)) {
             filters.$and.push({ movimentDate: rangeMovimentDate });
+        }
+        if (filters.$and.length === 0)
+            delete filters['$and'];
+        this.filters = filters;
+    }
+}
+exports.FinancialSearchOLD = FinancialSearchOLD;
+class FinancialSearch extends c2_mongoose_1.SearchFlow {
+    constructor(params) {
+        super(params);
+        this.buildFilters();
+    }
+    buildFilters() {
+        let filters = this.buildDefaultFilters(this);
+        if ((0, Utils_2.isEmpty)(filters.$and)) {
+            filters = { $and: [] };
+        }
+        if ((0, Utils_2.isNotEmpty)(this.searchText)) {
+            let regex = this.buildRegex(this.searchText);
+            let condition = {
+                $or: [
+                    { 'description': { $regex: regex } },
+                    { 'sequence': { $regex: regex } },
+                    { 'status': { $regex: regex } },
+                    { 'type': { $regex: regex } },
+                ]
+            };
+            filters.$and.push(condition);
         }
         if (filters.$and.length === 0)
             delete filters['$and'];

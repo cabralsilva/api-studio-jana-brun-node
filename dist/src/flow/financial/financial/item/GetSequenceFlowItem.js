@@ -17,7 +17,7 @@ class GetSequenceFlowItem {
     get(financial, offset = 0) {
         return __awaiter(this, void 0, void 0, function* () {
             var sequence = StringUtils_1.default.padToLeft("0", 6, 1);
-            var historicalCompany = yield FindBySearchFlowItem_1.default.find(new Financial_1.FinancialSearch({
+            var historicalCompany = yield FindBySearchFlowItem_1.default.find(new Financial_1.FinancialSearchOLD({
                 orderBy: "created_at",
                 order: "desc",
                 page: 1,
