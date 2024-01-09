@@ -1,4 +1,4 @@
-import { StudentRepository } from "../../../model/schema/Student"
+import { StudentRepository } from "../../../model/schema/IStudent"
 
 class CreateFlowItem {
   async create(student: {}, session = undefined) {

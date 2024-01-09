@@ -28,7 +28,7 @@ class Utils {
         if (value === undefined || isNaN(value)) {
             return value;
         }
-        const factor = Math.pow(10, decimalPlates);
+        const factor = 10 ** decimalPlates;
         let rounded = Math.trunc(value * factor) / factor;
         return rounded;
     }
@@ -37,7 +37,7 @@ class Utils {
             return value;
         }
         value = this.trunc(value, decimalPlates + 1);
-        const factor = Math.pow(10, decimalPlates);
+        const factor = 10 ** decimalPlates;
         let rounded = Math.round(value * factor) / factor;
         return rounded;
     }

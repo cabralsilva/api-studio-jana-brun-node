@@ -1,11 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = require("http-status");
-const CreateFlow_1 = require("../flow/priceTable/CreateFlow");
-const DeleteFlow_1 = require("../flow/priceTable/DeleteFlow");
-const ReadFlow_1 = require("../flow/priceTable/ReadFlow");
-const UpdateFlow_1 = require("../flow/priceTable/UpdateFlow");
-const ResponseHttp_1 = require("../model/ResponseHttp");
+const CreateFlow_1 = __importDefault(require("../flow/priceTable/CreateFlow"));
+const DeleteFlow_1 = __importDefault(require("../flow/priceTable/DeleteFlow"));
+const ReadFlow_1 = __importDefault(require("../flow/priceTable/ReadFlow"));
+const UpdateFlow_1 = __importDefault(require("../flow/priceTable/UpdateFlow"));
+const ResponseHttp_1 = __importDefault(require("../model/ResponseHttp"));
 class PriceTableController {
     create(req, res) {
         CreateFlow_1.default.create(req, res)

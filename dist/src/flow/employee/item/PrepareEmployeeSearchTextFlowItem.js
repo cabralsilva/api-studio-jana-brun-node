@@ -8,10 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Person_1 = require("../../../model/schema/Person");
-const Utils_1 = require("../../../utils/Utils");
-const FindBySearchFlowItem_1 = require("../../person/item/FindBySearchFlowItem");
+const Utils_1 = __importDefault(require("../../../utils/Utils"));
+const FindBySearchFlowItem_1 = __importDefault(require("../../person/item/FindBySearchFlowItem"));
 class PrepareEmployeeSearchTextFlowItem {
     prepare(req) {
         return __awaiter(this, void 0, void 0, function* () {

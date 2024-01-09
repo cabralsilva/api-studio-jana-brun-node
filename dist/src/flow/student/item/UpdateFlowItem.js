@@ -8,14 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Student_1 = require("../../../model/schema/Student");
-const StringUtils_1 = require("../../../utils/StringUtils");
-const Utils_1 = require("../../../utils/Utils");
+const IStudent_1 = require("../../../model/schema/IStudent");
+const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const Utils_1 = __importDefault(require("../../../utils/Utils"));
 class UpdateFlowItem {
     update(id, student, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            const studentAfter = yield Student_1.StudentRepository.findByIdAndUpdate(id, { $set: student }, { returnDocument: 'after', session });
+            const studentAfter = yield IStudent_1.StudentRepository.findByIdAndUpdate(id, { $set: student }, { returnDocument: 'after', session });
             if (Utils_1.default.isEmpty(studentAfter)) {
                 throw Error(StringUtils_1.default.message("message.registerNotFounded"));
             }

@@ -8,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Matriculation_1 = require("../../../model/schema/Matriculation");
-const StringUtils_1 = require("../../../utils/StringUtils");
+const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
 class GetSequenceFlowItem {
     get(offset = 0) {
         return __awaiter(this, void 0, void 0, function* () {

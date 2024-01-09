@@ -1,4 +1,4 @@
-import { ProductRepository, ProductSearch } from "../../../model/schema/Product"
+import { ProductRepository, ProductSearch } from "../../../model/schema/IProduct"
 
 class FindByFilterFlowItem {
   async find(search: ProductSearch) {

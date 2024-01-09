@@ -1,4 +1,4 @@
-import { StudentRepository } from "../../../model/schema/Student";
+import { StudentRepository } from "../../../model/schema/IStudent";
 import StringUtils from "../../../utils/StringUtils";
 import Utils from "../../../utils/Utils";
 

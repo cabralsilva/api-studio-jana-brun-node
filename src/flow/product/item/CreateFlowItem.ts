@@ -1,4 +1,4 @@
-import { ProductRepository } from "../../../model/schema/Product"
+import { ProductRepository } from "../../../model/schema/IProduct"
 
 class CreateFlowItem {
   async create(product: {}, session = undefined) {

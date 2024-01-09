@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Product_1 = require("../../../model/schema/Product");
+const IProduct_1 = require("../../../model/schema/IProduct");
 class GetByIdFlowItem {
     get(id, pop = undefined, sel = "") {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Product_1.ProductRepository.findById(id).populate(pop).select(sel);
+            return yield IProduct_1.ProductRepository.findById(id).populate(pop).select(sel);
         });
     }
 }

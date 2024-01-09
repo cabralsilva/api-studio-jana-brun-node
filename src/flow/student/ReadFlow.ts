@@ -1,7 +1,7 @@
 import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { StudentSearch } from '../../model/schema/Student'
+import { StudentSearch } from '../../model/schema/IStudent'
 import StringUtils from "../../utils/StringUtils"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'

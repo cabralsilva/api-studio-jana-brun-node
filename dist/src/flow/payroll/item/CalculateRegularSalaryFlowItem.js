@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const GetMonthsIntervalFlowItem_ts_1 = require("./GetMonthsIntervalFlowItem.ts");
+const GetMonthsIntervalFlowItem_ts_1 = __importDefault(require("./GetMonthsIntervalFlowItem.ts"));
 class CalculateRegularSalaryFlowItem {
     calculate(initDate, endDate, salaryValue) {
         var months = [];

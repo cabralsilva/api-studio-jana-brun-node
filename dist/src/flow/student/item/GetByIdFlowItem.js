@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Student_1 = require("../../../model/schema/Student");
+const IStudent_1 = require("../../../model/schema/IStudent");
 class GetByIdFlowItem {
     get(id, pop = undefined, sel = "") {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Student_1.StudentRepository.findById(id)
+            return yield IStudent_1.StudentRepository.findById(id)
                 .populate(pop)
                 .select(sel);
         });

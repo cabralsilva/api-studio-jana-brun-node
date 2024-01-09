@@ -1,11 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = require("http-status");
-const CreatePayrollFlow_1 = require("../flow/payroll/CreatePayrollFlow");
-const DeleteFlow_1 = require("../flow/payroll/DeleteFlow");
-const PreProcessPayrollFlow_1 = require("../flow/payroll/PreProcessPayrollFlow");
-const ReadFlow_1 = require("../flow/payroll/ReadFlow");
-const ResponseHttp_1 = require("../model/ResponseHttp");
+const CreatePayrollFlow_1 = __importDefault(require("../flow/payroll/CreatePayrollFlow"));
+const DeleteFlow_1 = __importDefault(require("../flow/payroll/DeleteFlow"));
+const PreProcessPayrollFlow_1 = __importDefault(require("../flow/payroll/PreProcessPayrollFlow"));
+const ReadFlow_1 = __importDefault(require("../flow/payroll/ReadFlow"));
+const ResponseHttp_1 = __importDefault(require("../model/ResponseHttp"));
 class PayrollController {
     create(req, res) {
         CreatePayrollFlow_1.default.create(req, res)

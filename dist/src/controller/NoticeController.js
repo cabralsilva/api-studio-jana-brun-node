@@ -1,11 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = require("http-status");
-const CreateFlow_1 = require("../flow/notice/CreateFlow");
-const DeleteFlow_1 = require("../flow/notice/DeleteFlow");
-const ReadFlow_1 = require("../flow/notice/ReadFlow");
-const UpdateFlow_1 = require("../flow/notice/UpdateFlow");
-const ResponseHttp_1 = require("../model/ResponseHttp");
+const CreateFlow_1 = __importDefault(require("../flow/notice/CreateFlow"));
+const DeleteFlow_1 = __importDefault(require("../flow/notice/DeleteFlow"));
+const ReadFlow_1 = __importDefault(require("../flow/notice/ReadFlow"));
+const UpdateFlow_1 = __importDefault(require("../flow/notice/UpdateFlow"));
+const ResponseHttp_1 = __importDefault(require("../model/ResponseHttp"));
 class NoticeController {
     create(req, res) {
         CreateFlow_1.default.create(req, res)

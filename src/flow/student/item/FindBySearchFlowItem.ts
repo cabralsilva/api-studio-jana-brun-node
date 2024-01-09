@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { StudentRepository, StudentSearch } from "../../../model/schema/Student";
+import { StudentRepository, StudentSearch } from "../../../model/schema/IStudent";
 
 class FindByFilterFlowItem {
   async find(search: StudentSearch) {

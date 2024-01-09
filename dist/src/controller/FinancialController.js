@@ -1,13 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = require("http-status");
-const AddPaymentFlow_1 = require("../flow/financial/financial/AddPaymentFlow");
-const CreateFlow_1 = require("../flow/financial/financial/CreateFlow");
-const DeleteFlow_1 = require("../flow/financial/financial/DeleteFlow");
-const PrintReceiptFlow_1 = require("../flow/financial/financial/PrintReceiptFlow");
-const ReadFlow_1 = require("../flow/financial/financial/ReadFlow");
-const UpdateFlow_1 = require("../flow/financial/financial/UpdateFlow");
-const ResponseHttp_1 = require("../model/ResponseHttp");
+const AddPaymentFlow_1 = __importDefault(require("../flow/financial/financial/AddPaymentFlow"));
+const CreateFlow_1 = __importDefault(require("../flow/financial/financial/CreateFlow"));
+const DeleteFlow_1 = __importDefault(require("../flow/financial/financial/DeleteFlow"));
+const PrintReceiptFlow_1 = __importDefault(require("../flow/financial/financial/PrintReceiptFlow"));
+const ReadFlow_1 = __importDefault(require("../flow/financial/financial/ReadFlow"));
+const UpdateFlow_1 = __importDefault(require("../flow/financial/financial/UpdateFlow"));
+const ResponseHttp_1 = __importDefault(require("../model/ResponseHttp"));
 class FinancialController {
     create(req, res) {
         CreateFlow_1.default.create(req, res)

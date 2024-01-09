@@ -8,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Configs_1 = require("../config/Configs");
-const Utils_1 = require("../utils/Utils");
+const Utils_1 = __importDefault(require("../utils/Utils"));
 class Search {
     constructor(_query) {
         this.searchText = _query.searchText;

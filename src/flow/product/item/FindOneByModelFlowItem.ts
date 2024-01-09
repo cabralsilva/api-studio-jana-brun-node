@@ -1,4 +1,4 @@
-import { ProductRepository } from "../../../model/schema/Product"
+import { ProductRepository } from "../../../model/schema/IProduct"
 
 class FindOneByModelFlowItem {
   async findOne(model, sort = undefined) {

@@ -1,7 +1,36 @@
+// {
+//   "compilerOptions": {
+//     "experimentalDecorators": true,
+//     "target": "es6",
+//     "module": "commonjs",
+//     "outDir": "dist",
+//     "typeRoots": [
+//       "../node_modules/@types"
+//     ],
+//     "types": [
+//       "node"
+//     ],
+//     "lib": [
+//       "ES2021.String"
+//     ]
+//   },
+//   "include": [
+//     "**/*.ts",
+//     "*.ts",
+//     "src/utils/config/Configs.ts", "../utils/Utils.ts",
+//   ],
+//   "exclude": [
+//     "node_modules"
+//   ],
+//   "buildOnSave": true,
+//   "compileOnSave": true
+// }
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "target": "es6",
+    // "target": "es6",
+    "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "commonjs",
     "outDir": "dist",
     "typeRoots": [
@@ -17,7 +46,7 @@
   "include": [
     "**/*.ts",
     "*.ts",
-    "src/utils/config/Configs.ts", "../utils/Utils.ts",
+    "config/Configs.ts",
   ],
   "exclude": [
     "node_modules"

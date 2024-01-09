@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import { PersonSearch } from "../../../model/schema/Person"
-import { Student, StudentSearch } from "../../../model/schema/Student"
+import { IStudent, StudentSearch } from "../../../model/schema/IStudent"
 import Utils from "../../../utils/Utils"
 import FindBySearchFlowItem from "../../person/item/FindBySearchFlowItem"
 import FindStudentBySearchFlowItem from "../../student/item/FindBySearchFlowItem"

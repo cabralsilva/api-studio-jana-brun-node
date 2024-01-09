@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongodb_1 = require("mongodb");
-const StringUtils_1 = require("../utils/StringUtils");
-const HttpError_1 = require("./HttpError");
+const StringUtils_1 = __importDefault(require("../utils/StringUtils"));
+const HttpError_1 = __importDefault(require("./HttpError"));
 class FlowHttp {
     processError(error) {
         if (error instanceof HttpError_1.default) {

@@ -1,6 +1,6 @@
 import * as bodyParser from 'body-parser'
-import * as cors from 'cors'
-import * as express from 'express'
+import cors from 'cors'
+import express from 'express'
 import * as fs from 'fs'
 import * as swagger from 'swagger-ui-express'
 import Database from './config/Database'
@@ -10,6 +10,7 @@ import CityController from './controller/CityController'
 import ClassController from './controller/ClassController'
 import ClassroomController from './controller/ClassroomController'
 import CountryController from './controller/CountryController'
+import CustomerController from './controller/CustomerController'
 import EmployeeController from './controller/EmployeeController'
 import FinancialController from './controller/FinancialController'
 import GrateController from './controller/GrateController'
@@ -25,10 +26,11 @@ import SaleController from './controller/SaleController'
 import StateController from './controller/StateController'
 import SupplierController from './controller/SupplierController'
 import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
+import httpContext from 'express-http-context'
 
 class StartUp {
   public app: express.Application
-  private _db: Database
+  // private _db: Database
   private bodyParser
 
   private swaggerFile: any = (process.cwd() + "/postman/schemas/schema.json");
@@ -37,8 +39,7 @@ class StartUp {
 
   constructor() {
     this.app = express()
-    this._db = new Database()
-    this._db.createConnection()
+    Database.createConnection()
     this.middler()
     this.routes()
   }
@@ -56,6 +57,12 @@ class StartUp {
     this.app.use(bodyParser.json({ limit: '200mb' }))
     this.app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }))
     this.app.use(bodyParser.text({ limit: '200mb' }))
+    this.app.use(httpContext.middleware)
+    this.app.use((request: any, response: any, next: any) => {
+      httpContext.set('headers', request.headers)
+      next()
+    })
+
     this.app.use('/api/v2/docs', swagger.serve, swagger.setup(this.swaggerDocument))
     this.app.use(i18n.middleware);
   }
@@ -123,11 +130,11 @@ class StartUp {
     this.app.route('/api/v2/grate/:id').patch(GrateController.update)
     this.app.route('/api/v2/grate/:id').delete(GrateController.delete)
 
-    this.app.route('/api/v2/product').get(ProductController.get)
-    this.app.route('/api/v2/product/:id').get(ProductController.getById)
-    this.app.route('/api/v2/product').post(ProductController.create)
-    this.app.route('/api/v2/product/:id').patch(ProductController.update)
-    this.app.route('/api/v2/product/:id').delete(ProductController.delete)
+    // this.app.route('/api/v2/product').get(ProductController.get)
+    // this.app.route('/api/v2/product/:id').get(ProductController.getById)
+    // this.app.route('/api/v2/product').post(ProductController.create)
+    // this.app.route('/api/v2/product/:id').patch(ProductController.update)
+    // this.app.route('/api/v2/product/:id').delete(ProductController.delete)
 
     this.app.route('/api/v2/role-payment').get(RolePaymentController.get)
     this.app.route('/api/v2/role-payment/:id').get(RolePaymentController.getById)
@@ -178,6 +185,9 @@ class StartUp {
     this.app.route('/api/v2/payroll/pre-process').post(PayrollController.preProcess)
 
     this.app.route('/api/v2/sale/price').post(SaleController.searchPrice)
+
+    this.app.use(CustomerController.routers)
+    this.app.use(ProductController.routers)
   }
 }
 

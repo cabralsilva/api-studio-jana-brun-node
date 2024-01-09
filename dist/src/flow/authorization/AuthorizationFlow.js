@@ -8,11 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const FlowHttp_1 = require("../../model/FlowHttp");
-const ResponseHttp_1 = require("../../model/ResponseHttp");
-const GetJWTFlowItem_1 = require("./item/GetJWTFlowItem");
-const ValidateJWTFlowItem_1 = require("./item/ValidateJWTFlowItem");
+const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
+const ResponseHttp_1 = __importDefault(require("../../model/ResponseHttp"));
+const GetJWTFlowItem_1 = __importDefault(require("./item/GetJWTFlowItem"));
+const ValidateJWTFlowItem_1 = __importDefault(require("./item/ValidateJWTFlowItem"));
 class AuthorizationFlow extends FlowHttp_1.default {
     authorization(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -1,40 +1,67 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const express = require("express");
-const fs = require("fs");
-const swagger = require("swagger-ui-express");
-const Database_1 = require("./config/Database");
-const i18n_1 = require("./config/i18n");
-const AuthenticationController_1 = require("./controller/AuthenticationController");
-const CityController_1 = require("./controller/CityController");
-const ClassController_1 = require("./controller/ClassController");
-const ClassroomController_1 = require("./controller/ClassroomController");
-const CountryController_1 = require("./controller/CountryController");
-const EmployeeController_1 = require("./controller/EmployeeController");
-const FinancialController_1 = require("./controller/FinancialController");
-const GrateController_1 = require("./controller/GrateController");
-const MatriculationController_1 = require("./controller/MatriculationController");
-const NoticeController_1 = require("./controller/NoticeController");
-const PaymentConditionController_1 = require("./controller/PaymentConditionController");
-const PayrollController_1 = require("./controller/PayrollController");
-const PersonController_1 = require("./controller/PersonController");
-const PriceTableController_1 = require("./controller/PriceTableController");
-const ProductController_1 = require("./controller/ProductController");
-const RolePaymentController_1 = require("./controller/RolePaymentController");
-const SaleController_1 = require("./controller/SaleController");
-const StateController_1 = require("./controller/StateController");
-const SupplierController_1 = require("./controller/SupplierController");
-const AuthorizationFlow_1 = require("./flow/authorization/AuthorizationFlow");
+const bodyParser = __importStar(require("body-parser"));
+const cors_1 = __importDefault(require("cors"));
+const express_1 = __importDefault(require("express"));
+const fs = __importStar(require("fs"));
+const swagger = __importStar(require("swagger-ui-express"));
+const Database_1 = __importDefault(require("./config/Database"));
+const i18n_1 = __importDefault(require("./config/i18n"));
+const AuthenticationController_1 = __importDefault(require("./controller/AuthenticationController"));
+const CityController_1 = __importDefault(require("./controller/CityController"));
+const ClassController_1 = __importDefault(require("./controller/ClassController"));
+const ClassroomController_1 = __importDefault(require("./controller/ClassroomController"));
+const CountryController_1 = __importDefault(require("./controller/CountryController"));
+const CustomerController_1 = __importDefault(require("./controller/CustomerController"));
+const EmployeeController_1 = __importDefault(require("./controller/EmployeeController"));
+const FinancialController_1 = __importDefault(require("./controller/FinancialController"));
+const GrateController_1 = __importDefault(require("./controller/GrateController"));
+const MatriculationController_1 = __importDefault(require("./controller/MatriculationController"));
+const NoticeController_1 = __importDefault(require("./controller/NoticeController"));
+const PaymentConditionController_1 = __importDefault(require("./controller/PaymentConditionController"));
+const PayrollController_1 = __importDefault(require("./controller/PayrollController"));
+const PersonController_1 = __importDefault(require("./controller/PersonController"));
+const PriceTableController_1 = __importDefault(require("./controller/PriceTableController"));
+const ProductController_1 = __importDefault(require("./controller/ProductController"));
+const RolePaymentController_1 = __importDefault(require("./controller/RolePaymentController"));
+const SaleController_1 = __importDefault(require("./controller/SaleController"));
+const StateController_1 = __importDefault(require("./controller/StateController"));
+const SupplierController_1 = __importDefault(require("./controller/SupplierController"));
+const AuthorizationFlow_1 = __importDefault(require("./flow/authorization/AuthorizationFlow"));
+const express_http_context_1 = __importDefault(require("express-http-context"));
 class StartUp {
     constructor() {
         this.swaggerFile = (process.cwd() + "/postman/schemas/schema.json");
         this.swaggerData = fs.readFileSync(this.swaggerFile, 'utf8');
         this.swaggerDocument = JSON.parse(this.swaggerData);
-        this.app = express();
-        this._db = new Database_1.default();
-        this._db.createConnection();
+        this.app = (0, express_1.default)();
+        Database_1.default.createConnection();
         this.middler();
         this.routes();
     }
@@ -43,13 +70,18 @@ class StartUp {
             methods: "GET,OPTIONS,PUT,POST,PATCH,DELETE",
             origin: "*"
         };
-        this.app.use(cors(options));
+        this.app.use((0, cors_1.default)(options));
     }
     middler() {
         this.enableCors();
         this.app.use(bodyParser.json({ limit: '200mb' }));
         this.app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
         this.app.use(bodyParser.text({ limit: '200mb' }));
+        this.app.use(express_http_context_1.default.middleware);
+        this.app.use((request, response, next) => {
+            express_http_context_1.default.set('headers', request.headers);
+            next();
+        });
         this.app.use('/api/v2/docs', swagger.serve, swagger.setup(this.swaggerDocument));
         this.app.use(i18n_1.default.middleware);
     }
@@ -107,11 +139,11 @@ class StartUp {
         this.app.route('/api/v2/grate').post(GrateController_1.default.create);
         this.app.route('/api/v2/grate/:id').patch(GrateController_1.default.update);
         this.app.route('/api/v2/grate/:id').delete(GrateController_1.default.delete);
-        this.app.route('/api/v2/product').get(ProductController_1.default.get);
-        this.app.route('/api/v2/product/:id').get(ProductController_1.default.getById);
-        this.app.route('/api/v2/product').post(ProductController_1.default.create);
-        this.app.route('/api/v2/product/:id').patch(ProductController_1.default.update);
-        this.app.route('/api/v2/product/:id').delete(ProductController_1.default.delete);
+        // this.app.route('/api/v2/product').get(ProductController.get)
+        // this.app.route('/api/v2/product/:id').get(ProductController.getById)
+        // this.app.route('/api/v2/product').post(ProductController.create)
+        // this.app.route('/api/v2/product/:id').patch(ProductController.update)
+        // this.app.route('/api/v2/product/:id').delete(ProductController.delete)
         this.app.route('/api/v2/role-payment').get(RolePaymentController_1.default.get);
         this.app.route('/api/v2/role-payment/:id').get(RolePaymentController_1.default.getById);
         this.app.route('/api/v2/role-payment').post(RolePaymentController_1.default.create);
@@ -153,6 +185,8 @@ class StartUp {
         this.app.route('/api/v2/payroll/:id').delete(PayrollController_1.default.delete);
         this.app.route('/api/v2/payroll/pre-process').post(PayrollController_1.default.preProcess);
         this.app.route('/api/v2/sale/price').post(SaleController_1.default.searchPrice);
+        this.app.use(CustomerController_1.default.routers);
+        this.app.use(ProductController_1.default.routers);
     }
 }
 exports.default = new StartUp();

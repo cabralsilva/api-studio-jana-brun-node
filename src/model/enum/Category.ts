@@ -1,9 +1,9 @@
 enum Category {
-  LESSON = "message.category.basic",
-  TICKETS = "message.category.tickets",
-  UNIFORMS = "message.category.uniforms",
-  BOTTLES = "message.category.bottles",
-  OTHERS = "message.category.others"
+  LESSON = "LESSON",
+  TICKETS = "TICKETS",
+  UNIFORMS = "UNIFORMS",
+  BOTTLES = "BOTTLES",
+  OTHERS = "OTHERS"
 }
 
 export default Category

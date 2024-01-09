@@ -1,4 +1,4 @@
-import { ProductRepository } from "../../../model/schema/Product";
+import { ProductRepository } from "../../../model/schema/IProduct";
 import StringUtils from "../../../utils/StringUtils";
 import Utils from "../../../utils/Utils";
 

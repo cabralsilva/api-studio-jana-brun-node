@@ -8,10 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
-const GetEmployeeByIdFlowItem_1 = require("../../employee/item/GetEmployeeByIdFlowItem");
-const GetSequenceFlowItem_1 = require("../../financial/financial/item/GetSequenceFlowItem");
+const GetEmployeeByIdFlowItem_1 = __importDefault(require("../../employee/item/GetEmployeeByIdFlowItem"));
+const GetSequenceFlowItem_1 = __importDefault(require("../../financial/financial/item/GetSequenceFlowItem"));
 class PrepareFinancialFromPayrollFlowItem {
     prepare(payroll, employeePayroll, offset = 0) {
         return __awaiter(this, void 0, void 0, function* () {

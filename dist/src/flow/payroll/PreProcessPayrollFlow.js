@@ -8,13 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
-const mongoose_1 = require("mongoose");
-const FlowHttp_1 = require("../../model/FlowHttp");
-const GetEmployeeByIdFlowItem_1 = require("../employee/item/GetEmployeeByIdFlowItem");
-const CalculateRegularSalaryFlowItem_1 = require("./item/CalculateRegularSalaryFlowItem");
-const CalculateVariableSalaryFlowItem_1 = require("./item/CalculateVariableSalaryFlowItem");
+const mongoose_1 = __importDefault(require("mongoose"));
+const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
+const GetEmployeeByIdFlowItem_1 = __importDefault(require("../employee/item/GetEmployeeByIdFlowItem"));
+const CalculateRegularSalaryFlowItem_1 = __importDefault(require("./item/CalculateRegularSalaryFlowItem"));
+const CalculateVariableSalaryFlowItem_1 = __importDefault(require("./item/CalculateVariableSalaryFlowItem"));
 class PreProcessPayrollFlow extends FlowHttp_1.default {
     preProcess(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

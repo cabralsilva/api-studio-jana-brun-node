@@ -8,16 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = require("http-status");
-const mongoose_1 = require("mongoose");
-const FlowHttp_1 = require("../../model/FlowHttp");
-const HttpError_1 = require("../../model/HttpError");
-const StringUtils_1 = require("../../utils/StringUtils");
-const AuthenticationFlowItem_1 = require("../authentication/item/AuthenticationFlowItem");
-const CryptoPasswordFlowItem_1 = require("./item/CryptoPasswordFlowItem");
-const GetByJWTFlowItem_1 = require("./item/GetByJWTFlowItem");
-const UpdateFlowItem_1 = require("./item/UpdateFlowItem");
+const mongoose_1 = __importDefault(require("mongoose"));
+const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
+const HttpError_1 = __importDefault(require("../../model/HttpError"));
+const StringUtils_1 = __importDefault(require("../../utils/StringUtils"));
+const AuthenticationFlowItem_1 = __importDefault(require("../authentication/item/AuthenticationFlowItem"));
+const CryptoPasswordFlowItem_1 = __importDefault(require("./item/CryptoPasswordFlowItem"));
+const GetByJWTFlowItem_1 = __importDefault(require("./item/GetByJWTFlowItem"));
+const UpdateFlowItem_1 = __importDefault(require("./item/UpdateFlowItem"));
 class UpdatePasswordFlow extends FlowHttp_1.default {
     update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

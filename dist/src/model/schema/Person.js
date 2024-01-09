@@ -1,10 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PersonSearch = exports.PersonRepository = exports.PersonModel = exports.Person = void 0;
-const mongoose_1 = require("mongoose");
-const Genre_1 = require("../enum/Genre");
-const TypeOfPerson_1 = require("../enum/TypeOfPerson");
-const Search_1 = require("../Search");
+const mongoose_1 = __importDefault(require("mongoose"));
+const Genre_1 = __importDefault(require("../enum/Genre"));
+const TypeOfPerson_1 = __importDefault(require("../enum/TypeOfPerson"));
+const Search_1 = __importDefault(require("../Search"));
 const Address_1 = require("./address/Address");
 const PersonModel = {
     name: { type: String, required: true },

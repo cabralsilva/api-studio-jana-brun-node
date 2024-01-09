@@ -8,14 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-const FlowHttp_1 = require("../../model/FlowHttp");
-const AuthenticationFlowItem_1 = require("./item/AuthenticationFlowItem");
-const DecryptCredentialsFlowItem_1 = require("./item/DecryptCredentialsFlowItem");
-const EnrichResponseFlowItem_1 = require("./item/EnrichResponseFlowItem");
-const GenerateJWTFlowItem_1 = require("./item/GenerateJWTFlowItem");
-const GetEmployeeFlowItem_1 = require("./item/GetEmployeeFlowItem");
+const mongoose_1 = __importDefault(require("mongoose"));
+const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
+const AuthenticationFlowItem_1 = __importDefault(require("./item/AuthenticationFlowItem"));
+const DecryptCredentialsFlowItem_1 = __importDefault(require("./item/DecryptCredentialsFlowItem"));
+const EnrichResponseFlowItem_1 = __importDefault(require("./item/EnrichResponseFlowItem"));
+const GenerateJWTFlowItem_1 = __importDefault(require("./item/GenerateJWTFlowItem"));
+const GetEmployeeFlowItem_1 = __importDefault(require("./item/GetEmployeeFlowItem"));
 class AuthenticationFlow extends FlowHttp_1.default {
     authentication(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
