@@ -16,7 +16,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const CreatePayrollFlowItem_1 = __importDefault(require("./item/CreatePayrollFlowItem"));
 const PrepareFinancialFromPayrollFlowItem_1 = __importDefault(require("./item/PrepareFinancialFromPayrollFlowItem"));
-const CreateFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFlowItem"));
+const CreateFinancialFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFinancialFlowItem"));
 class CreatePayrollFlow extends FlowHttp_1.default {
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -28,7 +28,7 @@ class CreatePayrollFlow extends FlowHttp_1.default {
                 var offsetSequence = 0;
                 for (const employeesPayroll of employeesPayrolls) {
                     var financial = yield PrepareFinancialFromPayrollFlowItem_1.default.prepare(payroll[0], employeesPayroll, offsetSequence++);
-                    yield CreateFlowItem_1.default.create(financial, session);
+                    yield CreateFinancialFlowItem_1.default.create(financial, session);
                 }
                 yield session.commitTransaction();
             }

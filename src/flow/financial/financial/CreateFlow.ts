@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import FlowHttp from "../../../model/FlowHttp"
-import CreateFinancialFlowItem from "./item/CreateFlowItem"
+import CreateFinancialFlowItem from "./item/CreateFinancialFlowItem"
 import PrepareFinancialFlowItem from "./item/PrepareFinancialFlowItem"
 
 class CreateFinancialFlow extends FlowHttp {

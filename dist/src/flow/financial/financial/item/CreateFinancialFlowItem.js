@@ -9,13 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const IPaymentCondition_1 = require("../../../../model/schema/IPaymentCondition");
-class FindOneByModelFlowItem {
-    findOne(model, sort = undefined) {
+const Financial_1 = require("../../../../model/schema/Financial");
+class CreateFinancialFlowItem {
+    create(financial, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield IPaymentCondition_1.PaymentConditionRepository.findOne(model)
-                .sort(sort);
+            return yield Financial_1.FinancialRepository.create([financial], { session });
         });
     }
 }
-exports.default = new FindOneByModelFlowItem;
+exports.default = new CreateFinancialFlowItem;

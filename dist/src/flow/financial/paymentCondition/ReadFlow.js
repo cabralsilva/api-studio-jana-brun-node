@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = __importStar(require("http-status"));
 const FlowHttp_1 = __importDefault(require("../../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const PaymentCondition_1 = require("../../../model/schema/PaymentCondition");
+const IPaymentCondition_1 = require("../../../model/schema/IPaymentCondition");
 const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 const EnrichFindFlowItem_1 = __importDefault(require("./item/EnrichFindFlowItem"));
@@ -56,7 +56,7 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return paymentCondition;
                 }
-                var resultSearch = yield FindBySearchFlowItem_1.default.find(new PaymentCondition_1.PaymentConditionSearch(req.query));
+                var resultSearch = yield FindBySearchFlowItem_1.default.find(new IPaymentCondition_1.PaymentConditionSearch(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {

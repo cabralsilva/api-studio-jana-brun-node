@@ -19,6 +19,7 @@ const Database_1 = __importDefault(require("../../config/Database"));
 const Http_1 = require("../../config/Http");
 const i18n_1 = require("../../config/i18n");
 const ISale_1 = require("../../model/schema/ISale");
+const GenerateFinancialFromSaleFlow_1 = __importDefault(require("./financial/GenerateFinancialFromSaleFlow"));
 class CreateSaleFlow extends Http_1.Http {
     constructor() {
         super(...arguments);
@@ -31,6 +32,7 @@ class CreateSaleFlow extends Http_1.Http {
                 session.startTransaction();
                 const payload = Object.assign({}, request.body);
                 const saleAfter = yield this.crudSale.create(payload, { session, logger: false });
+                yield GenerateFinancialFromSaleFlow_1.default.generate(saleAfter, session);
                 yield session.commitTransaction();
                 return [http_status_1.OK, Object.assign({ message: (0, i18n_1.getMessage)("message.registerCreatedSuccess") }, saleAfter)];
             }

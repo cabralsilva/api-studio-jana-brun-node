@@ -1,4 +1,4 @@
-import { PaymentConditionRepository } from "../../../../model/schema/PaymentCondition"
+import { PaymentConditionRepository } from "../../../../model/schema/IPaymentCondition"
 
 class FindOneByModelFlowItem {
   async findOne(model, sort = undefined) {

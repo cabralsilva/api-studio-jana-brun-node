@@ -6,7 +6,7 @@ import { getMessage } from "../../config/i18n"
 import Utils from "../../utils/Utils"
 import BuildFinancialsByPaymentConditionFlowItem from "../financial/financial/item/BuildFinancialsByPaymentConditionFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
-import CreateFinancialFlowItem from "../financial/financial/item/CreateFlowItem"
+import CreateFinancialFlowItem from "../financial/financial/item/CreateFinancialFlowItem"
 import UpdateFlowItem from "./item/UpdateFlowItem"
 import moment = require("moment")
 

@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const PaymentCondition_1 = require("../../../../model/schema/PaymentCondition");
+const IPaymentCondition_1 = require("../../../../model/schema/IPaymentCondition");
 class FindByFilterFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
             if (search.isPageable()) {
-                return yield search.findPageable(PaymentCondition_1.PaymentConditionRepository);
+                return yield search.findPageable(IPaymentCondition_1.PaymentConditionRepository);
             }
-            return yield search.findNoPageable(PaymentCondition_1.PaymentConditionRepository);
+            return yield search.findNoPageable(IPaymentCondition_1.PaymentConditionRepository);
         });
     }
 }

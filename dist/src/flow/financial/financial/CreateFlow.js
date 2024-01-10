@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const FlowHttp_1 = __importDefault(require("../../../model/FlowHttp"));
-const CreateFlowItem_1 = __importDefault(require("./item/CreateFlowItem"));
+const CreateFinancialFlowItem_1 = __importDefault(require("./item/CreateFinancialFlowItem"));
 const PrepareFinancialFlowItem_1 = __importDefault(require("./item/PrepareFinancialFlowItem"));
 class CreateFinancialFlow extends FlowHttp_1.default {
     create(req, res) {
@@ -25,7 +25,7 @@ class CreateFinancialFlow extends FlowHttp_1.default {
                 var financialBase = req.body;
                 var financials = yield PrepareFinancialFlowItem_1.default.prepare(financialBase);
                 for (var financial of financials) {
-                    yield CreateFlowItem_1.default.create(financial, session);
+                    yield CreateFinancialFlowItem_1.default.create(financial, session);
                 }
                 yield session.commitTransaction();
             }

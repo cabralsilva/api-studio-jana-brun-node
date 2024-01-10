@@ -6,6 +6,7 @@ import Database from "../../config/Database"
 import { Http } from "../../config/Http"
 import { getMessage } from "../../config/i18n"
 import { ISale, SaleRepository } from "../../model/schema/ISale"
+import GenerateFinancialFromSaleFlow from "./financial/GenerateFinancialFromSaleFlow"
 
 class CreateSaleFlow extends Http {
 
@@ -16,7 +17,8 @@ class CreateSaleFlow extends Http {
     try {
       session.startTransaction()
       const payload = { ...request.body }
-      const saleAfter = await this.crudSale.create(payload, { session, logger: false })
+      const saleAfter = await this.crudSale.create(payload, { session, logger: false }) as ISale
+      await GenerateFinancialFromSaleFlow.generate(saleAfter, session)
       await session.commitTransaction()
       return [OK, { message: getMessage("message.registerCreatedSuccess"), ...saleAfter }]
     } catch (error) {

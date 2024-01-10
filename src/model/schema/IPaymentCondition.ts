@@ -1,6 +1,12 @@
 import * as mongoose from 'mongoose'
 import Search from '../Search'
 
+export interface IPaymentCondition {
+  description: string
+  quantityInstallments: number
+  active: boolean
+}
+
 const PaymentConditionModel = {
   description: { type: String, required: true },
   quantityInstallments: { type: Number, default: 1, required: true },

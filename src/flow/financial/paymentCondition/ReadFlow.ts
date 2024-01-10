@@ -1,7 +1,7 @@
 import * as HttpStatus from 'http-status'
 import FlowHttp from '../../../model/FlowHttp'
 import HttpError from '../../../model/HttpError'
-import { PaymentConditionSearch } from '../../../model/schema/PaymentCondition'
+import { PaymentConditionSearch } from '../../../model/schema/IPaymentCondition'
 import { getMessage } from "../../../config/i18n"
 import Utils from '../../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'

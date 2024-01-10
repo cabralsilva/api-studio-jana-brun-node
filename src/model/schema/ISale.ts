@@ -20,6 +20,7 @@ export interface ISalePayment {
   sequence: number
   description: string
   value: number
+  firstPaymentDate: Date
   installment: ISalePaymentInstallment
 }
 
@@ -59,6 +60,7 @@ export interface ISaleCustomerData {
 }
 
 export interface ISale extends IDefault {
+  sequence: number
   customerData: ISaleCustomerData
   payments: ISalePayment[]
   financial: ISaleFinancial
@@ -66,6 +68,7 @@ export interface ISale extends IDefault {
 }
 
 const SaleSchema = new mongoose.Schema({
+  sequence: { type: Number, default: 99999 },
   customerData: {
     type: {
       customer: { type: mongoose.Schema.Types.ObjectId, ref: 'person' },
@@ -76,6 +79,7 @@ const SaleSchema = new mongoose.Schema({
     type: [{
       description: { type: String },
       value: { type: Number },
+      firstPaymentDate: { type: Date },
       installment: {
         type: {
           paymentCondition: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' },

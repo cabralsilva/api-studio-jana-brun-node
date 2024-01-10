@@ -29,6 +29,7 @@ const Utils_1 = require("c2-mongoose/dist/utils/Utils");
 const mongoose = __importStar(require("mongoose"));
 const mongoose_1 = require("mongoose");
 const SaleSchema = new mongoose.Schema({
+    sequence: { type: Number, default: 99999 },
     customerData: {
         type: {
             customer: { type: mongoose.Schema.Types.ObjectId, ref: 'person' },
@@ -39,6 +40,7 @@ const SaleSchema = new mongoose.Schema({
         type: [{
                 description: { type: String },
                 value: { type: Number },
+                firstPaymentDate: { type: Date },
                 installment: {
                     type: {
                         paymentCondition: { type: mongoose.Schema.Types.ObjectId, ref: 'paymentCondition' },

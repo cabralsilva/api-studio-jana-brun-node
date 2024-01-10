@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const PaymentCondition_1 = require("../../../../model/schema/PaymentCondition");
+const IPaymentCondition_1 = require("../../../../model/schema/IPaymentCondition");
 class GetByIdFlowItem {
     get(id, pop = "", sel = "") {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield PaymentCondition_1.PaymentConditionRepository.findById(id).populate(pop).select(sel);
+            return yield IPaymentCondition_1.PaymentConditionRepository.findById(id).populate(pop).select(sel);
         });
     }
 }

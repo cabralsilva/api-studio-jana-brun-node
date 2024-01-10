@@ -1,4 +1,4 @@
-import { PaymentConditionRepository, PaymentConditionSearch } from "../../../../model/schema/PaymentCondition"
+import { PaymentConditionRepository, PaymentConditionSearch } from "../../../../model/schema/IPaymentCondition"
 
 class FindByFilterFlowItem {
   async find(search: PaymentConditionSearch) {

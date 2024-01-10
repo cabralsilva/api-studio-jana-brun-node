@@ -1,9 +1,9 @@
 import { FinancialRepository } from "../../../../model/schema/Financial"
 
-class CreateFlowItem {
+class CreateFinancialFlowItem {
   async create(financial: {}, session = undefined) {
     return await FinancialRepository.create([financial], { session })
   }
 }
 
-export default new CreateFlowItem
+export default new CreateFinancialFlowItem

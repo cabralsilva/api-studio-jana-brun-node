@@ -43,7 +43,7 @@ const i18n_1 = require("../../config/i18n");
 const Utils_1 = __importDefault(require("../../utils/Utils"));
 const BuildFinancialsByPaymentConditionFlowItem_1 = __importDefault(require("../financial/financial/item/BuildFinancialsByPaymentConditionFlowItem"));
 const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
-const CreateFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFlowItem"));
+const CreateFinancialFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFinancialFlowItem"));
 const UpdateFlowItem_1 = __importDefault(require("./item/UpdateFlowItem"));
 class GenerateExtraSkuFinancial extends FlowHttp_1.default {
     generate(req, res) {
@@ -68,7 +68,7 @@ class GenerateExtraSkuFinancial extends FlowHttp_1.default {
                 };
                 const financials = yield BuildFinancialsByPaymentConditionFlowItem_1.default.build(matriculation.paymentConditionExtra, financialBase);
                 for (var financial of financials) {
-                    yield CreateFlowItem_1.default.create(financial, session);
+                    yield CreateFinancialFlowItem_1.default.create(financial, session);
                 }
                 yield UpdateFlowItem_1.default.update(matriculation._id.toString(), { extraSkuFinancialCreated: true }, session);
                 yield session.commitTransaction();

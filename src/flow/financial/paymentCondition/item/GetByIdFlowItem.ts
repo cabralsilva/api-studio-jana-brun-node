@@ -1,4 +1,4 @@
-import { PaymentConditionRepository } from "../../../../model/schema/PaymentCondition"
+import { PaymentConditionRepository } from "../../../../model/schema/IPaymentCondition"
 
 class GetByIdFlowItem {
   async get(id: string, pop = "", sel = ""): Promise<any> {

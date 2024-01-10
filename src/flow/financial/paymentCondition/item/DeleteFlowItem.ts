@@ -1,4 +1,4 @@
-import { PaymentConditionRepository } from "../../../../model/schema/PaymentCondition"
+import { PaymentConditionRepository } from "../../../../model/schema/IPaymentCondition"
 
 class DeleteFlowItem {
   async delete(id: string, session = undefined) {

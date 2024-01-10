@@ -1,4 +1,4 @@
-import { PaymentConditionRepository } from "../../../../model/schema/PaymentCondition";
+import { PaymentConditionRepository } from "../../../../model/schema/IPaymentCondition";
 import { getMessage } from "../../../../config/i18n";
 import Utils from "../../../../utils/Utils";
 
