@@ -2,7 +2,7 @@ import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
 import { PriceTableSearch } from '../../model/schema/PriceTable'
-import StringUtils from "../../utils/StringUtils"
+import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
 import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
@@ -26,7 +26,7 @@ class ReadFlow extends FlowHttp {
           }]
           );
         if (Utils.isEmpty(priceTable)) {
-          throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
+          throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
         }
         return priceTable
       }

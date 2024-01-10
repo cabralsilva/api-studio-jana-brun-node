@@ -3,9 +3,9 @@ import { isEmpty, isNotEmpty } from 'c2-mongoose/dist/utils/Utils'
 import * as mongoose from 'mongoose'
 import { model } from 'mongoose'
 import Category from '../enum/Category'
-import { Default } from './Default'
+import { IDefault } from './IDefault'
 
-interface IProduct extends Default {
+interface IProduct extends IDefault {
   code: string
   description: string
   category: Category

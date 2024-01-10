@@ -1,11 +1,11 @@
 import { UNAUTHORIZED } from "http-status"
 import HttpError from "../../../model/HttpError"
-import StringUtils from "../../../utils/StringUtils"
+import { getMessage } from "../../../config/i18n"
 
 class DecryptCredentialsFlowItem {
   decrypt(req: any): { username: string, password: string } {
     if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
-      throw new HttpError(UNAUTHORIZED, StringUtils.message("message.http.invalidRequest"))
+      throw new HttpError(UNAUTHORIZED, getMessage("message.http.invalidRequest"))
     }
 
     const base64Credentials = req.headers.authorization.split(' ')[1]

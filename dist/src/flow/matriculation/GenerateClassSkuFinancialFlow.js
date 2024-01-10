@@ -39,7 +39,7 @@ const HttpStatus = __importStar(require("http-status"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../utils/StringUtils"));
+const i18n_1 = require("../../config/i18n");
 const Utils_1 = __importDefault(require("../../utils/Utils"));
 const BuildFinancialsByPaymentConditionFlowItem_1 = __importDefault(require("../financial/financial/item/BuildFinancialsByPaymentConditionFlowItem"));
 const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
@@ -54,10 +54,10 @@ class GenerateClassSkuFinancial extends FlowHttp_1.default {
                 session.startTransaction();
                 const matriculation = yield GetByIdFlowItem_1.default.get(req.params.id, "paymentConditionClasses student");
                 if (Utils_1.default.isEmpty(matriculation)) {
-                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.response.resourceNotFound"));
+                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.response.resourceNotFound"));
                 }
                 if (matriculation.classSkuFinancialCreated) {
-                    throw new HttpError_1.default(HttpStatus.PRECONDITION_FAILED, StringUtils_1.default.message("message.response.matriculation.financialAlreadyCreated"));
+                    throw new HttpError_1.default(HttpStatus.PRECONDITION_FAILED, (0, i18n_1.getMessage)("message.response.matriculation.financialAlreadyCreated"));
                 }
                 const financialBase = {
                     movimentDate: new Date(),

@@ -39,7 +39,7 @@ const HttpStatus = __importStar(require("http-status"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const FlowHttp_1 = __importDefault(require("../../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 const AddPaymentFlowItem_1 = __importDefault(require("./item/AddPaymentFlowItem"));
 const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
@@ -53,7 +53,7 @@ class AddPaymentFlow extends FlowHttp_1.default {
                 session.startTransaction();
                 var financial = yield GetByIdFlowItem_1.default.get(req.params.id);
                 if (Utils_1.default.isEmpty(financial)) {
-                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.registerNotFounded"));
+                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.registerNotFounded"));
                 }
                 ValidateAddPaymentFlowItem_1.default.validate(financial, req.body);
                 var finacialToUpdate = {

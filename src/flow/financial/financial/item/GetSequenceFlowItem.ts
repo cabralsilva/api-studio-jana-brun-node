@@ -1,7 +1,8 @@
 import { FinancialSearchOLD } from "../../../../model/schema/Financial";
-import StringUtils from "../../../../utils/StringUtils";
+import { getMessage } from "../../../../config/i18n";
 import Utils from "../../../../utils/Utils";
 import FindBySearchFlowItem from "./FindBySearchFlowItem";
+import StringUtils from "../../../../utils/StringUtils";
 
 class GetSequenceFlowItem {
   async get(financial: any, offset: number = 0) {

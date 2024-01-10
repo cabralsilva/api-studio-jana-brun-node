@@ -184,9 +184,9 @@ class StartUp {
         this.app.route('/api/v2/payroll').post(PayrollController_1.default.create);
         this.app.route('/api/v2/payroll/:id').delete(PayrollController_1.default.delete);
         this.app.route('/api/v2/payroll/pre-process').post(PayrollController_1.default.preProcess);
-        this.app.route('/api/v2/sale/price').post(SaleController_1.default.searchPrice);
         this.app.use(CustomerController_1.default.routers);
         this.app.use(ProductController_1.default.routers);
+        this.app.use(SaleController_1.default.routers);
     }
 }
 exports.default = new StartUp();

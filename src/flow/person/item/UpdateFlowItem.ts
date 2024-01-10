@@ -1,5 +1,5 @@
 import { PersonRepository } from "../../../model/schema/Person";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const personAfter = await PersonRepository.findByIdAndUpdate(id, { $set: person }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(personAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return personAfter
   }

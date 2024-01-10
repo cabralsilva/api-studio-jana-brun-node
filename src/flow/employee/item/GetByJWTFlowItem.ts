@@ -4,7 +4,7 @@ import { jwtSecret } from "../../../config/Configs"
 import GetEmployeeByIdFlowItem from "./GetEmployeeByIdFlowItem"
 import { FORBIDDEN, UNAUTHORIZED } from "http-status"
 import HttpError from "../../../model/HttpError"
-import StringUtils from "../../../utils/StringUtils"
+import { getMessage } from "../../../config/i18n"
 import Utils from "../../../utils/Utils"
 
 class GetByJWTFlowItem {
@@ -13,13 +13,13 @@ class GetByJWTFlowItem {
     let holder: string
     jwt.verify(token, jwtSecret, (error, decode) => {
       if (error) {
-        throw new HttpError(FORBIDDEN, StringUtils.message("message.http.invalidRequest"), error)
+        throw new HttpError(FORBIDDEN, getMessage("message.http.invalidRequest"), error)
       }
       holder = decode.holder
     })
     let employee = await GetEmployeeByIdFlowItem.get(holder)
     if (Utils.isEmpty(employee)) {
-      throw new HttpError(UNAUTHORIZED, StringUtils.message("message.http.invalidCredentials"))
+      throw new HttpError(UNAUTHORIZED, getMessage("message.http.invalidCredentials"))
     }
     return employee as any
     

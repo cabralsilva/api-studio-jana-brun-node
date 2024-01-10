@@ -1,5 +1,5 @@
 import { GrateRepository } from "../../../model/schema/Grate";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const grateAfter = await GrateRepository.findByIdAndUpdate(id, { $set: grate }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(grateAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return grateAfter
   }

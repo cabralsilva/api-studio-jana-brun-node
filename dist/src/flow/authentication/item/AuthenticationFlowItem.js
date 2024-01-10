@@ -38,13 +38,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crypto = __importStar(require("crypto"));
 const http_status_1 = require("http-status");
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 class AuthenticationFlowItem {
     authenticate(employee, password) {
         return __awaiter(this, void 0, void 0, function* () {
             var hash = crypto.pbkdf2Sync(password, employee.salt, 1000, 64, `sha512`).toString(`hex`);
             if (employee.password !== hash) {
-                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
+                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, (0, i18n_1.getMessage)("message.http.invalidCredentials"));
             }
         });
     }

@@ -184,10 +184,9 @@ class StartUp {
     this.app.route('/api/v2/payroll/:id').delete(PayrollController.delete)
     this.app.route('/api/v2/payroll/pre-process').post(PayrollController.preProcess)
 
-    this.app.route('/api/v2/sale/price').post(SaleController.searchPrice)
-
     this.app.use(CustomerController.routers)
     this.app.use(ProductController.routers)
+    this.app.use(SaleController.routers)
   }
 }
 

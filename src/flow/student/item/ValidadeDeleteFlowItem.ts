@@ -1,6 +1,6 @@
 import * as HttpStatus from "http-status"
 import HttpError from "../../../model/HttpError"
-import StringUtils from "../../../utils/StringUtils"
+import { getMessage } from "../../../config/i18n"
 import Utils from "../../../utils/Utils"
 
 class ValidateDeleteFlowItem {
@@ -9,11 +9,11 @@ class ValidateDeleteFlowItem {
     // const search = { student: id }
     // var searchProducts = await FindBySearchProductFlowItem.find(new ProductSearch(search))
     // if (searchProducts.items.length > 0) {
-    //   occurences = AddOccurrenceOnDeleteFlowItem.add(occurences, StringUtils.message("message.product"), searchProducts.items, "description")
+    //   occurences = AddOccurrenceOnDeleteFlowItem.add(occurences, getMessage("message.product"), searchProducts.items, "description")
     // }
 
     if (Utils.isNotEmpty(occurences)) {
-      throw new HttpError(HttpStatus.PRECONDITION_FAILED, StringUtils.message("message.deleteNotAllowed"), occurences)
+      throw new HttpError(HttpStatus.PRECONDITION_FAILED, getMessage("message.deleteNotAllowed"), occurences)
     }
   }
 }

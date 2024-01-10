@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 
-export interface Default {
+export interface IDefault {
     [key: string]: any
     _id?: Types.ObjectId
     createdAtDateTime?: Date

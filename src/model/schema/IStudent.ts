@@ -3,9 +3,9 @@ import { isEmpty, isNotEmpty } from 'c2-mongoose/dist/utils/Utils'
 import * as mongoose from 'mongoose'
 import { Types, model } from 'mongoose'
 import SchoolLevel from '../enum/SchoolLevel'
-import { Default } from './Default'
+import { IDefault } from './IDefault'
 
-interface IStudent extends Default {
+interface IStudent extends IDefault {
   person: Types.ObjectId | any
   responsible: Types.ObjectId | any
   school: Types.ObjectId | any

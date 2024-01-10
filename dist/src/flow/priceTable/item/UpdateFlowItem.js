@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const PriceTable_1 = require("../../../model/schema/PriceTable");
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 class UpdateFlowItem {
     update(id, priceTable, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
             const priceTableAfter = yield PriceTable_1.PriceTableRepository.findByIdAndUpdate(id, { $set: priceTable }, { returnDocument: 'after', session });
             if (Utils_1.default.isEmpty(priceTableAfter)) {
-                throw Error(StringUtils_1.default.message("message.registerNotFounded"));
+                throw Error((0, i18n_1.getMessage)("message.registerNotFounded"));
             }
             return priceTableAfter;
         });

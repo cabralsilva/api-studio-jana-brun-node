@@ -37,7 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = __importStar(require("http-status"));
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 class ValidateDeleteFlowItem {
     validate(id) {
@@ -46,10 +46,10 @@ class ValidateDeleteFlowItem {
             // const search = { product: id }
             // var searchProducts = await FindBySearchProductFlowItem.find(new ProductSearch(search))
             // if (searchProducts.items.length > 0) {
-            //   occurences = AddOccurrenceOnDeleteFlowItem.add(occurences, StringUtils.message("message.product"), searchProducts.items, "description")
+            //   occurences = AddOccurrenceOnDeleteFlowItem.add(occurences, getMessage("message.product"), searchProducts.items, "description")
             // }
             if (Utils_1.default.isNotEmpty(occurences)) {
-                throw new HttpError_1.default(HttpStatus.PRECONDITION_FAILED, StringUtils_1.default.message("message.deleteNotAllowed"), occurences);
+                throw new HttpError_1.default(HttpStatus.PRECONDITION_FAILED, (0, i18n_1.getMessage)("message.deleteNotAllowed"), occurences);
             }
         });
     }

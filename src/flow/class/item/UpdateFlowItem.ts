@@ -1,5 +1,5 @@
 import { ClassRepository } from "../../../model/schema/Class";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const clazzAfter = await ClassRepository.findByIdAndUpdate(id, { $set: clazz }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(clazzAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return clazzAfter
   }

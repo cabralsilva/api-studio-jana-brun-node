@@ -1,6 +1,6 @@
 import { NOT_ACCEPTABLE } from "http-status";
 import HttpError from "../../../../model/HttpError";
-import StringUtils from "../../../../utils/StringUtils";
+import { getMessage } from "../../../../config/i18n";
 import Utils from "../../../../utils/Utils";
 import GetByIdFlowItem from "../../paymentCondition/item/GetByIdFlowItem";
 import GetSequenceFlowItem from "./GetSequenceFlowItem";
@@ -12,7 +12,7 @@ class PrepareFinancialFlowItem {
     var financials = []
     const paymentCondition = await GetByIdFlowItem.get(financialBase.paymentCondition)
     if(Utils.isEmpty(paymentCondition)){
-      throw new HttpError(NOT_ACCEPTABLE, StringUtils.message("message.response.resourceNotFound"), StringUtils.message("message.paymentCondition"))
+      throw new HttpError(NOT_ACCEPTABLE, getMessage("message.response.resourceNotFound"), getMessage("message.paymentCondition"))
     }
 
     for (var installmentNumber = 1; installmentNumber <= paymentCondition.quantityInstallments; installmentNumber++) {

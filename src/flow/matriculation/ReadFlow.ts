@@ -2,7 +2,7 @@ import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
 import { MatriculationSearch } from '../../model/schema/Matriculation'
-import StringUtils from "../../utils/StringUtils"
+import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
 import AdjustGrateItemFlowItem from './item/AdjustGrateItemFlowItem'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
@@ -71,7 +71,7 @@ class ReadFlow extends FlowHttp {
           ])
 
         if (Utils.isEmpty(matriculation)) {
-          throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
+          throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
         }
 
         matriculation._doc.clazzesSkus.forEach((classSku, index) => {

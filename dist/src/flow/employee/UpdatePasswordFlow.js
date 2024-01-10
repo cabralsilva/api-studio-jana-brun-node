@@ -16,7 +16,7 @@ const http_status_1 = require("http-status");
 const mongoose_1 = __importDefault(require("mongoose"));
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../utils/StringUtils"));
+const i18n_1 = require("../../config/i18n");
 const AuthenticationFlowItem_1 = __importDefault(require("../authentication/item/AuthenticationFlowItem"));
 const CryptoPasswordFlowItem_1 = __importDefault(require("./item/CryptoPasswordFlowItem"));
 const GetByJWTFlowItem_1 = __importDefault(require("./item/GetByJWTFlowItem"));
@@ -35,7 +35,7 @@ class UpdatePasswordFlow extends FlowHttp_1.default {
             }
             catch (error) {
                 yield session.abortTransaction();
-                this.processError(new HttpError_1.default(http_status_1.NOT_ACCEPTABLE, StringUtils_1.default.message("message.http.updatePasswordInvalid")));
+                this.processError(new HttpError_1.default(http_status_1.NOT_ACCEPTABLE, (0, i18n_1.getMessage)("message.http.updatePasswordInvalid")));
             }
             finally {
                 yield session.endSession();

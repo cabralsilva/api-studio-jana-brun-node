@@ -2,7 +2,7 @@ import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
 import { ClassSearch } from '../../model/schema/Class'
-import StringUtils from "../../utils/StringUtils"
+import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
 import FindBySearchFlowItem from "./item/FindClassByFilterFlowItem"
@@ -31,7 +31,7 @@ class ReadFlow extends FlowHttp {
             }
           }]);
         if (Utils.isEmpty(clazz)) {
-          throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
+          throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
         }
         return clazz
       }

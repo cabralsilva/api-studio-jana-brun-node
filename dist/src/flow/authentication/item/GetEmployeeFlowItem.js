@@ -14,15 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = require("http-status");
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 const FindOneByModelFlowItem_1 = __importDefault(require("../../employee/item/FindOneByModelFlowItem"));
+const i18n_1 = require("../../../config/i18n");
 class GetEmployeeFlowItem {
     get(credential) {
         return __awaiter(this, void 0, void 0, function* () {
             const employee = yield FindOneByModelFlowItem_1.default.findOne({ email: credential.username }, undefined, 'person');
             if (Utils_1.default.isEmpty(employee)) {
-                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
+                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, (0, i18n_1.getMessage)("message.http.invalidCredentials"));
             }
             return employee;
         });

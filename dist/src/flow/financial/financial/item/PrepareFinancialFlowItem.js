@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = require("http-status");
 const HttpError_1 = __importDefault(require("../../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../../utils/StringUtils"));
+const i18n_1 = require("../../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../../utils/Utils"));
 const GetByIdFlowItem_1 = __importDefault(require("../../paymentCondition/item/GetByIdFlowItem"));
 const GetSequenceFlowItem_1 = __importDefault(require("./GetSequenceFlowItem"));
@@ -26,7 +26,7 @@ class PrepareFinancialFlowItem {
             var financials = [];
             const paymentCondition = yield GetByIdFlowItem_1.default.get(financialBase.paymentCondition);
             if (Utils_1.default.isEmpty(paymentCondition)) {
-                throw new HttpError_1.default(http_status_1.NOT_ACCEPTABLE, StringUtils_1.default.message("message.response.resourceNotFound"), StringUtils_1.default.message("message.paymentCondition"));
+                throw new HttpError_1.default(http_status_1.NOT_ACCEPTABLE, (0, i18n_1.getMessage)("message.response.resourceNotFound"), (0, i18n_1.getMessage)("message.paymentCondition"));
             }
             for (var installmentNumber = 1; installmentNumber <= paymentCondition.quantityInstallments; installmentNumber++) {
                 var c = moment(financialBase.movimentDate);

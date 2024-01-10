@@ -39,7 +39,7 @@ const HttpStatus = __importStar(require("http-status"));
 const FlowHttp_1 = __importDefault(require("../../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
 const Financial_1 = require("../../../model/schema/Financial");
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
 const c2_mongoose_1 = require("c2-mongoose");
@@ -55,7 +55,7 @@ class ReadFlow extends FlowHttp_1.default {
                 if (Utils_1.default.isNotEmpty((_a = req.params) === null || _a === void 0 ? void 0 : _a.id)) {
                     const financial = yield GetByIdFlowItem_1.default.get(req.params.id);
                     if (Utils_1.default.isEmpty(financial)) {
-                        throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.registerNotFounded"));
+                        throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.registerNotFounded"));
                     }
                     return financial;
                 }

@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DaysOfWeek_1 = __importDefault(require("../../../model/enum/DaysOfWeek"));
 const Class_1 = require("../../../model/schema/Class");
 const Matriculation_1 = require("../../../model/schema/Matriculation");
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 const FindClassByFilterFlowItem_1 = __importDefault(require("../../class/item/FindClassByFilterFlowItem"));
 const FindMatriculationBySearchFlowItem_1 = __importDefault(require("../../matriculation/item/FindMatriculationBySearchFlowItem"));
@@ -55,9 +55,9 @@ class CalculateRegularSalaryFlowItem {
                     //calcular os dias e horarios que teve aula no periodo selecionado para pagamento
                     for (var schedulesDetail of clazz.schedulesDetails) {
                         if (schedulesDetail.often == 'ONCE') {
-                            console.error(StringUtils_1.default.message("message.methodNotImplemented", "Pagamento de turmas com frequencia única."));
+                            console.error((0, i18n_1.getMessage)("message.methodNotImplemented", "Pagamento de turmas com frequencia única."));
                             continue;
-                            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, StringUtils.message("message.methodNotImplemented", "Pagamento de turmas com frequencia única."))
+                            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, getMessage("message.methodNotImplemented", "Pagamento de turmas com frequencia única."))
                             // se o dia do evento ocorreu entre o inicio e o fim
                             // var day = moment(schedulesDetail.oftenDay)
                             // if (day.isBetween(initDate, endDate)) {
@@ -84,9 +84,9 @@ class CalculateRegularSalaryFlowItem {
                             }
                         }
                         else if (schedulesDetail.often == 'MONTHLY') {
-                            console.error(StringUtils_1.default.message("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."));
+                            console.error((0, i18n_1.getMessage)("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."));
                             continue;
-                            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, StringUtils.message("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."))
+                            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, getMessage("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."))
                         }
                     }
                     var mapDaysAsc = new Map([...details.entries()].sort());

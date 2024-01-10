@@ -2,7 +2,7 @@ import { NOT_ACCEPTABLE, UNAUTHORIZED } from "http-status"
 import mongoose from "mongoose"
 import FlowHttp from "../../model/FlowHttp"
 import HttpError from "../../model/HttpError"
-import StringUtils from "../../utils/StringUtils"
+import { getMessage } from "../../config/i18n"
 import AuthenticationFlowItem from "../authentication/item/AuthenticationFlowItem"
 import CryptoPasswordFlowItem from "./item/CryptoPasswordFlowItem"
 import GetByJWTFlowItem from "./item/GetByJWTFlowItem"
@@ -21,7 +21,7 @@ class UpdatePasswordFlow extends FlowHttp {
       await session.commitTransaction()
     } catch (error) {
       await session.abortTransaction()
-      this.processError(new HttpError(NOT_ACCEPTABLE, StringUtils.message("message.http.updatePasswordInvalid")))
+      this.processError(new HttpError(NOT_ACCEPTABLE, getMessage("message.http.updatePasswordInvalid")))
     } finally {
       await session.endSession()
     }

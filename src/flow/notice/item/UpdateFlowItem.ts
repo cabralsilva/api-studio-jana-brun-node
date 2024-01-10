@@ -1,5 +1,5 @@
 import { NoticeRepository } from "../../../model/schema/Notice";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const noticeAfter = await NoticeRepository.findByIdAndUpdate(id, { $set: notice }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(noticeAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return noticeAfter
   }

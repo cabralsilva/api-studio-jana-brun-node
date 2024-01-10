@@ -1,5 +1,5 @@
 import { PriceTableRepository } from "../../../model/schema/PriceTable";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const priceTableAfter = await PriceTableRepository.findByIdAndUpdate(id, { $set: priceTable }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(priceTableAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return priceTableAfter
   }

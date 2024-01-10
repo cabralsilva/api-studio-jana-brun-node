@@ -1,5 +1,5 @@
 import { CityRepository } from "../../../model/schema/address/City";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const cityAfter = await CityRepository.findByIdAndUpdate(id, { $set: city }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(cityAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return cityAfter
   }

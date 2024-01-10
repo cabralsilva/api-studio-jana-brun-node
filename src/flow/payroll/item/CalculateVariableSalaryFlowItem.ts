@@ -3,7 +3,7 @@ import DaysOfWeek from "../../../model/enum/DaysOfWeek";
 import { ClassSearch } from "../../../model/schema/Class";
 import { MatriculationSearch } from "../../../model/schema/Matriculation";
 import { EmployeePayment, PaymentByHourDetail, PaymentByPercentDetail, PaymentClass } from "../../../model/schema/Payroll";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 import FindClassByFilterFlowItem from "../../class/item/FindClassByFilterFlowItem";
 import FindMatriculationBySearchFlowItem from "../../matriculation/item/FindMatriculationBySearchFlowItem";
@@ -48,9 +48,9 @@ class CalculateRegularSalaryFlowItem {
         //calcular os dias e horarios que teve aula no periodo selecionado para pagamento
         for (var schedulesDetail of clazz.schedulesDetails) {
           if (schedulesDetail.often == 'ONCE') {
-            console.error(StringUtils.message("message.methodNotImplemented", "Pagamento de turmas com frequencia única."))
+            console.error(getMessage("message.methodNotImplemented", "Pagamento de turmas com frequencia única."))
             continue;
-            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, StringUtils.message("message.methodNotImplemented", "Pagamento de turmas com frequencia única."))
+            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, getMessage("message.methodNotImplemented", "Pagamento de turmas com frequencia única."))
             // se o dia do evento ocorreu entre o inicio e o fim
             // var day = moment(schedulesDetail.oftenDay)
             // if (day.isBetween(initDate, endDate)) {
@@ -76,9 +76,9 @@ class CalculateRegularSalaryFlowItem {
               current.add(1, 'days')
             }
           } else if (schedulesDetail.often == 'MONTHLY') {
-            console.error(StringUtils.message("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."))
+            console.error(getMessage("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."))
             continue;
-            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, StringUtils.message("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."))
+            // throw new HttpError(HttpStatus.PRECONDITION_FAILED, getMessage("message.methodNotImplemented", "Pagamento de turmas com frequencia mensal."))
           }
         }
 

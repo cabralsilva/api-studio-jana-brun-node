@@ -1,5 +1,5 @@
 import { EmployeeRepository } from "../../../model/schema/Employee";
-import StringUtils from "../../../utils/StringUtils";
+import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const employeeAfter = await EmployeeRepository.findByIdAndUpdate(id, { $set: employee }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(employeeAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return employeeAfter
   }

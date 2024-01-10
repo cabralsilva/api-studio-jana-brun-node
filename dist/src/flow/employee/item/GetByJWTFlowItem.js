@@ -41,7 +41,7 @@ const Configs_1 = require("../../../config/Configs");
 const GetEmployeeByIdFlowItem_1 = __importDefault(require("./GetEmployeeByIdFlowItem"));
 const http_status_1 = require("http-status");
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 class GetByJWTFlowItem {
     get(req) {
@@ -50,13 +50,13 @@ class GetByJWTFlowItem {
             let holder;
             jwt.verify(token, Configs_1.jwtSecret, (error, decode) => {
                 if (error) {
-                    throw new HttpError_1.default(http_status_1.FORBIDDEN, StringUtils_1.default.message("message.http.invalidRequest"), error);
+                    throw new HttpError_1.default(http_status_1.FORBIDDEN, (0, i18n_1.getMessage)("message.http.invalidRequest"), error);
                 }
                 holder = decode.holder;
             });
             let employee = yield GetEmployeeByIdFlowItem_1.default.get(holder);
             if (Utils_1.default.isEmpty(employee)) {
-                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, StringUtils_1.default.message("message.http.invalidCredentials"));
+                throw new HttpError_1.default(http_status_1.UNAUTHORIZED, (0, i18n_1.getMessage)("message.http.invalidCredentials"));
             }
             return employee;
         });

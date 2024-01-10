@@ -1,7 +1,7 @@
 import * as HttpStatus from 'http-status'
 import FlowHttp from '../../../model/FlowHttp'
 import HttpError from '../../../model/HttpError'
-import StringUtils from "../../../utils/StringUtils"
+import { getMessage } from "../../../config/i18n"
 import Utils from '../../../utils/Utils'
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
 import ValidatePrintReceiptFlowItem from './item/ValidatePrintReceiptFlowItem'
@@ -13,7 +13,7 @@ class PrintReceiptFlow extends FlowHttp {
 
       const financial = await GetByIdFlowItem.get(req.params.id);
       if (Utils.isEmpty(financial)) {
-        throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
+        throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
       }
       await ValidatePrintReceiptFlowItem.validate(financial)
       return this.generateReceipt(financial)

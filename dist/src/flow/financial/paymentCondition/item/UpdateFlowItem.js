@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const PaymentCondition_1 = require("../../../../model/schema/PaymentCondition");
-const StringUtils_1 = __importDefault(require("../../../../utils/StringUtils"));
+const i18n_1 = require("../../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../../utils/Utils"));
 class UpdateFlowItem {
     update(id, paymentCondition, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
             const paymentConditionAfter = yield PaymentCondition_1.PaymentConditionRepository.findByIdAndUpdate(id, { $set: paymentCondition }, { returnDocument: 'after', session });
             if (Utils_1.default.isEmpty(paymentConditionAfter)) {
-                throw Error(StringUtils_1.default.message("message.registerNotFounded"));
+                throw Error((0, i18n_1.getMessage)("message.registerNotFounded"));
             }
             return paymentConditionAfter;
         });

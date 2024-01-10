@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongodb_1 = require("mongodb");
-const StringUtils_1 = __importDefault(require("../utils/StringUtils"));
 const HttpError_1 = __importDefault(require("./HttpError"));
+const i18n_1 = require("../config/i18n");
 class FlowHttp {
     processError(error) {
         if (error instanceof HttpError_1.default) {
@@ -13,11 +13,11 @@ class FlowHttp {
         }
         if (error instanceof mongodb_1.MongoServerError) {
             if (error.code === 11000) {
-                throw new HttpError_1.default(409, StringUtils_1.default.message("response.duplicate"), error.keyValue);
+                throw new HttpError_1.default(409, (0, i18n_1.getMessage)("response.duplicate"), error.keyValue);
             }
         }
         if (error.errors) {
-            throw new HttpError_1.default(422, StringUtils_1.default.message("response.invalidValues"), error.errors);
+            throw new HttpError_1.default(422, (0, i18n_1.getMessage)("response.invalidValues"), error.errors);
         }
         throw new HttpError_1.default(500, error.message, error);
     }

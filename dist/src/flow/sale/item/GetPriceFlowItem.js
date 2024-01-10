@@ -11,7 +11,7 @@ class GetPriceFlowItem {
         let score = 0;
         for (var itemPrice of itemsOfPriceOfProduct) {
             let minScoreToCurrentItemPrice = itemPrice.gratesItems.length;
-            var itemsPriceIntersection = itemPrice.gratesItems.filter(n => searcherPrice.grateItemList.some(n2 => n._id == n2._id));
+            var itemsPriceIntersection = itemPrice.gratesItems.filter(n => searcherPrice.gratesItems.some(n2 => n._id == n2.grateItem));
             if (itemsPriceIntersection.length >= minScoreToCurrentItemPrice && itemsPriceIntersection.length >= score) {
                 response = itemPrice;
                 score = itemsPriceIntersection.length;

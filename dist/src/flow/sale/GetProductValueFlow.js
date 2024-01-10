@@ -35,15 +35,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
+const HttpStatus = __importStar(require("http-status"));
+const Database_1 = __importDefault(require("../../config/Database"));
+const Http_1 = require("../../config/Http");
+const i18n_1 = require("../../config/i18n");
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
 const PriceTable_1 = require("../../model/schema/PriceTable");
-const StringUtils_1 = __importDefault(require("../../utils/StringUtils"));
 const Utils_1 = __importDefault(require("../../utils/Utils"));
 const FindBySearchFlowItem_1 = __importDefault(require("../priceTable/item/FindBySearchFlowItem"));
-const HttpStatus = __importStar(require("http-status"));
 const GetPriceFlowItem_1 = __importDefault(require("./item/GetPriceFlowItem"));
-class GetProductValueFlow extends FlowHttp_1.default {
+class GetProductValueFlow extends Http_1.Http {
     get(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -53,17 +54,18 @@ class GetProductValueFlow extends FlowHttp_1.default {
                     order: 'desc'
                 }));
                 if (Utils_1.default.isEmpty(searchResultPriceTables === null || searchResultPriceTables === void 0 ? void 0 : searchResultPriceTables.items)) {
-                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.response.resourceNotFound", StringUtils_1.default.message("message.priceTable")));
+                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.response.resourceNotFound", (0, i18n_1.getMessage)("message.price")));
                 }
                 let priceTable = searchResultPriceTables.items[0];
                 let itemPrice = GetPriceFlowItem_1.default.get(req.body, priceTable);
                 if (Utils_1.default.isEmpty(itemPrice)) {
-                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.response.resourceNotFound", StringUtils_1.default.message("message.priceTable")));
+                    throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.response.resourceNotFound", (0, i18n_1.getMessage)("message.price")));
                 }
-                return itemPrice;
+                return [HttpStatus.OK, itemPrice];
             }
             catch (error) {
-                this.processError(error);
+                const errorAux = Database_1.default.convertErrorToHttpError(error);
+                this.tryError(errorAux);
             }
         });
     }

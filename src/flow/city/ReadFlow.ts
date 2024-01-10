@@ -2,11 +2,11 @@ import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
 import { CitySearch } from '../../model/schema/address/City'
-import StringUtils from "../../utils/StringUtils"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
 import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
+import { getMessage } from '../../config/i18n'
 
 class ReadFlow extends FlowHttp {
 
@@ -15,7 +15,7 @@ class ReadFlow extends FlowHttp {
       if (Utils.isNotEmpty(req.params?.id)){
         const city = await GetByIdFlowItem.get(req.params.id);
         if (Utils.isEmpty(city)) {
-          throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
+          throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
         }
         return city
       }

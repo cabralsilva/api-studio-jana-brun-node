@@ -54,7 +54,7 @@ class GetProductByIdFlowItem extends Http_1.Http {
         //         model: 'grate'
         //       });
         //       if (Utils.isEmpty(product)) {
-        //         throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.registerNotFounded"))
+        //         throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
         //       }
         //       return product
         //     }

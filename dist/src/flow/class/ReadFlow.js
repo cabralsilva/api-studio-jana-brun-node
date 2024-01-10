@@ -39,7 +39,7 @@ const HttpStatus = __importStar(require("http-status"));
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
 const Class_1 = require("../../model/schema/Class");
-const StringUtils_1 = __importDefault(require("../../utils/StringUtils"));
+const i18n_1 = require("../../config/i18n");
 const Utils_1 = __importDefault(require("../../utils/Utils"));
 const EnrichFindFlowItem_1 = __importDefault(require("./item/EnrichFindFlowItem"));
 const FindClassByFilterFlowItem_1 = __importDefault(require("./item/FindClassByFilterFlowItem"));
@@ -66,7 +66,7 @@ class ReadFlow extends FlowHttp_1.default {
                             }
                         }]);
                     if (Utils_1.default.isEmpty(clazz)) {
-                        throw new HttpError_1.default(HttpStatus.NOT_FOUND, StringUtils_1.default.message("message.registerNotFounded"));
+                        throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.registerNotFounded"));
                     }
                     return clazz;
                 }

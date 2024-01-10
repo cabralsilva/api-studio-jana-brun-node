@@ -28,11 +28,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = __importStar(require("http-status"));
 const HttpError_1 = __importDefault(require("../../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../../utils/StringUtils"));
+const i18n_1 = require("../../../../config/i18n");
 class ValidatePrintReceiptFlowItem {
     validate(financial) {
         if (financial.status !== 'PARTIALLY' && financial.status !== 'PAID') {
-            throw new HttpError_1.default(HttpStatus.NOT_ACCEPTABLE, StringUtils_1.default.message("message.financial.printReceiptPaymentsStatusIllegal"));
+            throw new HttpError_1.default(HttpStatus.NOT_ACCEPTABLE, (0, i18n_1.getMessage)("message.financial.printReceiptPaymentsStatusIllegal"));
         }
     }
 }

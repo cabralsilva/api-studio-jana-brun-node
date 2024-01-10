@@ -1,5 +1,5 @@
 import { PaymentConditionRepository } from "../../../../model/schema/PaymentCondition";
-import StringUtils from "../../../../utils/StringUtils";
+import { getMessage } from "../../../../config/i18n";
 import Utils from "../../../../utils/Utils";
 
 class UpdateFlowItem {
@@ -7,7 +7,7 @@ class UpdateFlowItem {
     const paymentConditionAfter = await PaymentConditionRepository.findByIdAndUpdate(id, { $set: paymentCondition }, { returnDocument: 'after', session })
 
     if (Utils.isEmpty(paymentConditionAfter)) {
-      throw Error(StringUtils.message("message.registerNotFounded"))
+      throw Error(getMessage("message.registerNotFounded"))
     }
     return paymentConditionAfter
   }

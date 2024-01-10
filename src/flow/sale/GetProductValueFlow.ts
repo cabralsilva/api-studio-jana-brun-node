@@ -1,16 +1,16 @@
-import mongoose from 'mongoose'
-import FlowHttp from '../../model/FlowHttp'
+import * as HttpStatus from "http-status"
+import Database from '../../config/Database'
+import { Http } from '../../config/Http'
+import { getMessage } from '../../config/i18n'
 import HttpError from '../../model/HttpError'
 import { PriceTableSearch } from '../../model/schema/PriceTable'
-import StringUtils from '../../utils/StringUtils'
 import Utils from '../../utils/Utils'
 import FindPriceTableFlowItem from '../priceTable/item/FindBySearchFlowItem'
-import * as HttpStatus from "http-status"
 import GetPriceFlowItem from './item/GetPriceFlowItem'
 
-class GetProductValueFlow extends FlowHttp {
+class GetProductValueFlow extends Http {
 
-  async get(req, res) {
+  async get(req, res): Promise<[number, any]>  {
     try {
 
       var searchResultPriceTables = await FindPriceTableFlowItem.find(new PriceTableSearch(
@@ -21,20 +21,22 @@ class GetProductValueFlow extends FlowHttp {
         }
       ))
       if (Utils.isEmpty(searchResultPriceTables?.items)) {
-        throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.response.resourceNotFound", StringUtils.message("message.priceTable")))
+        throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.response.resourceNotFound", getMessage("message.price")))
       }
 
       let priceTable = searchResultPriceTables.items[0]
       let itemPrice = GetPriceFlowItem.get(req.body, priceTable)
 
       if (Utils.isEmpty(itemPrice)) {
-        throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.response.resourceNotFound", StringUtils.message("message.priceTable")))
+        throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.response.resourceNotFound", getMessage("message.price")))
       }
 
-      return itemPrice
-    } catch (error) {
-      this.processError(error)
+      return [HttpStatus.OK, itemPrice]
+    } catch (error: any) {
+      const errorAux = Database.convertErrorToHttpError(error)
+      this.tryError(errorAux)
     }
   }
 }
+
 export default new GetProductValueFlow

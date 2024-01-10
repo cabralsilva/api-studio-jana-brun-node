@@ -30,17 +30,17 @@ const http_status_1 = require("http-status");
 const jwt = __importStar(require("jsonwebtoken"));
 const Configs_1 = require("../../../config/Configs");
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
+const i18n_1 = require("../../../config/i18n");
 class ValidateJWTFlowItem {
     validate(token) {
         jwt.verify(token, Configs_1.jwtSecret, (error, decode) => {
             if (error) {
-                throw new HttpError_1.default(http_status_1.FORBIDDEN, StringUtils_1.default.message("message.http.invalidToken"));
+                throw new HttpError_1.default(http_status_1.FORBIDDEN, (0, i18n_1.getMessage)("message.http.invalidToken"));
             }
             const now = new Date();
             const expireDate = new Date(decode.exp);
             if (expireDate < now) {
-                throw new HttpError_1.default(http_status_1.FORBIDDEN, StringUtils_1.default.message("message.http.expiredToken"));
+                throw new HttpError_1.default(http_status_1.FORBIDDEN, (0, i18n_1.getMessage)("message.http.expiredToken"));
             }
         });
     }

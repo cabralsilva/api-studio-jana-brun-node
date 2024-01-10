@@ -2,7 +2,7 @@ import * as HttpStatus from "http-status"
 import mongoose from "mongoose"
 import FlowHttp from "../../model/FlowHttp"
 import HttpError from "../../model/HttpError"
-import StringUtils from "../../utils/StringUtils"
+import { getMessage } from "../../config/i18n"
 import Utils from "../../utils/Utils"
 import BuildFinancialsByPaymentConditionFlowItem from "../financial/financial/item/BuildFinancialsByPaymentConditionFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
@@ -20,11 +20,11 @@ class GenerateClassSkuFinancial extends FlowHttp {
       const matriculation = await GetByIdFlowItem.get(req.params.id, "paymentConditionClasses student")
 
       if (Utils.isEmpty(matriculation)) {
-        throw new HttpError(HttpStatus.NOT_FOUND, StringUtils.message("message.response.resourceNotFound"))
+        throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.response.resourceNotFound"))
       }
 
       if (matriculation.classSkuFinancialCreated) {
-        throw new HttpError(HttpStatus.PRECONDITION_FAILED, StringUtils.message("message.response.matriculation.financialAlreadyCreated"))
+        throw new HttpError(HttpStatus.PRECONDITION_FAILED, getMessage("message.response.matriculation.financialAlreadyCreated"))
       }
 
       const financialBase = {
