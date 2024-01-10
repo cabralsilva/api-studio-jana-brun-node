@@ -1,4 +1,4 @@
-import { PersonRepository } from "../../../model/schema/Person";
+import { PersonRepository } from "../../../model/schema/IPerson";
 import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 

@@ -1,9 +1,21 @@
-import mongoose from 'mongoose'
+import mongoose, { Date } from 'mongoose'
 import Genre from '../enum/Genre'
 import TypeOfPerson from '../enum/TypeOfPerson'
 import Search from '../Search'
 import { AddressModel } from './address/Address'
+import { SearchFlow } from 'c2-mongoose'
+import { isEmpty, isNotEmpty } from 'c2-mongoose/dist/utils/Utils'
 
+export interface IPerson {
+  name: string
+  tradeName: string
+  socialId: string
+  documentNumber: string
+  bornDate: Date
+  genre: string
+  type: string
+  address: any
+}
 
 const PersonModel = {
   name: { type: String, required: true },
@@ -18,7 +30,38 @@ const PersonModel = {
 
 const Person = new mongoose.Schema(PersonModel)
 
-class PersonSearch extends Search {
+export class PersonSearch extends SearchFlow {
+  constructor(params: any) {
+    super(params)
+    
+    this.buildFilters()
+  }
+
+  buildFilters() {
+    let filters = this.buildDefaultFilters(this)
+
+    if (isEmpty(filters.$and)) {
+      filters = { $and: [] } as any
+    }
+
+    if (isNotEmpty(this.searchText)) {
+      let regex = this.buildRegex(this.searchText)
+      let condition = {
+        $or: [
+          { 'name': { $regex: regex } },
+          { 'tradeName': { $regex: regex } }
+        ]
+      }
+      filters.$and.push(condition)
+    }
+
+    if (filters.$and.length === 0)
+      delete filters['$and']
+    this.filters = filters
+  }
+}
+
+class PersonSearchOLD extends Search {
   name: { type: String }
   tradeName: { type: String }
 
@@ -56,4 +99,4 @@ class PersonSearch extends Search {
 
 const PersonRepository = mongoose.model('person', Person)
 
-export { Person, PersonModel, PersonRepository, PersonSearch }
+export { Person, PersonModel, PersonRepository, PersonSearchOLD }

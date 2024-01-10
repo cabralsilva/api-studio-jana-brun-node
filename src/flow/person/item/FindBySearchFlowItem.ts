@@ -1,7 +1,7 @@
-import { PersonRepository, PersonSearch } from "../../../model/schema/Person"
+import { PersonRepository, PersonSearchOLD } from "../../../model/schema/IPerson"
 
 class FindByFilterFlowItem {
-  async find(search: PersonSearch) {
+  async find(search: PersonSearchOLD) {
     
     if (search.isPageable()) {
       return await search.findPageable(PersonRepository)

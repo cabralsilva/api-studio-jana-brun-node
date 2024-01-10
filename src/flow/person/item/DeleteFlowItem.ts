@@ -1,4 +1,4 @@
-import { PersonRepository } from "../../../model/schema/Person"
+import { PersonRepository } from "../../../model/schema/IPerson"
 
 class DeleteFlowItem {
   async delete(id: string, session = undefined) {

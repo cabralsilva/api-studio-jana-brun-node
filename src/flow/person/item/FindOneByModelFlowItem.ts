@@ -1,4 +1,4 @@
-import { PersonRepository } from "../../../model/schema/Person"
+import { PersonRepository } from "../../../model/schema/IPerson"
 
 class FindOneByModelFlowItem {
   async findOne(model, sort = undefined) {

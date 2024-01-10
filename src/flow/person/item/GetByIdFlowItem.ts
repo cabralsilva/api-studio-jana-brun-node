@@ -1,4 +1,4 @@
-import { PersonRepository } from "../../../model/schema/Person"
+import { PersonRepository } from "../../../model/schema/IPerson"
 
 class GetByIdFlowItem {
   async get(id: string, pop = "", sel = "") {
