@@ -10,58 +10,62 @@ const Utils_1 = __importDefault(require("../../../../utils/Utils"));
 class BuildHeaderData {
     build(payroll) {
         var _a, _b, _c;
-        let html = `<table class='table-main quebra-pagina'>\
-                    <thead class='header'>\
-                      <tr>\
-                        <th colspan='4'>FOLHA ${payroll.description}</th>\
-                      </tr>\
-                    </thead>\
-                    <tbody>\
-                      <tr>\
-                        <td colspan="4">\
-                          <table class="full-width">\
-                            <tr class="header">\
-                              <td>Inicio</td>\
-                              <td>Fim</td>\
-                              <td>Data pagamento</td>\
-                            </tr>\
-                            <tr>\
-                              <td>${(0, moment_1.default)(payroll.initDate).format("DD/MM/YYYY")}</td>\
-                              <td>${(0, moment_1.default)(payroll.endDate).format("DD/MM/YYYY")}</td>\
-                              <td>${(0, moment_1.default)(payroll.targetDate).format("DD/MM/YYYY")}</td>\
-                            </tr>\
-                          </table>\
-                        </td>\
-                      </tr>\
-
-                      <tr class="resume">
-                        <td colspan="4">
-                          <table class="full-width">
-                            <tr class="header">
-                              <td>Funcionário</td>
-                              <td>Pagamento regular</td>
-                              <td>Pagamento variável</td>
-                              <td>Total</td>
-                            </tr>
-                            <tr>
-                              <td>${payroll.payrollEmployeeDetails[0].employee.name}</td>\
-                              <td>${Utils_1.default.toMoneyBR((_a = payroll.payrollEmployeeDetails[0].regularValueTotal) !== null && _a !== void 0 ? _a : 0)}</td>\
-                              <td>${Utils_1.default.toMoneyBR((_b = payroll.payrollEmployeeDetails[0].variableValueTotal) !== null && _b !== void 0 ? _b : 0)}</td>\
-                              <td>${Utils_1.default.toMoneyBR((_c = payroll.payrollEmployeeDetails[0].total) !== null && _c !== void 0 ? _c : 0)}</td>\
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-
-                      <tr class="details header">
-                        <td>Tipo</td>
-                        <td colspan="2">Descrição</td>
-                        <td>Total</td>
-                      </tr>
-                      {{ROWS_PAYMENTS}}\
-                    </tbody>\
-                  </table>`;
-        html = html.replace('{{ROWS_PAYMENTS}}', this.buildDetailPayments(payroll.payrollEmployeeDetails[0].payments));
+        let html = "";
+        for (const payrollEmployeeDetail of payroll.payrollEmployeeDetails) {
+            let htmlAux = `<table class='table-main quebra-pagina'>\
+                      <thead class='header'>\
+                        <tr>\
+                          <th colspan='4'>FOLHA ${payroll.description}</th>\
+                        </tr>\
+                      </thead>\
+                      <tbody>\
+                        <tr>\
+                          <td colspan="4">\
+                            <table class="full-width">\
+                              <tr class="header">\
+                                <td>Inicio</td>\
+                                <td>Fim</td>\
+                                <td>Data pagamento</td>\
+                              </tr>\
+                              <tr>\
+                                <td>${(0, moment_1.default)(payroll.initDate).format("DD/MM/YYYY")}</td>\
+                                <td>${(0, moment_1.default)(payroll.endDate).format("DD/MM/YYYY")}</td>\
+                                <td>${(0, moment_1.default)(payroll.targetDate).format("DD/MM/YYYY")}</td>\
+                              </tr>\
+                            </table>\
+                          </td>\
+                        </tr>\
+  
+                        <tr class="resume">
+                          <td colspan="4">
+                            <table class="full-width">
+                              <tr class="header">
+                                <td>Funcionário</td>
+                                <td>Pagamento regular</td>
+                                <td>Pagamento variável</td>
+                                <td>Total</td>
+                              </tr>
+                              <tr>
+                                <td>${payrollEmployeeDetail.employee.name}</td>\
+                                <td>${Utils_1.default.toMoneyBR((_a = payrollEmployeeDetail.regularValueTotal) !== null && _a !== void 0 ? _a : 0)}</td>\
+                                <td>${Utils_1.default.toMoneyBR((_b = payrollEmployeeDetail.variableValueTotal) !== null && _b !== void 0 ? _b : 0)}</td>\
+                                <td>${Utils_1.default.toMoneyBR((_c = payrollEmployeeDetail.total) !== null && _c !== void 0 ? _c : 0)}</td>\
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+  
+                        <tr class="details header">
+                          <td>Tipo</td>
+                          <td colspan="2">Descrição</td>
+                          <td>Total</td>
+                        </tr>
+                        {{ROWS_PAYMENTS}}\
+                      </tbody>\
+                    </table>`;
+            htmlAux = htmlAux.replace('{{ROWS_PAYMENTS}}', this.buildDetailPayments(payrollEmployeeDetail.payments));
+            html += htmlAux;
+        }
         return html;
     }
     buildDetailPayments(payments) {
@@ -73,10 +77,13 @@ class BuildHeaderData {
                   <td>{{TOTAL}}</td>\
                 </tr>`;
             if (payment.type === TypeOfPayroll_1.default.REGULAR) {
-                let rowAux = row;
-                rowAux = rowAux.replace('{{DESCRIPTION}}', this.buildRegularDescription(payment.monthly));
-                rowAux = rowAux.replace('{{TOTAL}}', Utils_1.default.toMoneyBR(payment.monthly.total));
-                rows += rowAux;
+                for (const detail of payment.monthly.details) {
+                    let rowAux = row;
+                    let detailLabel = `${detail.label} | ${detail.quantityOfDays} dias <br />`;
+                    rowAux = rowAux.replace('{{DESCRIPTION}}', detailLabel);
+                    rowAux = rowAux.replace('{{TOTAL}}', Utils_1.default.toMoneyBR(detail.total));
+                    rows += rowAux;
+                }
             }
             else {
                 for (const paymentClass of payment.classes) {
