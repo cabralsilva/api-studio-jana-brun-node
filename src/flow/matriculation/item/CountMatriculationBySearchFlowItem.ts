@@ -1,7 +1,7 @@
-import { MatriculationRepository, MatriculationSearch } from "../../../model/schema/Matriculation"
+import { MatriculationRepository, MatriculationSearchOLD } from "../../../model/schema/IMatriculation"
 
 class CountMatriculationBySearchFlowItem {
-  async find(search: MatriculationSearch): Promise<number> {
+  async find(search: MatriculationSearchOLD): Promise<number> {
     return await search.count(MatriculationRepository)
   }
 }

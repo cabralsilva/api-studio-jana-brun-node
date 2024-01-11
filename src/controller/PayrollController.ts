@@ -1,39 +1,52 @@
-import { OK } from 'http-status'
+import { Request, Response } from 'express'
+import { ParamsDictionary } from 'express-serve-static-core'
+import { ParsedQs } from 'qs'
 import CreatePayrollFlow from '../flow/payroll/CreatePayrollFlow'
-import DeleteFlow from '../flow/payroll/DeleteFlow'
+import DeletePayrollFlow from '../flow/payroll/DeletePayrollFlow'
+import GetPayrollByIdFlow from '../flow/payroll/GetPayrollByIdFlow'
+import SearchPayrollFlow from '../flow/payroll/SearchPayrollFlow'
+import UpdatePayrollFlow from '../flow/payroll/UpdatePayrollFlow'
+import { CrudController } from './CrudController'
+import { HttpDispatchHandling } from './Controller'
+import PrinterMatriculatedFlow from '../flow/class/printer-matriculations/PrinterMatriculatedFlow'
 import PreProcessPayrollFlow from '../flow/payroll/PreProcessPayrollFlow'
-import ReadFlow from '../flow/payroll/ReadFlow'
-import ResponseHttp from '../model/ResponseHttp'
+import PrinterPayrollFlow from '../flow/payroll/printer/PrinterPayrollFlow'
 
-class PayrollController {
-  create(req, res) {
-    CreatePayrollFlow.create(req, res)
-      .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
-      .catch(error => ResponseHttp.sendResponseError(res, error))
+class PayrollController extends CrudController {
+  constructor() {
+    super({
+      relativePath: "/payroll",
+    })
+
+    this.routers.get(`${this.options.uri}/printer/:payrollId`, this.printerMatriculationsRunner)
+    this.routers.post(`${this.options.uri}/pre-process`, this.preProcessRunner)
   }
 
-  get(req, res) {
-    ReadFlow.read(req, res)
-      .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
-      .catch(error => ResponseHttp.sendResponseError(res, error))
+  @HttpDispatchHandling
+  async preProcessRunner(request: Request, response: Response): Promise<[number, any]> {
+    return await PreProcessPayrollFlow.preProcess(request, response)
   }
 
-  getById(req, res) {
-    ReadFlow.read(req, res)
-      .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
-      .catch(error => ResponseHttp.sendResponseError(res, error))
+  @HttpDispatchHandling
+  async printerMatriculationsRunner(request: Request, response: Response): Promise<[number, any]> {
+    return await PrinterPayrollFlow.print(request, response)
   }
 
-  delete(req, res) {
-    DeleteFlow.delete(req, res)
-      .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
-      .catch(error => ResponseHttp.sendResponseError(res, error))
+  async search(request: Request, response: Response): Promise<[number, any]> {
+    return await SearchPayrollFlow.search(request, response)
   }
-
-  preProcess(req, res) {
-    PreProcessPayrollFlow.preProcess(req, res)
-      .then(payroll => ResponseHttp.sendResponse(res, OK, payroll))
-      .catch(error => ResponseHttp.sendResponseError(res, error))
+  
+  async getById(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, response: Response<any, Record<string, any>>): Promise<[number, any]> {
+    return await GetPayrollByIdFlow.get(request, response)
+  }
+  async create(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, response: Response<any, Record<string, any>>): Promise<[number, any]> {
+    return await CreatePayrollFlow.create(request, response)
+  }
+  async update(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, response: Response<any, Record<string, any>>): Promise<[number, any]> {
+    return await UpdatePayrollFlow.update(request, response)
+  }
+  async delete(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, response: Response<any, Record<string, any>>): Promise<[number, any]> {
+    return await DeletePayrollFlow.delete(request, response)
   }
 }
 

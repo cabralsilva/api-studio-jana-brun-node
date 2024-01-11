@@ -1,7 +1,7 @@
 import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { MatriculationSearch } from '../../model/schema/Matriculation'
+import { MatriculationSearchOLD } from '../../model/schema/IMatriculation'
 import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
 import AdjustGrateItemFlowItem from './item/AdjustGrateItemFlowItem'
@@ -85,7 +85,7 @@ class ReadFlow extends FlowHttp {
         return matriculation
       }
       await PrepareSearchPersonFlowItem.prepare(req)
-      var resultSearch = await FindBySearchFlowItem.find(new MatriculationSearch(req.query)) as any
+      var resultSearch = await FindBySearchFlowItem.find(new MatriculationSearchOLD(req.query)) as any
       return EnrichFindFlowItem.enrich(resultSearch)
     } catch (error) {
       this.processError(error)

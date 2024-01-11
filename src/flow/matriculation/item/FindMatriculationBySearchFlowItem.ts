@@ -1,7 +1,7 @@
-import { MatriculationRepository, MatriculationSearch } from "../../../model/schema/Matriculation"
+import { MatriculationRepository, MatriculationSearchOLD } from "../../../model/schema/IMatriculation"
 
 class FindMatriculationBySearchFlowItem {
-  async find(search: MatriculationSearch) {
+  async find(search: MatriculationSearchOLD) {
     
     if (search.isPageable()) {
       return await search.findPageable(MatriculationRepository)

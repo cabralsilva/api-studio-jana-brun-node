@@ -1,4 +1,4 @@
-import { MatriculationRepository } from "../../../model/schema/Matriculation"
+import { MatriculationRepository } from "../../../model/schema/IMatriculation"
 
 class DeleteFlowItem {
   async delete(id: string, session = undefined) {

@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Matriculation_1 = require("../../../model/schema/Matriculation");
+const IMatriculation_1 = require("../../../model/schema/IMatriculation");
 class CountMatriculationBySearchFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield search.count(Matriculation_1.MatriculationRepository);
+            return yield search.count(IMatriculation_1.MatriculationRepository);
         });
     }
 }

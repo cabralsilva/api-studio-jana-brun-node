@@ -1,23 +1,27 @@
 import moment = require("moment")
+import { OK } from "http-status"
 import mongoose from "mongoose"
-import FlowHttp from "../../model/FlowHttp"
-import { EmployeePayment, PayrollEmployeeDetail } from "../../model/schema/Payroll"
+import Database from "../../config/Database"
+import { Http } from "../../config/Http"
+import { EmployeePayment, PayrollEmployeeDetail } from "../../model/schema/IPayroll"
 import GetEmployeeByIdFlowItem from "../employee/item/GetEmployeeByIdFlowItem"
 import CalculateRegularSalaryFlowItem from "./item/CalculateRegularSalaryFlowItem"
 import CalculateVariableSalaryFlowItem from "./item/CalculateVariableSalaryFlowItem"
+import { Request, Response } from "express";
 
-class PreProcessPayrollFlow extends FlowHttp {
+class PreProcessPayrollFlow extends Http {
 
-  async preProcess(req, res) {
+  async preProcess(request: Request, response: Response): Promise<[number, any]> {
     const session = await mongoose.startSession()
     try {
       session.startTransaction()
       await session.commitTransaction()
-      return await this.buildPayrollDetail(req.body)
+      const ret = await this.buildPayrollDetail(request.body)
+      return [OK, ret]
     } catch (error) {
-      console.log(error)
       await session.abortTransaction()
-      this.processError(error)
+      const errorAux = Database.convertErrorToHttpError(error)
+      this.tryError(errorAux)
     } finally {
       await session.endSession()
     }

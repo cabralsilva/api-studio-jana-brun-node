@@ -1,4 +1,4 @@
-import { MatriculationRepository } from "../../../model/schema/Matriculation";
+import { MatriculationRepository } from "../../../model/schema/IMatriculation";
 import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 

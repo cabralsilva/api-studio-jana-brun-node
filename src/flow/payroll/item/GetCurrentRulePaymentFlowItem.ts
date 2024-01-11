@@ -1,7 +1,3 @@
-import mongoose from "mongoose"
-import { MatriculationSearch } from "../../../model/schema/Matriculation"
-import CountMatriculationBySearchFlowItem from "../../matriculation/item/CountMatriculationBySearchFlowItem"
-
 class GetCurrentRulePaymentFlowItem {
   async get(clazz: any, rolesOfEmployee: any, quantityMatriculation: number) {
     

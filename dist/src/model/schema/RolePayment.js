@@ -28,8 +28,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RolePaymentSearch = exports.RolePaymentRepository = exports.RolePaymentModel = exports.RolePayment = void 0;
 const mongoose = __importStar(require("mongoose"));
-const TypeOfSalary_1 = __importDefault(require("../enum/TypeOfSalary"));
 const Search_1 = __importDefault(require("../Search"));
+const TypeOfSalary_1 = __importDefault(require("../enum/TypeOfSalary"));
 const RolePaymentModel = {
     employee: { type: mongoose.Schema.Types.ObjectId, ref: 'employee', required: true },
     sinceStudentNumber: { type: Number },

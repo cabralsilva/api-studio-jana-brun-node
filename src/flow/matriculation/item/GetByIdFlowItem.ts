@@ -1,4 +1,4 @@
-import { MatriculationRepository } from "../../../model/schema/Matriculation"
+import { MatriculationRepository } from "../../../model/schema/IMatriculation"
 
 class GetByIdFlowItem {
   async get(id: string, pop = undefined, sel = ""): Promise<any> {

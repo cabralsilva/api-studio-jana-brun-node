@@ -1,4 +1,13 @@
 import * as mongoose from 'mongoose'
+import { IProduct } from './IProduct'
+
+export interface ISkuItem {
+  product: mongoose.Types.ObjectId | IProduct
+  grateItemList: any[]
+  quantity: number
+  unitValue: number
+  totalValue: number
+}
 
 const SkuItemModel = {
   product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },

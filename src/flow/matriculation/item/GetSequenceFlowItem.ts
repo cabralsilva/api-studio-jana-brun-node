@@ -1,11 +1,11 @@
-import { MatriculationRepository, MatriculationSearch } from "../../../model/schema/Matriculation";
+import { MatriculationRepository, MatriculationSearchOLD } from "../../../model/schema/IMatriculation";
 import StringUtils from "../../../utils/StringUtils";
 
 class GetSequenceFlowItem {
   async get(offset: number = 0) {
     var sequence = StringUtils.padToLeft("0", 6, 1)
     
-    var count = await new MatriculationSearch({
+    var count = await new MatriculationSearchOLD({
         orderBy: "created_at",
         order: "desc",
         page: 1,

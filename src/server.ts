@@ -7,7 +7,7 @@ import Database from './config/Database'
 import i18n from './config/i18n'
 import AuthenticationController from './controller/AuthenticationController'
 import CityController from './controller/CityController'
-import ClassController from './controller/ClassController'
+import ClassControllerOLD from './controller/ClassController_OLD'
 import ClassroomController from './controller/ClassroomController'
 import CountryController from './controller/CountryController'
 import CustomerController from './controller/CustomerController'
@@ -17,7 +17,7 @@ import GrateController from './controller/GrateController'
 import MatriculationController from './controller/MatriculationController'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
-import PayrollController from './controller/PayrollController'
+import PayrollControllerOLD from './controller/PayrollControllerOLD'
 import PersonController from './controller/PersonController'
 import PriceTableController from './controller/PriceTableController'
 import ProductController from './controller/ProductController'
@@ -27,6 +27,8 @@ import StateController from './controller/StateController'
 import SupplierController from './controller/SupplierController'
 import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
 import httpContext from 'express-http-context'
+import ClassController from './controller/ClassController'
+import PayrollController from './controller/PayrollController'
 
 class StartUp {
   public app: express.Application
@@ -154,11 +156,11 @@ class StartUp {
     this.app.route('/api/v2/classroom/:id').patch(ClassroomController.update)
     this.app.route('/api/v2/classroom/:id').delete(ClassroomController.delete)
 
-    this.app.route('/api/v2/class').get(ClassController.get)
-    this.app.route('/api/v2/class/:id').get(ClassController.getById)
-    this.app.route('/api/v2/class').post(ClassController.create)
-    this.app.route('/api/v2/class/:id').patch(ClassController.update)
-    this.app.route('/api/v2/class/:id').delete(ClassController.delete)
+    // this.app.route('/api/v2/class').get(ClassControllerOLD.get)
+    // this.app.route('/api/v2/class/:id').get(ClassControllerOLD.getById)
+    // this.app.route('/api/v2/class').post(ClassControllerOLD.create)
+    // this.app.route('/api/v2/class/:id').patch(ClassControllerOLD.update)
+    // this.app.route('/api/v2/class/:id').delete(ClassControllerOLD.delete)
 
     this.app.route('/api/v2/person').get(PersonController.get)
 
@@ -178,15 +180,17 @@ class StartUp {
     this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationController.generateFinancialClassSku)
     this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationController.generateFinancialExtraSku)
     
-    this.app.route('/api/v2/payroll').get(PayrollController.get)
-    this.app.route('/api/v2/payroll/:id').get(PayrollController.getById)
-    this.app.route('/api/v2/payroll').post(PayrollController.create)
-    this.app.route('/api/v2/payroll/:id').delete(PayrollController.delete)
-    this.app.route('/api/v2/payroll/pre-process').post(PayrollController.preProcess)
+    // this.app.route('/api/v2/payroll').get(PayrollControllerOLD.get)
+    // this.app.route('/api/v2/payroll/:id').get(PayrollControllerOLD.getById)
+    // this.app.route('/api/v2/payroll').post(PayrollControllerOLD.create)
+    // this.app.route('/api/v2/payroll/:id').delete(PayrollControllerOLD.delete)
+    // this.app.route('/api/v2/payroll/pre-process').post(PayrollControllerOLD.preProcess)
 
     this.app.use(CustomerController.routers)
     this.app.use(ProductController.routers)
     this.app.use(SaleController.routers)
+    this.app.use(ClassController.routers)
+    this.app.use(PayrollController.routers)
   }
 }
 

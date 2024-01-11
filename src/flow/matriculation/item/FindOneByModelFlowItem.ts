@@ -1,4 +1,4 @@
-import { MatriculationRepository } from "../../../model/schema/Matriculation"
+import { MatriculationRepository } from "../../../model/schema/IMatriculation"
 
 class FindOneByModelFlowItem {
   async findOne(model, sort = undefined, pop = undefined): Promise<any> {

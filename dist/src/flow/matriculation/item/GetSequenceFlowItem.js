@@ -12,18 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Matriculation_1 = require("../../../model/schema/Matriculation");
+const IMatriculation_1 = require("../../../model/schema/IMatriculation");
 const StringUtils_1 = __importDefault(require("../../../utils/StringUtils"));
 class GetSequenceFlowItem {
     get(offset = 0) {
         return __awaiter(this, void 0, void 0, function* () {
             var sequence = StringUtils_1.default.padToLeft("0", 6, 1);
-            var count = yield new Matriculation_1.MatriculationSearch({
+            var count = yield new IMatriculation_1.MatriculationSearchOLD({
                 orderBy: "created_at",
                 order: "desc",
                 page: 1,
                 limit: 1
-            }).count(Matriculation_1.MatriculationRepository);
+            }).count(IMatriculation_1.MatriculationRepository);
             sequence = StringUtils_1.default.padToLeft("0", 6, (Number(count) + 1 + offset));
             return sequence;
         });

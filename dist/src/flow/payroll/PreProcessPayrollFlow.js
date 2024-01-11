@@ -13,24 +13,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
+const http_status_1 = require("http-status");
 const mongoose_1 = __importDefault(require("mongoose"));
-const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
+const Database_1 = __importDefault(require("../../config/Database"));
+const Http_1 = require("../../config/Http");
 const GetEmployeeByIdFlowItem_1 = __importDefault(require("../employee/item/GetEmployeeByIdFlowItem"));
 const CalculateRegularSalaryFlowItem_1 = __importDefault(require("./item/CalculateRegularSalaryFlowItem"));
 const CalculateVariableSalaryFlowItem_1 = __importDefault(require("./item/CalculateVariableSalaryFlowItem"));
-class PreProcessPayrollFlow extends FlowHttp_1.default {
-    preProcess(req, res) {
+class PreProcessPayrollFlow extends Http_1.Http {
+    preProcess(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const session = yield mongoose_1.default.startSession();
             try {
                 session.startTransaction();
                 yield session.commitTransaction();
-                return yield this.buildPayrollDetail(req.body);
+                const ret = yield this.buildPayrollDetail(request.body);
+                return [http_status_1.OK, ret];
             }
             catch (error) {
-                console.log(error);
                 yield session.abortTransaction();
-                this.processError(error);
+                const errorAux = Database_1.default.convertErrorToHttpError(error);
+                this.tryError(errorAux);
             }
             finally {
                 yield session.endSession();

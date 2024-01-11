@@ -1,7 +1,7 @@
 enum TypeOfSalary {
-  BY_HOUR = "message.employee.typeOfPayment.byHour",
-  BY_PERCENT = "message.employee.typeOfPayment.byPercent",
-  BY_MONTH = "message.employee.typeOfPayment.byMonth"
+  BY_HOUR = "BY_HOUR",
+  BY_PERCENT = "BY_PERCENT",
+  BY_MONTH = "BY_MONTH"
 }
 
 export default TypeOfSalary

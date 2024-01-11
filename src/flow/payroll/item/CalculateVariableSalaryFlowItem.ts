@@ -1,20 +1,20 @@
 import { Moment } from "moment";
-import DaysOfWeek from "../../../model/enum/DaysOfWeek";
-import { ClassSearch } from "../../../model/schema/Class";
-import { MatriculationSearch } from "../../../model/schema/Matriculation";
-import { EmployeePayment, PaymentByHourDetail, PaymentByPercentDetail, PaymentClass } from "../../../model/schema/Payroll";
 import { getMessage } from "../../../config/i18n";
+import DaysOfWeek from "../../../model/enum/DaysOfWeek";
+import { ClassSearchOLD } from "../../../model/schema/IClass";
+import { MatriculationSearchOLD } from "../../../model/schema/IMatriculation";
+import { PaymentByHourDetail, PaymentByPercentDetail, PaymentClass } from "../../../model/schema/IPayroll";
 import Utils from "../../../utils/Utils";
-import FindClassByFilterFlowItem from "../../class/item/FindClassByFilterFlowItem";
+import FindClassByFilterFlowItem from "../../class_OLD/item/FindClassByFilterFlowItem";
 import FindMatriculationBySearchFlowItem from "../../matriculation/item/FindMatriculationBySearchFlowItem";
 import GetCurrentRulePaymentFlowItem from "./GetCurrentRulePaymentFlowItem";
 import moment = require("moment");
 
 class CalculateRegularSalaryFlowItem {
   async calculate(initDate: Moment, endDate: Moment, employee: any): Promise<PaymentClass[]> {
-    const classes = await FindClassByFilterFlowItem.find(new ClassSearch({
+    const classes = await FindClassByFilterFlowItem.find(new ClassSearchOLD({
       populate: 'rolePayments.employee',
-      // endDateRange: [moment()],
+      endDateRange: [moment()],
       employee: [employee]
     }))
 
@@ -29,7 +29,7 @@ class CalculateRegularSalaryFlowItem {
       }
 
       //somar quantidade de alunos na turma
-      var matriculations = await FindMatriculationBySearchFlowItem.find(new MatriculationSearch({
+      var matriculations = await FindMatriculationBySearchFlowItem.find(new MatriculationSearchOLD({
         classes: clazz._id,
         status: 'EFFECTIVE'
       }))

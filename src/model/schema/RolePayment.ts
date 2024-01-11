@@ -1,6 +1,15 @@
 import * as mongoose from 'mongoose'
-import TypeOfSalary from '../enum/TypeOfSalary'
 import Search from '../Search'
+import TypeOfSalary from '../enum/TypeOfSalary'
+
+export interface IRolePayment {
+  employee: mongoose.Types.ObjectId | any
+  sinceStudentNumber: number
+  untilStudentNumber: number
+  typeOfPayment: { type: String, enum: TypeOfSalary, required: true, default: TypeOfSalary.BY_MONTH },
+  paymentValue: number
+  active: boolean
+}
 
 const RolePaymentModel = {
   employee: { type: mongoose.Schema.Types.ObjectId, ref: 'employee', required: true },

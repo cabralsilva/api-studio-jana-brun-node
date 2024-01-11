@@ -35,7 +35,6 @@ const Database_1 = __importDefault(require("./config/Database"));
 const i18n_1 = __importDefault(require("./config/i18n"));
 const AuthenticationController_1 = __importDefault(require("./controller/AuthenticationController"));
 const CityController_1 = __importDefault(require("./controller/CityController"));
-const ClassController_1 = __importDefault(require("./controller/ClassController"));
 const ClassroomController_1 = __importDefault(require("./controller/ClassroomController"));
 const CountryController_1 = __importDefault(require("./controller/CountryController"));
 const CustomerController_1 = __importDefault(require("./controller/CustomerController"));
@@ -45,7 +44,6 @@ const GrateController_1 = __importDefault(require("./controller/GrateController"
 const MatriculationController_1 = __importDefault(require("./controller/MatriculationController"));
 const NoticeController_1 = __importDefault(require("./controller/NoticeController"));
 const PaymentConditionController_1 = __importDefault(require("./controller/PaymentConditionController"));
-const PayrollController_1 = __importDefault(require("./controller/PayrollController"));
 const PersonController_1 = __importDefault(require("./controller/PersonController"));
 const PriceTableController_1 = __importDefault(require("./controller/PriceTableController"));
 const ProductController_1 = __importDefault(require("./controller/ProductController"));
@@ -55,6 +53,8 @@ const StateController_1 = __importDefault(require("./controller/StateController"
 const SupplierController_1 = __importDefault(require("./controller/SupplierController"));
 const AuthorizationFlow_1 = __importDefault(require("./flow/authorization/AuthorizationFlow"));
 const express_http_context_1 = __importDefault(require("express-http-context"));
+const ClassController_1 = __importDefault(require("./controller/ClassController"));
+const PayrollController_1 = __importDefault(require("./controller/PayrollController"));
 class StartUp {
     constructor() {
         this.swaggerFile = (process.cwd() + "/postman/schemas/schema.json");
@@ -159,11 +159,11 @@ class StartUp {
         this.app.route('/api/v2/classroom').post(ClassroomController_1.default.create);
         this.app.route('/api/v2/classroom/:id').patch(ClassroomController_1.default.update);
         this.app.route('/api/v2/classroom/:id').delete(ClassroomController_1.default.delete);
-        this.app.route('/api/v2/class').get(ClassController_1.default.get);
-        this.app.route('/api/v2/class/:id').get(ClassController_1.default.getById);
-        this.app.route('/api/v2/class').post(ClassController_1.default.create);
-        this.app.route('/api/v2/class/:id').patch(ClassController_1.default.update);
-        this.app.route('/api/v2/class/:id').delete(ClassController_1.default.delete);
+        // this.app.route('/api/v2/class').get(ClassControllerOLD.get)
+        // this.app.route('/api/v2/class/:id').get(ClassControllerOLD.getById)
+        // this.app.route('/api/v2/class').post(ClassControllerOLD.create)
+        // this.app.route('/api/v2/class/:id').patch(ClassControllerOLD.update)
+        // this.app.route('/api/v2/class/:id').delete(ClassControllerOLD.delete)
         this.app.route('/api/v2/person').get(PersonController_1.default.get);
         this.app.route('/api/v2/financial').get(FinancialController_1.default.get);
         this.app.route('/api/v2/financial/:id').get(FinancialController_1.default.getById);
@@ -179,14 +179,16 @@ class StartUp {
         this.app.route('/api/v2/matriculation/:id').delete(MatriculationController_1.default.delete);
         this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationController_1.default.generateFinancialClassSku);
         this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationController_1.default.generateFinancialExtraSku);
-        this.app.route('/api/v2/payroll').get(PayrollController_1.default.get);
-        this.app.route('/api/v2/payroll/:id').get(PayrollController_1.default.getById);
-        this.app.route('/api/v2/payroll').post(PayrollController_1.default.create);
-        this.app.route('/api/v2/payroll/:id').delete(PayrollController_1.default.delete);
-        this.app.route('/api/v2/payroll/pre-process').post(PayrollController_1.default.preProcess);
+        // this.app.route('/api/v2/payroll').get(PayrollControllerOLD.get)
+        // this.app.route('/api/v2/payroll/:id').get(PayrollControllerOLD.getById)
+        // this.app.route('/api/v2/payroll').post(PayrollControllerOLD.create)
+        // this.app.route('/api/v2/payroll/:id').delete(PayrollControllerOLD.delete)
+        // this.app.route('/api/v2/payroll/pre-process').post(PayrollControllerOLD.preProcess)
         this.app.use(CustomerController_1.default.routers);
         this.app.use(ProductController_1.default.routers);
         this.app.use(SaleController_1.default.routers);
+        this.app.use(ClassController_1.default.routers);
+        this.app.use(PayrollController_1.default.routers);
     }
 }
 exports.default = new StartUp();

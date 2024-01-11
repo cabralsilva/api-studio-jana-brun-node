@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Person_1 = require("../../../model/schema/Person");
+const IPerson_1 = require("../../../model/schema/IPerson");
 class FindOneByModelFlowItem {
     findOne(model, sort = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Person_1.PersonRepository.findOne(model)
+            return yield IPerson_1.PersonRepository.findOne(model)
                 .sort(sort);
         });
     }

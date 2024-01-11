@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Matriculation_1 = require("../../../model/schema/Matriculation");
+const IMatriculation_1 = require("../../../model/schema/IMatriculation");
 class FindMatriculationBySearchFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
             if (search.isPageable()) {
-                return yield search.findPageable(Matriculation_1.MatriculationRepository);
+                return yield search.findPageable(IMatriculation_1.MatriculationRepository);
             }
-            return yield search.findNoPageable(Matriculation_1.MatriculationRepository);
+            return yield search.findNoPageable(IMatriculation_1.MatriculationRepository);
         });
     }
 }

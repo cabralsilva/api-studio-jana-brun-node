@@ -1,6 +1,6 @@
 enum StatusOfMatriculation {
-  EFFECTIVE = "label.effective",
-  CANCELLED = "label.cancelled"
+  EFFECTIVE = "EFFECTIVE",
+  CANCELLED = "CANCELLED"
 }
 
 export default StatusOfMatriculation

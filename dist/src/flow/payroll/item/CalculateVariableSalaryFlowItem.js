@@ -12,21 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const DaysOfWeek_1 = __importDefault(require("../../../model/enum/DaysOfWeek"));
-const Class_1 = require("../../../model/schema/Class");
-const Matriculation_1 = require("../../../model/schema/Matriculation");
 const i18n_1 = require("../../../config/i18n");
+const DaysOfWeek_1 = __importDefault(require("../../../model/enum/DaysOfWeek"));
+const IClass_1 = require("../../../model/schema/IClass");
+const IMatriculation_1 = require("../../../model/schema/IMatriculation");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
-const FindClassByFilterFlowItem_1 = __importDefault(require("../../class/item/FindClassByFilterFlowItem"));
+const FindClassByFilterFlowItem_1 = __importDefault(require("../../class_OLD/item/FindClassByFilterFlowItem"));
 const FindMatriculationBySearchFlowItem_1 = __importDefault(require("../../matriculation/item/FindMatriculationBySearchFlowItem"));
 const GetCurrentRulePaymentFlowItem_1 = __importDefault(require("./GetCurrentRulePaymentFlowItem"));
 const moment = require("moment");
 class CalculateRegularSalaryFlowItem {
     calculate(initDate, endDate, employee) {
         return __awaiter(this, void 0, void 0, function* () {
-            const classes = yield FindClassByFilterFlowItem_1.default.find(new Class_1.ClassSearch({
+            const classes = yield FindClassByFilterFlowItem_1.default.find(new IClass_1.ClassSearchOLD({
                 populate: 'rolePayments.employee',
-                // endDateRange: [moment()],
+                endDateRange: [moment()],
                 employee: [employee]
             }));
             var paymentClasses = [];
@@ -38,7 +38,7 @@ class CalculateRegularSalaryFlowItem {
                     }
                 };
                 //somar quantidade de alunos na turma
-                var matriculations = yield FindMatriculationBySearchFlowItem_1.default.find(new Matriculation_1.MatriculationSearch({
+                var matriculations = yield FindMatriculationBySearchFlowItem_1.default.find(new IMatriculation_1.MatriculationSearchOLD({
                     classes: clazz._id,
                     status: 'EFFECTIVE'
                 }));

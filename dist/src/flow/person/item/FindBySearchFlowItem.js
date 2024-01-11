@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Person_1 = require("../../../model/schema/Person");
+const IPerson_1 = require("../../../model/schema/IPerson");
 class FindByFilterFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
             if (search.isPageable()) {
-                return yield search.findPageable(Person_1.PersonRepository);
+                return yield search.findPageable(IPerson_1.PersonRepository);
             }
-            return yield search.findNoPageable(Person_1.PersonRepository);
+            return yield search.findNoPageable(IPerson_1.PersonRepository);
         });
     }
 }

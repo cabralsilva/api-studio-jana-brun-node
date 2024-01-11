@@ -23,6 +23,12 @@ export default {
       matriculation: {
         financialAlreadyCreated: "Registros financeiros já foram gerados anteriorment. {0}"
       }
+    },
+    enum: {
+      typeOfPayroll: {
+        REGULAR: "Regular",
+        VARIABLE: "Variável"
+      }
     }
   }
 }

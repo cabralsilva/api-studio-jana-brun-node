@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = __importStar(require("http-status"));
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
-const Matriculation_1 = require("../../model/schema/Matriculation");
+const IMatriculation_1 = require("../../model/schema/IMatriculation");
 const i18n_1 = require("../../config/i18n");
 const Utils_1 = __importDefault(require("../../utils/Utils"));
 const AdjustGrateItemFlowItem_1 = __importDefault(require("./item/AdjustGrateItemFlowItem"));
@@ -119,7 +119,7 @@ class ReadFlow extends FlowHttp_1.default {
                     return matriculation;
                 }
                 yield PrepareSearchPersonFlowItem_1.default.prepare(req);
-                var resultSearch = yield FindMatriculationBySearchFlowItem_1.default.find(new Matriculation_1.MatriculationSearch(req.query));
+                var resultSearch = yield FindMatriculationBySearchFlowItem_1.default.find(new IMatriculation_1.MatriculationSearchOLD(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {

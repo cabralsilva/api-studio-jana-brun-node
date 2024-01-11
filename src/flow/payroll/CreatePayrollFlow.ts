@@ -1,28 +1,38 @@
+import { C2Flow } from "c2-mongoose"
+import { Request, Response } from "express"
+import { OK } from "http-status"
 import mongoose from "mongoose"
-import FlowHttp from "../../model/FlowHttp"
-import CreatePayrollFlowItem from "./item/CreatePayrollFlowItem"
-import PrepareFinancialFromPayrollFlowItem from "./item/PrepareFinancialFromPayrollFlowItem"
+import Database from "../../config/Database"
+import { Http } from "../../config/Http"
+import { getMessage } from "../../config/i18n"
+import { IPayroll, PayrollRepository } from "../../model/schema/IPayroll"
 import CreateFinancialFlowItem from "../financial/financial/item/CreateFinancialFlowItem"
+import PrepareFinancialFromPayrollFlowItem from "../payroll_OLD/item/PrepareFinancialFromPayrollFlowItem"
 
-class CreatePayrollFlow extends FlowHttp {
+class CreatePayrollFlow extends Http {
 
-  async create(req, res) {
+  private crudPayroll = new C2Flow<IPayroll>(PayrollRepository)
+
+  async create(request: Request, response: Response): Promise<[number, any]> {
     const session = await mongoose.startSession()
     try {
       session.startTransaction()
-      const payroll = await CreatePayrollFlowItem.create(req.body, session)
-      const employeesPayrolls = payroll.flatMap(p => p.payrollEmployeeDetails)
+      const payload = { ...request.body }
+      const payrollAfter = await this.crudPayroll.create(payload, { session, logger: false })
+      // const payroll = await CreatePayrollFlowItem.create(req.body, session)
+      // const employeesPayrolls = payrollAfter.payrollEmployeeDetails
 
       var offsetSequence = 0
-      for (const employeesPayroll of employeesPayrolls) {
-        var financial = await PrepareFinancialFromPayrollFlowItem.prepare(payroll[0], employeesPayroll, offsetSequence++)
+      for (const employeesPayroll of payrollAfter.payrollEmployeeDetails) {
+        var financial = await PrepareFinancialFromPayrollFlowItem.prepare(payrollAfter, employeesPayroll, offsetSequence++)
         await CreateFinancialFlowItem.create(financial, session)
       }
       await session.commitTransaction()
+      return [OK, { message: getMessage("message.registerCreatedSuccess"), ...payrollAfter }]
     } catch (error) {
-      console.error(error)
       await session.abortTransaction()
-      this.processError(error)
+      const errorAux = Database.convertErrorToHttpError(error)
+      this.tryError(errorAux)
     } finally {
       await session.endSession()
     }
