@@ -9,6 +9,7 @@ import GetByIdFlowItem from "./item/GetByIdFlowItem"
 import CreateFinancialFlowItem from "../financial/financial/item/CreateFinancialFlowItem"
 import UpdateFlowItem from "./item/UpdateFlowItem"
 import moment = require("moment")
+import DateUtils from "../../utils/DateUtils"
 
 class GenerateClassSkuFinancial extends FlowHttp {
 
@@ -29,7 +30,7 @@ class GenerateClassSkuFinancial extends FlowHttp {
 
       const financialBase = {
         movimentDate: new Date(),
-        dueDate: req.body.dueDate,
+        dueDate: DateUtils.stringToDateTimeUTC0(req.body.dueDate),
         description: `MAT-${matriculation.sequence}`,
         value: matriculation.clazzesSkus.reduce((acc, clazzSku) => { return acc + clazzSku.totalValue }, 0),
         dayFixedOfPayment: moment(req.body.dueDate).date(),

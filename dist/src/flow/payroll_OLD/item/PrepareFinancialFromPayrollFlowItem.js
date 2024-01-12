@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
 const GetEmployeeByIdFlowItem_1 = __importDefault(require("../../employee/item/GetEmployeeByIdFlowItem"));
 const GetSequenceFlowItem_1 = __importDefault(require("../../financial/financial/item/GetSequenceFlowItem"));
+const DateUtils_1 = __importDefault(require("../../../utils/DateUtils"));
 class PrepareFinancialFromPayrollFlowItem {
     prepare(payroll, employeePayroll, offset = 0) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -23,7 +24,7 @@ class PrepareFinancialFromPayrollFlowItem {
                 sequence: yield GetSequenceFlowItem_1.default.get(financial, offset),
                 description: employeePayroll.description,
                 movimentDate: moment(payroll.endDate),
-                dueDate: moment(payroll.targetDate),
+                dueDate: DateUtils_1.default.toDateTimeUTC0(moment(payroll.targetDate).toDate()),
                 type: 'DEBIT',
                 installment: 1,
                 installmentTotal: 1,

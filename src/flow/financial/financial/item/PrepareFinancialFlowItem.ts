@@ -6,6 +6,7 @@ import GetByIdFlowItem from "../../paymentCondition/item/GetByIdFlowItem";
 import GetSequenceFlowItem from "./GetSequenceFlowItem";
 import GetValueOfInstallmenFlowItem from "./GetValueOfInstallmenFlowItem";
 import moment = require("moment");
+import DateUtils from "../../../../utils/DateUtils";
 
 class PrepareFinancialFlowItem {
   async prepare(financialBase: any): Promise<any[]> {
@@ -17,10 +18,11 @@ class PrepareFinancialFlowItem {
 
     for (var installmentNumber = 1; installmentNumber <= paymentCondition.quantityInstallments; installmentNumber++) {
       var c = moment(financialBase.movimentDate)
+      let dueDateAux = moment(financialBase.dueDate).add(installmentNumber - 1, 'months').toDate()
       const financial = {
         ...financialBase,
         movimentDate: moment(financialBase.movimentDate),
-        dueDate: moment(financialBase.dueDate).add(installmentNumber - 1, 'months'),
+        dueDate: DateUtils.toDateTimeUTC0(dueDateAux),
         value: GetValueOfInstallmenFlowItem.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value),
         installment: installmentNumber,
         installmentTotal: paymentCondition.quantityInstallments,

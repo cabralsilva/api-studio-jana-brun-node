@@ -1,14 +1,14 @@
 import * as HttpStatus from "http-status"
 import mongoose from "mongoose"
+import { getMessage } from "../../config/i18n"
 import FlowHttp from "../../model/FlowHttp"
 import HttpError from "../../model/HttpError"
-import { getMessage } from "../../config/i18n"
+import DateUtils from "../../utils/DateUtils"
 import Utils from "../../utils/Utils"
 import BuildFinancialsByPaymentConditionFlowItem from "../financial/financial/item/BuildFinancialsByPaymentConditionFlowItem"
-import GetByIdFlowItem from "./item/GetByIdFlowItem"
 import CreateFinancialFlowItem from "../financial/financial/item/CreateFinancialFlowItem"
+import GetByIdFlowItem from "./item/GetByIdFlowItem"
 import UpdateFlowItem from "./item/UpdateFlowItem"
-import moment = require("moment")
 
 class GenerateExtraSkuFinancial extends FlowHttp {
 
@@ -29,7 +29,7 @@ class GenerateExtraSkuFinancial extends FlowHttp {
 
       const financialBase = {
         movimentDate: new Date(),
-        dueDate: req.body.dueDate,
+        dueDate: DateUtils.stringToDateTimeUTC0(req.body.dueDate),
         description: `MAT/EX-${matriculation.sequence}`,
         value: matriculation.extraSkus.reduce((acc, extraSku) => { return acc + extraSku.totalValue }, 0),
         type: 'RECEIPT',

@@ -2,6 +2,7 @@
 import moment = require("moment");
 import GetEmployeeByIdFlowItem from "../../employee/item/GetEmployeeByIdFlowItem";
 import GetSequenceFlowItem from "../../financial/financial/item/GetSequenceFlowItem";
+import DateUtils from "../../../utils/DateUtils";
 
 class PrepareFinancialFromPayrollFlowItem {
   async prepare(payroll: any, employeePayroll: any, offset: number = 0): Promise<any> {
@@ -10,7 +11,7 @@ class PrepareFinancialFromPayrollFlowItem {
       sequence: await GetSequenceFlowItem.get(financial, offset),
       description: employeePayroll.description,
       movimentDate: moment(payroll.endDate),
-      dueDate: moment(payroll.targetDate),
+      dueDate: DateUtils.toDateTimeUTC0(moment(payroll.targetDate).toDate()),
       type: 'DEBIT',
       installment: 1,
       installmentTotal: 1,

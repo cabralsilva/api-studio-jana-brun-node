@@ -2,6 +2,7 @@ import GetSequenceFlowItem from "./GetSequenceFlowItem";
 import GetValueOfInstallmenFlowItem from "./GetValueOfInstallmenFlowItem";
 import moment = require("moment");
 import Utils from "../../../../utils/Utils";
+import DateUtils from "../../../../utils/DateUtils";
 
 class BuildFinancialsByPaymentConditionFlowItem {
   async build(paymentCondition: any, financialBase: {movimentDate: any, dueDate: any, description?: string, value: number, dayFixedOfPayment?: number}): Promise<any[]> {
@@ -17,7 +18,7 @@ class BuildFinancialsByPaymentConditionFlowItem {
       const financial = {
         ...financialBase,
         movimentDate: moment(financialBase.movimentDate),
-        dueDate,
+        dueDate: DateUtils.toDateTimeUTC0(dueDate.toDate()),
         value: GetValueOfInstallmenFlowItem.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value),
         installment: installmentNumber,
         installmentTotal: paymentCondition.quantityInstallments,

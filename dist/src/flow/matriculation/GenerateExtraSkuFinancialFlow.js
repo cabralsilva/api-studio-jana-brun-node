@@ -37,13 +37,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = __importStar(require("http-status"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const i18n_1 = require("../../config/i18n");
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
-const i18n_1 = require("../../config/i18n");
+const DateUtils_1 = __importDefault(require("../../utils/DateUtils"));
 const Utils_1 = __importDefault(require("../../utils/Utils"));
 const BuildFinancialsByPaymentConditionFlowItem_1 = __importDefault(require("../financial/financial/item/BuildFinancialsByPaymentConditionFlowItem"));
-const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
 const CreateFinancialFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFinancialFlowItem"));
+const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
 const UpdateFlowItem_1 = __importDefault(require("./item/UpdateFlowItem"));
 class GenerateExtraSkuFinancial extends FlowHttp_1.default {
     generate(req, res) {
@@ -60,7 +61,7 @@ class GenerateExtraSkuFinancial extends FlowHttp_1.default {
                 }
                 const financialBase = {
                     movimentDate: new Date(),
-                    dueDate: req.body.dueDate,
+                    dueDate: DateUtils_1.default.stringToDateTimeUTC0(req.body.dueDate),
                     description: `MAT/EX-${matriculation.sequence}`,
                     value: matriculation.extraSkus.reduce((acc, extraSku) => { return acc + extraSku.totalValue; }, 0),
                     type: 'RECEIPT',

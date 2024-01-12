@@ -46,6 +46,7 @@ const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
 const CreateFinancialFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFinancialFlowItem"));
 const UpdateFlowItem_1 = __importDefault(require("./item/UpdateFlowItem"));
 const moment = require("moment");
+const DateUtils_1 = __importDefault(require("../../utils/DateUtils"));
 class GenerateClassSkuFinancial extends FlowHttp_1.default {
     generate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,7 +62,7 @@ class GenerateClassSkuFinancial extends FlowHttp_1.default {
                 }
                 const financialBase = {
                     movimentDate: new Date(),
-                    dueDate: req.body.dueDate,
+                    dueDate: DateUtils_1.default.stringToDateTimeUTC0(req.body.dueDate),
                     description: `MAT-${matriculation.sequence}`,
                     value: matriculation.clazzesSkus.reduce((acc, clazzSku) => { return acc + clazzSku.totalValue; }, 0),
                     dayFixedOfPayment: moment(req.body.dueDate).date(),
