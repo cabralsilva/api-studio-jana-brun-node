@@ -46,6 +46,7 @@ const BuildFinancialsByPaymentConditionFlowItem_1 = __importDefault(require("../
 const CreateFinancialFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFinancialFlowItem"));
 const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
 const UpdateFlowItem_1 = __importDefault(require("./item/UpdateFlowItem"));
+const moment_1 = __importDefault(require("moment"));
 class GenerateExtraSkuFinancial extends FlowHttp_1.default {
     generate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -60,7 +61,7 @@ class GenerateExtraSkuFinancial extends FlowHttp_1.default {
                     throw new HttpError_1.default(HttpStatus.PRECONDITION_FAILED, (0, i18n_1.getMessage)("message.response.matriculation.financialAlreadyCreated"));
                 }
                 const financialBase = {
-                    movimentDate: DateUtils_1.default.toDateTimeUTC0(new Date()),
+                    movimentDate: DateUtils_1.default.stringToDateTimeUTC0((0, moment_1.default)().format("YYYY-MM-DD")),
                     dueDate: DateUtils_1.default.stringToDateTimeUTC0(req.body.dueDate),
                     description: `MAT/EX-${matriculation.sequence}`,
                     value: matriculation.extraSkus.reduce((acc, extraSku) => { return acc + extraSku.totalValue; }, 0),

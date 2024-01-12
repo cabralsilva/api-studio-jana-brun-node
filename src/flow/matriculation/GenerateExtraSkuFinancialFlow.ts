@@ -9,6 +9,7 @@ import BuildFinancialsByPaymentConditionFlowItem from "../financial/financial/it
 import CreateFinancialFlowItem from "../financial/financial/item/CreateFinancialFlowItem"
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
 import UpdateFlowItem from "./item/UpdateFlowItem"
+import moment from "moment"
 
 class GenerateExtraSkuFinancial extends FlowHttp {
 
@@ -28,7 +29,7 @@ class GenerateExtraSkuFinancial extends FlowHttp {
       }
 
       const financialBase = {
-        movimentDate: DateUtils.toDateTimeUTC0(new Date()),
+        movimentDate: DateUtils.stringToDateTimeUTC0(moment().format("YYYY-MM-DD")),
         dueDate: DateUtils.stringToDateTimeUTC0(req.body.dueDate),
         description: `MAT/EX-${matriculation.sequence}`,
         value: matriculation.extraSkus.reduce((acc, extraSku) => { return acc + extraSku.totalValue }, 0),

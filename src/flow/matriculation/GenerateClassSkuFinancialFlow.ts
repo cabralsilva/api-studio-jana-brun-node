@@ -29,7 +29,7 @@ class GenerateClassSkuFinancial extends FlowHttp {
       }
 
       const financialBase = {
-        movimentDate: DateUtils.toDateTimeUTC0(new Date()),
+        movimentDate: DateUtils.stringToDateTimeUTC0(moment().format("YYYY-MM-DD")),
         dueDate: DateUtils.stringToDateTimeUTC0(req.body.dueDate),
         description: `MAT-${matriculation.sequence}`,
         value: matriculation.clazzesSkus.reduce((acc, clazzSku) => { return acc + clazzSku.totalValue }, 0),
