@@ -33,7 +33,7 @@ class GenerateFinancialFromSaleFlow {
                 let dueDateAux = moment(payment.firstPaymentDate);
                 for (let sequence = 1; sequence <= paymentCondition.quantityInstallments; sequence++) {
                     const financial = {
-                        movimentDate: DateUtils_1.default.toDateTimeUTC0(new Date()),
+                        movimentDate: DateUtils_1.default.stringToDateTimeUTC0(moment().format("YYYY-MM-DD")),
                         dueDate: DateUtils_1.default.toDateTimeUTC0(dueDateAux.toDate()),
                         description: `Venda - ${sale.sequence}`,
                         value: GetValueOfInstallmenFlowItem_1.default.get(sequence, paymentCondition.quantityInstallments, payment.value),
