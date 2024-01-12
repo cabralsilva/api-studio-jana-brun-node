@@ -17,7 +17,7 @@ class BuildFinancialsByPaymentConditionFlowItem {
 
       const financial = {
         ...financialBase,
-        movimentDate: moment(financialBase.movimentDate),
+        movimentDate: DateUtils.toDateTimeUTC0(moment(financialBase.movimentDate).toDate()),
         dueDate: DateUtils.toDateTimeUTC0(dueDate.toDate()),
         value: GetValueOfInstallmenFlowItem.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value),
         installment: installmentNumber,

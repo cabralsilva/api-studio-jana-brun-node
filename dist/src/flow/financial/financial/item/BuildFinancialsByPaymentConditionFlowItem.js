@@ -26,7 +26,7 @@ class BuildFinancialsByPaymentConditionFlowItem {
                 if (Utils_1.default.isNotEmpty(financialBase.dayFixedOfPayment)) {
                     dueDate.set("date", financialBase.dayFixedOfPayment);
                 }
-                const financial = Object.assign(Object.assign({}, financialBase), { movimentDate: moment(financialBase.movimentDate), dueDate: DateUtils_1.default.toDateTimeUTC0(dueDate.toDate()), value: GetValueOfInstallmenFlowItem_1.default.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value), installment: installmentNumber, installmentTotal: paymentCondition.quantityInstallments });
+                const financial = Object.assign(Object.assign({}, financialBase), { movimentDate: DateUtils_1.default.toDateTimeUTC0(moment(financialBase.movimentDate).toDate()), dueDate: DateUtils_1.default.toDateTimeUTC0(dueDate.toDate()), value: GetValueOfInstallmenFlowItem_1.default.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value), installment: installmentNumber, installmentTotal: paymentCondition.quantityInstallments });
                 financial.sequence = yield GetSequenceFlowItem_1.default.get(financial, (installmentNumber - 1));
                 financial.description = financialBase.description || "AV-" + financial.sequence,
                     financials.push(financial);
