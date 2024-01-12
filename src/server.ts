@@ -19,7 +19,7 @@ import MatriculationControllerOLD from './controller/MatriculationControllerOLD'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
 import PayrollController from './controller/PayrollController'
-import PersonController from './controller/PersonController'
+import PersonControllerOLD from './controller/PersonControllerOLD'
 import PriceTableController from './controller/PriceTableController'
 import ProductController from './controller/ProductController'
 import RolePaymentController from './controller/RolePaymentController'
@@ -28,6 +28,7 @@ import StateController from './controller/StateController'
 import SupplierController from './controller/SupplierController'
 import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
 import MatriculationController from './controller/MatriculationController'
+import PersonController from './controller/PersonController'
 
 class StartUp {
   public app: express.Application
@@ -161,7 +162,7 @@ class StartUp {
     // this.app.route('/api/v2/class/:id').patch(ClassControllerOLD.update)
     // this.app.route('/api/v2/class/:id').delete(ClassControllerOLD.delete)
 
-    this.app.route('/api/v2/person').get(PersonController.get)
+    // this.app.route('/api/v2/person').get(PersonControllerOLD.get)
 
     this.app.route('/api/v2/financial').get(FinancialController.get)
     this.app.route('/api/v2/financial/:id').get(FinancialController.getById)
@@ -191,6 +192,7 @@ class StartUp {
     this.app.use(ClassController.routers)
     this.app.use(PayrollController.routers)
     this.app.use(MatriculationController.routers)
+    this.app.use(PersonController.routers)
   }
 }
 

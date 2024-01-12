@@ -2,7 +2,7 @@ import Utils from "../../../utils/Utils"
 
 class GetPriceFlowItem {
   get(searcherPrice: any, priceTable: any): any {
-    let itemsOfPriceOfProduct = priceTable.items.filter((item: any) => item.product._id == searcherPrice.product._id)
+    let itemsOfPriceOfProduct = priceTable.items.filter((item: any) => item.product?._id == searcherPrice.product._id)
     let response = null
     let score = 0
     for (var itemPrice of itemsOfPriceOfProduct) {

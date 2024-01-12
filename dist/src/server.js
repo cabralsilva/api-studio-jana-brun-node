@@ -47,7 +47,6 @@ const MatriculationControllerOLD_1 = __importDefault(require("./controller/Matri
 const NoticeController_1 = __importDefault(require("./controller/NoticeController"));
 const PaymentConditionController_1 = __importDefault(require("./controller/PaymentConditionController"));
 const PayrollController_1 = __importDefault(require("./controller/PayrollController"));
-const PersonController_1 = __importDefault(require("./controller/PersonController"));
 const PriceTableController_1 = __importDefault(require("./controller/PriceTableController"));
 const ProductController_1 = __importDefault(require("./controller/ProductController"));
 const RolePaymentController_1 = __importDefault(require("./controller/RolePaymentController"));
@@ -56,6 +55,7 @@ const StateController_1 = __importDefault(require("./controller/StateController"
 const SupplierController_1 = __importDefault(require("./controller/SupplierController"));
 const AuthorizationFlow_1 = __importDefault(require("./flow/authorization/AuthorizationFlow"));
 const MatriculationController_1 = __importDefault(require("./controller/MatriculationController"));
+const PersonController_1 = __importDefault(require("./controller/PersonController"));
 class StartUp {
     constructor() {
         this.swaggerFile = (process.cwd() + "/postman/schemas/schema.json");
@@ -165,7 +165,7 @@ class StartUp {
         // this.app.route('/api/v2/class').post(ClassControllerOLD.create)
         // this.app.route('/api/v2/class/:id').patch(ClassControllerOLD.update)
         // this.app.route('/api/v2/class/:id').delete(ClassControllerOLD.delete)
-        this.app.route('/api/v2/person').get(PersonController_1.default.get);
+        // this.app.route('/api/v2/person').get(PersonControllerOLD.get)
         this.app.route('/api/v2/financial').get(FinancialController_1.default.get);
         this.app.route('/api/v2/financial/:id').get(FinancialController_1.default.getById);
         this.app.route('/api/v2/financial').post(FinancialController_1.default.create);
@@ -191,6 +191,7 @@ class StartUp {
         this.app.use(ClassController_1.default.routers);
         this.app.use(PayrollController_1.default.routers);
         this.app.use(MatriculationController_1.default.routers);
+        this.app.use(PersonController_1.default.routers);
     }
 }
 exports.default = new StartUp();
