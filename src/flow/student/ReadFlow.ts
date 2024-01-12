@@ -1,7 +1,7 @@
 import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { StudentSearch } from '../../model/schema/IStudent'
+import { StudentSearch, StudentSearchOLD } from '../../model/schema/IStudent'
 import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
@@ -30,7 +30,7 @@ class ReadFlow extends FlowHttp {
         return student
       }
 
-      var resultSearch = await FindBySearchFlowItem.find(new StudentSearch(req.query)) as any
+      var resultSearch = await FindBySearchFlowItem.find(new StudentSearchOLD(req.query)) as any
       return EnrichFindFlowItem.enrich(resultSearch)
     } catch (error) {
       this.processError(error)

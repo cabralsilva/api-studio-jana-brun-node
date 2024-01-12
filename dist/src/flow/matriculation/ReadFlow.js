@@ -118,11 +118,13 @@ class ReadFlow extends FlowHttp_1.default {
                     });
                     return matriculation;
                 }
-                yield PrepareSearchPersonFlowItem_1.default.prepare(req);
-                var resultSearch = yield FindMatriculationBySearchFlowItem_1.default.find(new IMatriculation_1.MatriculationSearchOLD(req.query));
+                const search = Object.assign({}, req.query);
+                yield PrepareSearchPersonFlowItem_1.default.prepare(search);
+                var resultSearch = yield FindMatriculationBySearchFlowItem_1.default.find(new IMatriculation_1.MatriculationSearchOLD(search));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {
+                console.log(error);
                 this.processError(error);
             }
         });

@@ -26,12 +26,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StudentSearch = exports.StudentRepository = void 0;
+exports.StudentSearch = exports.StudentRepository = exports.StudentSearchOLD = void 0;
 const c2_mongoose_1 = require("c2-mongoose");
 const Utils_1 = require("c2-mongoose/dist/utils/Utils");
 const mongoose = __importStar(require("mongoose"));
 const mongoose_1 = require("mongoose");
 const SchoolLevel_1 = __importDefault(require("../enum/SchoolLevel"));
+const Search_1 = __importDefault(require("../Search"));
+const Utils_2 = __importDefault(require("../../utils/Utils"));
 const StudentSchema = new mongoose.Schema({
     person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
     responsible: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
@@ -75,5 +77,41 @@ class StudentSearch extends c2_mongoose_1.SearchFlow {
     }
 }
 exports.StudentSearch = StudentSearch;
+class StudentSearchOLD extends Search_1.default {
+    constructor(_query) {
+        super(_query);
+        this.name = _query.name;
+        this.active = _query.active;
+        if (Utils_2.default.isNotEmpty(_query.person)) {
+            var personArray = _query.person.trim().split(' ');
+            this.person = personArray.map(p => new mongoose.Types.ObjectId(p));
+        }
+        this.buildFilters();
+    }
+    buildFilters() {
+        let filters = { $and: [] };
+        Object.entries(this).forEach(([key, value]) => {
+            if (value) {
+                let condition = {};
+                if (key === 'person') {
+                    condition[key] = { $in: value };
+                }
+                else {
+                    if (!Array.isArray(value)) {
+                        condition[key] = value;
+                    }
+                    else {
+                        condition[key] = { $in: value };
+                    }
+                }
+                filters.$and.push(condition);
+            }
+        });
+        if (filters.$and.length === 0)
+            delete filters['$and'];
+        this.filters = filters;
+    }
+}
+exports.StudentSearchOLD = StudentSearchOLD;
 const StudentRepository = (0, mongoose_1.model)('student', StudentSchema);
 exports.StudentRepository = StudentRepository;

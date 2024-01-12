@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { StudentRepository, StudentSearch } from "../../../model/schema/IStudent";
+import { StudentRepository, StudentSearch, StudentSearchOLD } from "../../../model/schema/IStudent";
 
 class FindByFilterFlowItem {
-  async find(search: StudentSearch) {
+  async find(search: StudentSearchOLD) {
 
     if (search.isPageable()) {
       return await search.findPageable(StudentRepository)

@@ -65,16 +65,15 @@ class MatriculationSearch extends c2_mongoose_1.SearchFlow {
         if ((0, Utils_2.isEmpty)(filters.$and)) {
             filters = { $and: [] };
         }
-        if ((0, Utils_2.isNotEmpty)(this.searchText)) {
-            let regex = this.buildRegex(this.searchText);
-            let condition = {
-                $or: [
-                    { 'name': { $regex: regex } },
-                    { 'tradeName': { $regex: regex } }
-                ]
-            };
-            filters.$and.push(condition);
-        }
+        // if (isNotEmpty(this.searchText)) {
+        //   let regex = this.buildRegex(this.searchText)
+        //   let condition = {
+        //     $or: [
+        //       { 'observation': { $regex: regex } },
+        //     ]
+        //   }
+        //   filters.$and.push(condition)
+        // }
         if (filters.$and.length === 0)
             delete filters['$and'];
         this.filters = filters;

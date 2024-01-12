@@ -64,7 +64,7 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return student;
                 }
-                var resultSearch = yield FindBySearchFlowItem_1.default.find(new IStudent_1.StudentSearch(req.query));
+                var resultSearch = yield FindBySearchFlowItem_1.default.find(new IStudent_1.StudentSearchOLD(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {

@@ -84,10 +84,13 @@ class ReadFlow extends FlowHttp {
         })
         return matriculation
       }
-      await PrepareSearchPersonFlowItem.prepare(req)
-      var resultSearch = await FindBySearchFlowItem.find(new MatriculationSearchOLD(req.query)) as any
+
+      const search = { ...req.query }
+      await PrepareSearchPersonFlowItem.prepare(search)
+      var resultSearch = await FindBySearchFlowItem.find(new MatriculationSearchOLD(search)) as any
       return EnrichFindFlowItem.enrich(resultSearch)
     } catch (error) {
+      console.log(error)
       this.processError(error)
     }
   }

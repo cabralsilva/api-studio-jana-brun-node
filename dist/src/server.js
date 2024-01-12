@@ -43,7 +43,7 @@ const CustomerController_1 = __importDefault(require("./controller/CustomerContr
 const EmployeeController_1 = __importDefault(require("./controller/EmployeeController"));
 const FinancialController_1 = __importDefault(require("./controller/FinancialController"));
 const GrateController_1 = __importDefault(require("./controller/GrateController"));
-const MatriculationController_1 = __importDefault(require("./controller/MatriculationController"));
+const MatriculationControllerOLD_1 = __importDefault(require("./controller/MatriculationControllerOLD"));
 const NoticeController_1 = __importDefault(require("./controller/NoticeController"));
 const PaymentConditionController_1 = __importDefault(require("./controller/PaymentConditionController"));
 const PayrollController_1 = __importDefault(require("./controller/PayrollController"));
@@ -55,6 +55,7 @@ const SaleController_1 = __importDefault(require("./controller/SaleController"))
 const StateController_1 = __importDefault(require("./controller/StateController"));
 const SupplierController_1 = __importDefault(require("./controller/SupplierController"));
 const AuthorizationFlow_1 = __importDefault(require("./flow/authorization/AuthorizationFlow"));
+const MatriculationController_1 = __importDefault(require("./controller/MatriculationController"));
 class StartUp {
     constructor() {
         this.swaggerFile = (process.cwd() + "/postman/schemas/schema.json");
@@ -172,13 +173,13 @@ class StartUp {
         this.app.route('/api/v2/financial/:id').delete(FinancialController_1.default.delete);
         this.app.route('/api/v2/financial/payment/:id').patch(FinancialController_1.default.payment);
         this.app.route('/api/v2/financial/print-receipt/:id').get(FinancialController_1.default.printReceipt);
-        this.app.route('/api/v2/matriculation').get(MatriculationController_1.default.get);
-        this.app.route('/api/v2/matriculation/:id').get(MatriculationController_1.default.getById);
-        this.app.route('/api/v2/matriculation').post(MatriculationController_1.default.create);
-        this.app.route('/api/v2/matriculation/:id').patch(MatriculationController_1.default.update);
-        this.app.route('/api/v2/matriculation/:id').delete(MatriculationController_1.default.delete);
-        this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationController_1.default.generateFinancialClassSku);
-        this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationController_1.default.generateFinancialExtraSku);
+        // this.app.route('/api/v2/matriculation').get(MatriculationControllerOLD.get)
+        this.app.route('/api/v2/matriculation/:id').get(MatriculationControllerOLD_1.default.getById);
+        this.app.route('/api/v2/matriculation').post(MatriculationControllerOLD_1.default.create);
+        this.app.route('/api/v2/matriculation/:id').patch(MatriculationControllerOLD_1.default.update);
+        this.app.route('/api/v2/matriculation/:id').delete(MatriculationControllerOLD_1.default.delete);
+        this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationControllerOLD_1.default.generateFinancialClassSku);
+        this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationControllerOLD_1.default.generateFinancialExtraSku);
         // this.app.route('/api/v2/payroll').get(PayrollControllerOLD.get)
         // this.app.route('/api/v2/payroll/:id').get(PayrollControllerOLD.getById)
         // this.app.route('/api/v2/payroll').post(PayrollControllerOLD.create)
@@ -189,6 +190,7 @@ class StartUp {
         this.app.use(SaleController_1.default.routers);
         this.app.use(ClassController_1.default.routers);
         this.app.use(PayrollController_1.default.routers);
+        this.app.use(MatriculationController_1.default.routers);
     }
 }
 exports.default = new StartUp();

@@ -15,7 +15,7 @@ import CustomerController from './controller/CustomerController'
 import EmployeeController from './controller/EmployeeController'
 import FinancialController from './controller/FinancialController'
 import GrateController from './controller/GrateController'
-import MatriculationController from './controller/MatriculationController'
+import MatriculationControllerOLD from './controller/MatriculationControllerOLD'
 import NoticeController from './controller/NoticeController'
 import PaymentConditionController from './controller/PaymentConditionController'
 import PayrollController from './controller/PayrollController'
@@ -27,6 +27,7 @@ import SaleController from './controller/SaleController'
 import StateController from './controller/StateController'
 import SupplierController from './controller/SupplierController'
 import AuthorizationFlow from './flow/authorization/AuthorizationFlow'
+import MatriculationController from './controller/MatriculationController'
 
 class StartUp {
   public app: express.Application
@@ -170,13 +171,13 @@ class StartUp {
     this.app.route('/api/v2/financial/payment/:id').patch(FinancialController.payment)
     this.app.route('/api/v2/financial/print-receipt/:id').get(FinancialController.printReceipt)
 
-    this.app.route('/api/v2/matriculation').get(MatriculationController.get)
-    this.app.route('/api/v2/matriculation/:id').get(MatriculationController.getById)
-    this.app.route('/api/v2/matriculation').post(MatriculationController.create)
-    this.app.route('/api/v2/matriculation/:id').patch(MatriculationController.update)
-    this.app.route('/api/v2/matriculation/:id').delete(MatriculationController.delete)
-    this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationController.generateFinancialClassSku)
-    this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationController.generateFinancialExtraSku)
+    // this.app.route('/api/v2/matriculation').get(MatriculationControllerOLD.get)
+    this.app.route('/api/v2/matriculation/:id').get(MatriculationControllerOLD.getById)
+    this.app.route('/api/v2/matriculation').post(MatriculationControllerOLD.create)
+    this.app.route('/api/v2/matriculation/:id').patch(MatriculationControllerOLD.update)
+    this.app.route('/api/v2/matriculation/:id').delete(MatriculationControllerOLD.delete)
+    this.app.route('/api/v2/matriculation/financial/class-sku/:id').post(MatriculationControllerOLD.generateFinancialClassSku)
+    this.app.route('/api/v2/matriculation/financial/extra-sku/:id').post(MatriculationControllerOLD.generateFinancialExtraSku)
     
     // this.app.route('/api/v2/payroll').get(PayrollControllerOLD.get)
     // this.app.route('/api/v2/payroll/:id').get(PayrollControllerOLD.getById)
@@ -189,6 +190,7 @@ class StartUp {
     this.app.use(SaleController.routers)
     this.app.use(ClassController.routers)
     this.app.use(PayrollController.routers)
+    this.app.use(MatriculationController.routers)
   }
 }
 
