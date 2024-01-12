@@ -3,7 +3,7 @@ import { IProduct } from './IProduct'
 
 export interface ISkuItem {
   product: mongoose.Types.ObjectId | IProduct
-  grateItemList: any[]
+  gratesItems: any[]
   quantity: number
   unitValue: number
   totalValue: number
@@ -11,7 +11,7 @@ export interface ISkuItem {
 
 const SkuItemModel = {
   product: { type: mongoose.Schema.Types.ObjectId, ref: 'product', required: true },
-  grateItemList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grateItem', required: true }],
+  gratesItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'grateItem', required: true }],
   quantity: { type: Number, required: true, default: 1 },
   unitValue: { type: Number, required: true },
   totalValue: { type: Number, required: true }

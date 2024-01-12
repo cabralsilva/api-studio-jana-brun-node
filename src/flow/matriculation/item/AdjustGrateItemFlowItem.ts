@@ -19,7 +19,7 @@ class AdjustGrateItemFlowItem {
 
     let newArrayOfGrateItems = []
     
-    classSkuItem.grateItemList.forEach(grateItem => {
+    classSkuItem.gratesItems?.forEach(grateItem => {
       
       newArrayOfGrateItems.push(arrayOfGrateItems.find(grateItemTarget => {
         return grateItem.equals(grateItemTarget._id)

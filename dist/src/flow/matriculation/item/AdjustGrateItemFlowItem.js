@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class AdjustGrateItemFlowItem {
     adjust(classSkuItem) {
-        var _a;
+        var _a, _b;
         let arrayOfGrateItems = [];
         (_a = classSkuItem === null || classSkuItem === void 0 ? void 0 : classSkuItem.product) === null || _a === void 0 ? void 0 : _a.grates.forEach(grate => {
             let grateLocal = {
@@ -17,7 +17,7 @@ class AdjustGrateItemFlowItem {
             arrayOfGrateItems.push(...grateItemsLocal);
         });
         let newArrayOfGrateItems = [];
-        classSkuItem.grateItemList.forEach(grateItem => {
+        (_b = classSkuItem.gratesItems) === null || _b === void 0 ? void 0 : _b.forEach(grateItem => {
             newArrayOfGrateItems.push(arrayOfGrateItems.find(grateItemTarget => {
                 return grateItem.equals(grateItemTarget._id);
             }));

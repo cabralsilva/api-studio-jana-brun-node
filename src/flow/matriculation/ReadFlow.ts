@@ -76,11 +76,11 @@ class ReadFlow extends FlowHttp {
 
         matriculation._doc.clazzesSkus.forEach((classSku, index) => {
           let newArrayGrateItems = AdjustGrateItemFlowItem.adjust(classSku)
-          matriculation._doc.clazzesSkus[index]._doc.grateItemList = newArrayGrateItems
+          matriculation._doc.clazzesSkus[index]._doc.gratesItems = newArrayGrateItems
         })
         matriculation._doc.extraSkus.forEach((extraSku, index) => {
           let newArrayGrateItems = AdjustGrateItemFlowItem.adjust(extraSku)
-          matriculation._doc.extraSkus[index]._doc.grateItemList = newArrayGrateItems
+          matriculation._doc.extraSkus[index]._doc.gratesItems = newArrayGrateItems
         })
         return matriculation
       }

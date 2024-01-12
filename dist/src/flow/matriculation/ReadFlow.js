@@ -110,11 +110,11 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     matriculation._doc.clazzesSkus.forEach((classSku, index) => {
                         let newArrayGrateItems = AdjustGrateItemFlowItem_1.default.adjust(classSku);
-                        matriculation._doc.clazzesSkus[index]._doc.grateItemList = newArrayGrateItems;
+                        matriculation._doc.clazzesSkus[index]._doc.gratesItems = newArrayGrateItems;
                     });
                     matriculation._doc.extraSkus.forEach((extraSku, index) => {
                         let newArrayGrateItems = AdjustGrateItemFlowItem_1.default.adjust(extraSku);
-                        matriculation._doc.extraSkus[index]._doc.grateItemList = newArrayGrateItems;
+                        matriculation._doc.extraSkus[index]._doc.gratesItems = newArrayGrateItems;
                     });
                     return matriculation;
                 }
