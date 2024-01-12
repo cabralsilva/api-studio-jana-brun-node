@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var AccessProfile;
 (function (AccessProfile) {
-    AccessProfile["BASIC"] = "message.accessProfile.basic";
-    AccessProfile["ADMIN"] = "message.accessProfile.admin";
+    AccessProfile["BASIC"] = "BASIC";
+    AccessProfile["ADMIN"] = "ADMIN";
 })(AccessProfile || (AccessProfile = {}));
 exports.default = AccessProfile;

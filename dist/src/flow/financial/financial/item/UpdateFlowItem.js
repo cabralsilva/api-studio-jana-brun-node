@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Financial_1 = require("../../../../model/schema/Financial");
+const IFinancial_1 = require("../../../../model/schema/IFinancial");
 const i18n_1 = require("../../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../../utils/Utils"));
 class UpdateFlowItem {
     update(id, financial, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            const financialAfter = yield Financial_1.FinancialRepository.findByIdAndUpdate(id, { $set: financial }, { returnDocument: 'after', session });
+            const financialAfter = yield IFinancial_1.FinancialRepository.findByIdAndUpdate(id, { $set: financial }, { returnDocument: 'after', session });
             if (Utils_1.default.isEmpty(financialAfter)) {
                 throw Error((0, i18n_1.getMessage)("message.registerNotFounded"));
             }

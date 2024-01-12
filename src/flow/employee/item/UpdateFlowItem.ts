@@ -1,4 +1,4 @@
-import { EmployeeRepository } from "../../../model/schema/Employee";
+import { EmployeeRepository } from "../../../model/schema/IEmployee";
 import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 

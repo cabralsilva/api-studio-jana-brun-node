@@ -1,6 +1,6 @@
 enum TypeOfFinancial {
-  DEBIT = "message.financial.type.debit",
-  RECEIPT = "message.financial.type.receipt"
+  DEBIT = "DEBIT",
+  RECEIPT = "RECEIPT"
 }
 
 export default TypeOfFinancial

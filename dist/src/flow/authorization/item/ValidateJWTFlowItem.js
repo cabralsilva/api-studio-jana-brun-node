@@ -22,6 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -31,16 +40,30 @@ const jwt = __importStar(require("jsonwebtoken"));
 const Configs_1 = require("../../../config/Configs");
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
 const i18n_1 = require("../../../config/i18n");
+const AddDataTokenInContextFlowItem_1 = __importDefault(require("./AddDataTokenInContextFlowItem"));
 class ValidateJWTFlowItem {
     validate(token) {
-        jwt.verify(token, Configs_1.jwtSecret, (error, decode) => {
-            if (error) {
-                throw new HttpError_1.default(http_status_1.FORBIDDEN, (0, i18n_1.getMessage)("message.http.invalidToken"));
+        return __awaiter(this, void 0, void 0, function* () {
+            // jwt.verify(token, jwtSecret, (error, decode) => {
+            //   if (error) {
+            //     throw new HttpError(FORBIDDEN, getMessage("message.http.invalidToken"))
+            //   }
+            //   const now = new Date()
+            //   const expireDate = new Date(decode.exp)
+            //   if (expireDate < now) {
+            //     throw new HttpError(FORBIDDEN, getMessage("message.http.expiredToken"))
+            //   }
+            // })
+            try {
+                const decode = jwt.verify(token, Configs_1.jwtSecret);
+                // CheckJwtIssFlowItem.check(decode)
+                yield AddDataTokenInContextFlowItem_1.default.add(decode);
             }
-            const now = new Date();
-            const expireDate = new Date(decode.exp);
-            if (expireDate < now) {
-                throw new HttpError_1.default(http_status_1.FORBIDDEN, (0, i18n_1.getMessage)("message.http.expiredToken"));
+            catch (error) {
+                if (error.name === "TokenExpiredError") {
+                    throw new HttpError_1.default(http_status_1.FORBIDDEN, (0, i18n_1.getMessage)("message.authenticateIsRequired"));
+                }
+                throw new HttpError_1.default(http_status_1.FORBIDDEN, (0, i18n_1.getMessage)("message.authenticateIsRequired"));
             }
         });
     }

@@ -1,13 +1,13 @@
 enum PaymentMethod {
-  CASH = "message.paymentMethod.cash",
-  CHECK = "message.paymentMethod.check",
-  DEBIT_CARD = "message.paymentMethod.debitCard",
-  CREDIT_CARD = "message.paymentMethod.creditCard",
-  CREDIT = "message.paymentMethod.credit",
-  TRADE_NOTE = "message.paymentMethod.tradeNote",
-  BONUS = "message.paymentMethod.bonus",
-  ALLOWANCE = "message.paymentMethod.allowance",
-  PIX = "message.paymentMethod.pix"
+  CASH = "CASH",
+  CHECK = "CHECK",
+  DEBIT_CARD = "DEBIT_CARD",
+  CREDIT_CARD = "CREDIT_CARD",
+  CREDIT = "CREDIT",
+  TRADE_NOTE = "TRADE_NOTE",
+  BONUS = "BONUS",
+  ALLOWANCE = "ALLOWANCE",
+  PIX = "PIX"
 }
 
 export default PaymentMethod

@@ -1,4 +1,4 @@
-import { EmployeeRepository } from "../../../model/schema/Employee"
+import { EmployeeRepository } from "../../../model/schema/IEmployee"
 
 class FindOneByModelFlowItem {
   async findOne(model, sort = undefined, pop = undefined): Promise<any> {

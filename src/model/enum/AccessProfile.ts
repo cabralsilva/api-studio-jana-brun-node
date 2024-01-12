@@ -1,6 +1,6 @@
 enum AccessProfile {
-  BASIC = "message.accessProfile.basic",
-  ADMIN = "message.accessProfile.admin"
+  BASIC = "BASIC",
+  ADMIN = "ADMIN"
 }
 
 export default AccessProfile

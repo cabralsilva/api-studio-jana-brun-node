@@ -4,6 +4,30 @@ import AccessProfile from '../enum/AccessProfile'
 import Job from '../enum/Job'
 import TypeOfSalary from '../enum/TypeOfSalary'
 import Search from '../Search'
+import { IDefault } from './IDefault'
+import { IPerson } from './IPerson'
+
+export interface IEmployee extends IDefault {
+  person: mongoose.Types.ObjectId | IPerson
+  medicinContinuous: boolean
+  medicinNotes: string
+  allergiesContinuous: boolean
+  allergiesNotes: string
+  email: string
+  phone1: string
+  phone2: string
+  instagram: string
+  facebook: string
+  active: boolean
+  job: Job
+  typeOfSalary: TypeOfSalary
+  salaryValue: number
+  admissionDate: Date
+  demissionDate: Date
+  accessProfile: AccessProfile
+  password: string
+  salt: string
+}
 
 const EmployeeModel = {
   person: { type: mongoose.Schema.Types.ObjectId, ref: 'person', required: true },
@@ -17,12 +41,12 @@ const EmployeeModel = {
   instagram: { type: String },
   facebook: { type: String },
   active: { type: Boolean, required: true, default: true },
-  job: { type: String, enum: Object.keys(Job), required: true, default: 'NATURAL' },
-  typeOfSalary: { type: String, enum: Object.keys(TypeOfSalary), required: true, default: 'BY_MONTH' },
+  job: { type: String, enum: Job, required: true },
+  typeOfSalary: { type: String, enum: TypeOfSalary, required: true, default: TypeOfSalary.BY_MONTH },
   salaryValue: { type: Number, required: true, default: 0 },
   admissionDate: { type: Date },
   demissionDate: { type: Date },
-  accessProfile: { type: String, enum: Object.keys(AccessProfile), required: true, default: 'BASIC' },
+  accessProfile: { type: String, enum: AccessProfile, required: true, default: AccessProfile.BASIC },
   password: { type: String },
   salt: { type: String }
 }

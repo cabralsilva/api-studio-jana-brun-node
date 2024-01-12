@@ -9,19 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Financial_1 = require("../../../../model/schema/Financial");
+const IFinancial_1 = require("../../../../model/schema/IFinancial");
 class FindByFilterFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
             var response = {};
             if (search.isPageable()) {
-                response = yield search.findPageable(Financial_1.FinancialRepository);
+                response = yield search.findPageable(IFinancial_1.FinancialRepository);
             }
             else {
-                response = yield search.findNoPageable(Financial_1.FinancialRepository);
+                response = yield search.findNoPageable(IFinancial_1.FinancialRepository);
             }
             response = Object.assign(Object.assign({}, response), { metadata: {
-                    totalizers: yield search.sumBy(Financial_1.FinancialRepository, "$value", "$type")
+                    totalizers: yield search.sumBy(IFinancial_1.FinancialRepository, "$value", "$type")
                 } });
             return response;
         });

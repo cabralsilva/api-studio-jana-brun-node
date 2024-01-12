@@ -1,4 +1,4 @@
-import { FinancialRepository } from "../../../../model/schema/Financial"
+import { FinancialRepository } from "../../../../model/schema/IFinancial"
 
 class CreateFinancialFlowItem {
   async create(financial: {}, session = undefined) {

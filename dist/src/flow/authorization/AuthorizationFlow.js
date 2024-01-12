@@ -21,7 +21,7 @@ class AuthorizationFlow extends FlowHttp_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const token = GetJWTFlowItem_1.default.get(req);
-                ValidateJWTFlowItem_1.default.validate(token);
+                yield ValidateJWTFlowItem_1.default.validate(token);
                 next();
             }
             catch (error) {

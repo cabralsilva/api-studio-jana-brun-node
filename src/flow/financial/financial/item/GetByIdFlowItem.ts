@@ -1,4 +1,4 @@
-import { FinancialRepository } from "../../../../model/schema/Financial"
+import { FinancialRepository } from "../../../../model/schema/IFinancial"
 
 class GetByIdFlowItem {
   async get(id: string, pop = "", sel = "") {

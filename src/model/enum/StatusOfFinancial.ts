@@ -1,11 +1,11 @@
 enum StatusOfFinancial {
-  OPENED = "message.financial.status.opened",
-  PARTIALLY = "message.financial.status.partially",
-  EXPIRED = "message.financial.status.expired",
-  PROCESSING = "message.financial.status.processing",
-  PAID = "message.financial.status.paid",
-  CANCELED = "message.financial.status.canceled",
-  REFUNDED = "message.financial.status.refunded"
+  OPENED = "OPENED",
+  PARTIALLY = "PARTIALLY",
+  EXPIRED = "EXPIRED",
+  PROCESSING = "PROCESSING",
+  PAID = "PAID",
+  CANCELED = "CANCELED",
+  REFUNDED = "REFUNDED"
 }
 
 export default StatusOfFinancial

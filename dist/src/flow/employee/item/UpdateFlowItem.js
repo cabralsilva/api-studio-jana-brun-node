@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Employee_1 = require("../../../model/schema/Employee");
+const IEmployee_1 = require("../../../model/schema/IEmployee");
 const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 class UpdateFlowItem {
     update(id, employee, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            const employeeAfter = yield Employee_1.EmployeeRepository.findByIdAndUpdate(id, { $set: employee }, { returnDocument: 'after', session });
+            const employeeAfter = yield IEmployee_1.EmployeeRepository.findByIdAndUpdate(id, { $set: employee }, { returnDocument: 'after', session });
             if (Utils_1.default.isEmpty(employeeAfter)) {
                 throw Error((0, i18n_1.getMessage)("message.registerNotFounded"));
             }

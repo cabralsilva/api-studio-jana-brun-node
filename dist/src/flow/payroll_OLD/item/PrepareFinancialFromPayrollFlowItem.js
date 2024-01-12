@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
+const DateUtils_1 = __importDefault(require("../../../utils/DateUtils"));
 const GetEmployeeByIdFlowItem_1 = __importDefault(require("../../employee/item/GetEmployeeByIdFlowItem"));
 const GetSequenceFlowItem_1 = __importDefault(require("../../financial/financial/item/GetSequenceFlowItem"));
-const DateUtils_1 = __importDefault(require("../../../utils/DateUtils"));
 class PrepareFinancialFromPayrollFlowItem {
     prepare(payroll, employeePayroll, offset = 0) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -28,6 +28,7 @@ class PrepareFinancialFromPayrollFlowItem {
                 type: 'DEBIT',
                 installment: 1,
                 installmentTotal: 1,
+                isPayroll: true,
                 value: employeePayroll.total,
                 person: employee.person
             };

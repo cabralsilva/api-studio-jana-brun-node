@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Financial_1 = require("../../../../model/schema/Financial");
+const IFinancial_1 = require("../../../../model/schema/IFinancial");
 class CreateFinancialFlowItem {
     create(financial, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Financial_1.FinancialRepository.create([financial], { session });
+            return yield IFinancial_1.FinancialRepository.create([financial], { session });
         });
     }
 }

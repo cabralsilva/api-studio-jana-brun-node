@@ -7,14 +7,41 @@ import TypeOfFinancial from '../enum/TypeOfFinancial'
 import Search from '../Search'
 import { SearchFlow } from 'c2-mongoose'
 import { isEmpty, isNotEmpty } from 'c2-mongoose/dist/utils/Utils'
+import { IDefault } from './IDefault'
+import { IPaymentCondition } from './IPaymentCondition'
+import { IPerson } from './IPerson'
+
+export interface IFinancial extends IDefault {
+  sequence: string
+  description: string
+  movimentDate: Date
+  dueDate: Date
+  status: StatusOfFinancial
+  type: TypeOfFinancial
+  installment: number
+  installmentTotal: number
+  isPayroll: boolean
+  value: number
+  paymentCondition: mongoose.Types.ObjectId | IPaymentCondition
+  person: mongoose.Types.ObjectId | IPerson
+  payments: [{
+    movimentDate: Date
+    targetDate: Date
+    paymentDate: Date
+    valuePaid: number
+    employee: mongoose.Types.ObjectId | any
+    paymentMethod: PaymentMethod
+  }]
+}
 
 const FinancialModel = {
   sequence: { type: String, required: true },
   description: { type: String },
   movimentDate: { type: Date, required: true, default: new Date() },
   dueDate: { type: Date, required: true },
-  status: { type: String, enum: Object.keys(StatusOfFinancial), required: true, default: "OPENED" },
-  type: { type: String, enum: Object.keys(TypeOfFinancial), required: true },
+  status: { type: String, enum: StatusOfFinancial, required: true, default: StatusOfFinancial.OPENED },
+  type: { type: String, enum: TypeOfFinancial, required: true },
+  isPayroll: { type: Boolean, default: false },
   installment: { type: Number, required: true },
   installmentTotal: { type: Number, required: true },
   value: { type: Number, required: true },
@@ -26,7 +53,7 @@ const FinancialModel = {
     paymentDate: { type: Date, required: true },
     valuePaid: { type: Number },
     employee: { type: mongoose.Schema.Types.ObjectId, ref: 'employee' },
-    paymentMethod: { type: String, enum: Object.keys(PaymentMethod), required: true, default: "CASH" }
+    paymentMethod: { type: String, enum: PaymentMethod, required: true, default: PaymentMethod.CASH }
   }]
 }
 

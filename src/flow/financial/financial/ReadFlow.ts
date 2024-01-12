@@ -1,7 +1,7 @@
 import * as HttpStatus from 'http-status'
 import FlowHttp from '../../../model/FlowHttp'
 import HttpError from '../../../model/HttpError'
-import { FinancialRepository, FinancialSearch, FinancialSearchOLD } from '../../../model/schema/Financial'
+import { FinancialRepository, FinancialSearch, FinancialSearchOLD } from '../../../model/schema/IFinancial'
 import { getMessage } from "../../../config/i18n"
 import Utils from '../../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'
@@ -10,6 +10,9 @@ import GetByIdFlowItem from "./item/GetByIdFlowItem"
 import PrepareSearchPersonFlowItem from "./item/PrepareSearchPersonFlowItem"
 import { Request, Response } from 'express'
 import { CrudFlow } from 'c2-mongoose'
+import httpContext from 'express-http-context'
+import { IEmployee } from '../../../model/schema/IEmployee'
+import AccessProfile from '../../../model/enum/AccessProfile'
 
 class ReadFlow extends FlowHttp {
 
@@ -25,12 +28,14 @@ class ReadFlow extends FlowHttp {
         return financial
       }
 
+      const user = httpContext.get("user") as IEmployee
+      if (user.accessProfile === AccessProfile.BASIC) {
+        req.query.isPayroll = 'false'
+      }
       const searcher = new FinancialSearch({
         ...req.query
       })
-      // await PrepareSearchPersonFlowItem.prepare(req)
-      // var resultSearch = await FindBySearchFlowItem.find(new FinancialSearchOLD(req.query)) as any
-      // return EnrichFindFlowItem.enrich(resultSearch)
+
       this.searcherFinancial.prepareSearch(searcher)
       const ret = await this.searcherFinancial.find({
         metadata: [{

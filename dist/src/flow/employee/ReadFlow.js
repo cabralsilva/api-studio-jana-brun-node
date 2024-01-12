@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = __importStar(require("http-status"));
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
-const Employee_1 = require("../../model/schema/Employee");
+const IEmployee_1 = require("../../model/schema/IEmployee");
 const i18n_1 = require("../../config/i18n");
 const Utils_1 = __importDefault(require("../../utils/Utils"));
 const EnrichFindFlowItem_1 = __importDefault(require("./item/EnrichFindFlowItem"));
@@ -70,7 +70,7 @@ class ReadFlow extends FlowHttp_1.default {
                 }
                 yield PrepareEmployeeSearchTextFlowItem_1.default.prepare(req);
                 console.log(req.query);
-                var resultSearch = yield FindBySearchFlowItem_1.default.find(new Employee_1.EmployeeSearch(req.query));
+                var resultSearch = yield FindBySearchFlowItem_1.default.find(new IEmployee_1.EmployeeSearch(req.query));
                 return EnrichFindFlowItem_1.default.enrich(resultSearch);
             }
             catch (error) {

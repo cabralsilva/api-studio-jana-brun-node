@@ -1,4 +1,4 @@
-import { EmployeeRepository } from "../../../model/schema/Employee"
+import { EmployeeRepository } from "../../../model/schema/IEmployee"
 
 class GetEmployeeByIdFlowItem {
   async get(id: string, pop = undefined, sel = ""): Promise<any> {

@@ -1,4 +1,4 @@
-import { FinancialRepository } from "../../../../model/schema/Financial";
+import { FinancialRepository } from "../../../../model/schema/IFinancial";
 import { getMessage } from "../../../../config/i18n";
 import Utils from "../../../../utils/Utils";
 

@@ -19,8 +19,6 @@ class CreatePayrollFlow extends Http {
       session.startTransaction()
       const payload = { ...request.body }
       const payrollAfter = await this.crudPayroll.create(payload, { session, logger: false })
-      // const payroll = await CreatePayrollFlowItem.create(req.body, session)
-      // const employeesPayrolls = payrollAfter.payrollEmployeeDetails
 
       var offsetSequence = 0
       for (const employeesPayroll of payrollAfter.payrollEmployeeDetails) {

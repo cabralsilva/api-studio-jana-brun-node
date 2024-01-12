@@ -1,4 +1,4 @@
-import { FinancialSearchOLD } from "../../../../model/schema/Financial";
+import { FinancialSearchOLD } from "../../../../model/schema/IFinancial";
 import { getMessage } from "../../../../config/i18n";
 import Utils from "../../../../utils/Utils";
 import FindBySearchFlowItem from "./FindBySearchFlowItem";

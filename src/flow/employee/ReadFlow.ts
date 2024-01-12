@@ -2,7 +2,7 @@ import * as HttpStatus from 'http-status'
 import mongoose from 'mongoose'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { EmployeeSearch } from '../../model/schema/Employee'
+import { EmployeeSearch } from '../../model/schema/IEmployee'
 import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'

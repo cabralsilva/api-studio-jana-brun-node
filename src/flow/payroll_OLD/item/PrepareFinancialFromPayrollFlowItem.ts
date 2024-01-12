@@ -1,9 +1,8 @@
 
 import moment = require("moment");
+import DateUtils from "../../../utils/DateUtils";
 import GetEmployeeByIdFlowItem from "../../employee/item/GetEmployeeByIdFlowItem";
 import GetSequenceFlowItem from "../../financial/financial/item/GetSequenceFlowItem";
-import DateUtils from "../../../utils/DateUtils";
-import { IPayroll } from "../../../model/schema/IPayroll";
 
 class PrepareFinancialFromPayrollFlowItem {
   async prepare(payroll: any, employeePayroll: any, offset: number = 0): Promise<any> {
@@ -16,6 +15,7 @@ class PrepareFinancialFromPayrollFlowItem {
       type: 'DEBIT',
       installment: 1,
       installmentTotal: 1,
+      isPayroll: true,
       value: employeePayroll.total,
       person: employee.person
     }

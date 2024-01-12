@@ -38,15 +38,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = __importStar(require("http-status"));
 const FlowHttp_1 = __importDefault(require("../../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../../model/HttpError"));
-const Financial_1 = require("../../../model/schema/Financial");
+const IFinancial_1 = require("../../../model/schema/IFinancial");
 const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
 const c2_mongoose_1 = require("c2-mongoose");
+const express_http_context_1 = __importDefault(require("express-http-context"));
+const AccessProfile_1 = __importDefault(require("../../../model/enum/AccessProfile"));
 class ReadFlow extends FlowHttp_1.default {
     constructor() {
         super(...arguments);
-        this.searcherFinancial = new c2_mongoose_1.CrudFlow(Financial_1.FinancialRepository);
+        this.searcherFinancial = new c2_mongoose_1.CrudFlow(IFinancial_1.FinancialRepository);
     }
     read(req, res) {
         var _a;
@@ -59,10 +61,11 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return financial;
                 }
-                const searcher = new Financial_1.FinancialSearch(Object.assign({}, req.query));
-                // await PrepareSearchPersonFlowItem.prepare(req)
-                // var resultSearch = await FindBySearchFlowItem.find(new FinancialSearchOLD(req.query)) as any
-                // return EnrichFindFlowItem.enrich(resultSearch)
+                const user = express_http_context_1.default.get("user");
+                if (user.accessProfile === AccessProfile_1.default.BASIC) {
+                    req.query.isPayroll = 'false';
+                }
+                const searcher = new IFinancial_1.FinancialSearch(Object.assign({}, req.query));
                 this.searcherFinancial.prepareSearch(searcher);
                 const ret = yield this.searcherFinancial.find({
                     metadata: [{

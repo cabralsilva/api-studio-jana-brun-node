@@ -8,13 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const IFinancial_1 = require("../../../../model/schema/IFinancial");
-class AddPaymentFlowItem {
-    add(_id, _financial, _payment, session = undefined) {
+const express_http_context_1 = __importDefault(require("express-http-context"));
+const GetEmployeeByIdFlowItem_1 = __importDefault(require("../../employee/item/GetEmployeeByIdFlowItem"));
+class AddDataTokenInContextFlowItem {
+    add(decode) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield IFinancial_1.FinancialRepository.findByIdAndUpdate(_id, { $set: _financial, $push: { payments: _payment } }, { returnDocument: 'after', session });
+            const employeeId = decode.holder;
+            let user = yield GetEmployeeByIdFlowItem_1.default.get(employeeId);
+            express_http_context_1.default.set('user', user);
         });
     }
 }
-exports.default = new AddPaymentFlowItem;
+exports.default = new AddDataTokenInContextFlowItem;

@@ -29,12 +29,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bodyParser = __importStar(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
+const express_http_context_1 = __importDefault(require("express-http-context"));
 const fs = __importStar(require("fs"));
 const swagger = __importStar(require("swagger-ui-express"));
 const Database_1 = __importDefault(require("./config/Database"));
 const i18n_1 = __importDefault(require("./config/i18n"));
 const AuthenticationController_1 = __importDefault(require("./controller/AuthenticationController"));
 const CityController_1 = __importDefault(require("./controller/CityController"));
+const ClassController_1 = __importDefault(require("./controller/ClassController"));
 const ClassroomController_1 = __importDefault(require("./controller/ClassroomController"));
 const CountryController_1 = __importDefault(require("./controller/CountryController"));
 const CustomerController_1 = __importDefault(require("./controller/CustomerController"));
@@ -44,6 +46,7 @@ const GrateController_1 = __importDefault(require("./controller/GrateController"
 const MatriculationController_1 = __importDefault(require("./controller/MatriculationController"));
 const NoticeController_1 = __importDefault(require("./controller/NoticeController"));
 const PaymentConditionController_1 = __importDefault(require("./controller/PaymentConditionController"));
+const PayrollController_1 = __importDefault(require("./controller/PayrollController"));
 const PersonController_1 = __importDefault(require("./controller/PersonController"));
 const PriceTableController_1 = __importDefault(require("./controller/PriceTableController"));
 const ProductController_1 = __importDefault(require("./controller/ProductController"));
@@ -52,9 +55,6 @@ const SaleController_1 = __importDefault(require("./controller/SaleController"))
 const StateController_1 = __importDefault(require("./controller/StateController"));
 const SupplierController_1 = __importDefault(require("./controller/SupplierController"));
 const AuthorizationFlow_1 = __importDefault(require("./flow/authorization/AuthorizationFlow"));
-const express_http_context_1 = __importDefault(require("express-http-context"));
-const ClassController_1 = __importDefault(require("./controller/ClassController"));
-const PayrollController_1 = __importDefault(require("./controller/PayrollController"));
 class StartUp {
     constructor() {
         this.swaggerFile = (process.cwd() + "/postman/schemas/schema.json");

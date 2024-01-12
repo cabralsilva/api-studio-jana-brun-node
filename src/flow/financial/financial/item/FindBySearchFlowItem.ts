@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { FinancialRepository, FinancialSearchOLD } from "../../../../model/schema/Financial";
+import { FinancialRepository, FinancialSearchOLD } from "../../../../model/schema/IFinancial";
 
 class FindByFilterFlowItem {
   async find(search: FinancialSearchOLD) {

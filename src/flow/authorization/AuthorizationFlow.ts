@@ -8,7 +8,7 @@ class AuthorizationFlow extends FlowHttp {
   async authorization(req, res, next) {
     try {
       const token = GetJWTFlowItem.get(req)
-      ValidateJWTFlowItem.validate(token)
+      await ValidateJWTFlowItem.validate(token)
       next()
     } catch (error) {
       ResponseHttp.sendResponseError(res, error)

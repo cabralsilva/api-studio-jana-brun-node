@@ -33,8 +33,6 @@ class CreatePayrollFlow extends Http_1.Http {
                 session.startTransaction();
                 const payload = Object.assign({}, request.body);
                 const payrollAfter = yield this.crudPayroll.create(payload, { session, logger: false });
-                // const payroll = await CreatePayrollFlowItem.create(req.body, session)
-                // const employeesPayrolls = payrollAfter.payrollEmployeeDetails
                 var offsetSequence = 0;
                 for (const employeesPayroll of payrollAfter.payrollEmployeeDetails) {
                     var financial = yield PrepareFinancialFromPayrollFlowItem_1.default.prepare(payrollAfter, employeesPayroll, offsetSequence++);

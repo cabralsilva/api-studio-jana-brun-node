@@ -1,4 +1,4 @@
-import { EmployeeRepository, EmployeeSearch } from "../../../model/schema/Employee"
+import { EmployeeRepository, EmployeeSearch } from "../../../model/schema/IEmployee"
 
 class FindByFilterFlowItem {
   async find(search: EmployeeSearch) {

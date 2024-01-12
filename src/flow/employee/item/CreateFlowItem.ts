@@ -1,4 +1,4 @@
-import { EmployeeRepository } from "../../../model/schema/Employee"
+import { EmployeeRepository } from "../../../model/schema/IEmployee"
 
 class CreateFlowItem {
   async create(employee: {}, session = undefined) {
