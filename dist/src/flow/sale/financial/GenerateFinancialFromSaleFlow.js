@@ -19,6 +19,7 @@ const GetSequenceFlowItem_1 = __importDefault(require("../../financial/financial
 const GetValueOfInstallmenFlowItem_1 = __importDefault(require("../../financial/financial/item/GetValueOfInstallmenFlowItem"));
 const GetByIdFlowItem_1 = __importDefault(require("../../financial/paymentCondition/item/GetByIdFlowItem"));
 const moment = require("moment");
+const DateUtils_1 = __importDefault(require("../../../utils/DateUtils"));
 class GenerateFinancialFromSaleFlow {
     constructor() {
         this.crudSale = new c2_mongoose_1.C2Flow(ISale_1.SaleRepository);
@@ -32,8 +33,8 @@ class GenerateFinancialFromSaleFlow {
                 let dueDateAux = moment(payment.firstPaymentDate);
                 for (let sequence = 1; sequence <= paymentCondition.quantityInstallments; sequence++) {
                     const financial = {
-                        movimentDate: new Date(),
-                        dueDate: dueDateAux.toDate(),
+                        movimentDate: DateUtils_1.default.toDateTimeUTC0(new Date()),
+                        dueDate: DateUtils_1.default.toDateTimeUTC0(dueDateAux.toDate()),
                         description: `Venda - ${sale.sequence}`,
                         value: GetValueOfInstallmenFlowItem_1.default.get(sequence, paymentCondition.quantityInstallments, payment.value),
                         type: 'RECEIPT',

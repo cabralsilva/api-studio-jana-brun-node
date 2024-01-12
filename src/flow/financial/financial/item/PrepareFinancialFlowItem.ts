@@ -21,7 +21,7 @@ class PrepareFinancialFlowItem {
       let dueDateAux = moment(financialBase.dueDate).add(installmentNumber - 1, 'months').toDate()
       const financial = {
         ...financialBase,
-        movimentDate: moment(financialBase.movimentDate),
+        movimentDate: DateUtils.toDateTimeUTC0(moment(financialBase.movimentDate).toDate()),
         dueDate: DateUtils.toDateTimeUTC0(dueDateAux),
         value: GetValueOfInstallmenFlowItem.get(installmentNumber, paymentCondition.quantityInstallments, financialBase.value),
         installment: installmentNumber,

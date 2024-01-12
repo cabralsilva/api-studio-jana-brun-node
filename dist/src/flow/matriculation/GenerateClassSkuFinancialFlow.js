@@ -61,7 +61,7 @@ class GenerateClassSkuFinancial extends FlowHttp_1.default {
                     throw new HttpError_1.default(HttpStatus.PRECONDITION_FAILED, (0, i18n_1.getMessage)("message.response.matriculation.financialAlreadyCreated"));
                 }
                 const financialBase = {
-                    movimentDate: new Date(),
+                    movimentDate: DateUtils_1.default.toDateTimeUTC0(new Date()),
                     dueDate: DateUtils_1.default.stringToDateTimeUTC0(req.body.dueDate),
                     description: `MAT-${matriculation.sequence}`,
                     value: matriculation.clazzesSkus.reduce((acc, clazzSku) => { return acc + clazzSku.totalValue; }, 0),

@@ -7,6 +7,7 @@ import GetSequenceFlowItem from "../../financial/financial/item/GetSequenceFlowI
 import GetValueOfInstallmenFlowItem from "../../financial/financial/item/GetValueOfInstallmenFlowItem"
 import GetByIdFlowItem from "../../financial/paymentCondition/item/GetByIdFlowItem"
 import moment = require("moment")
+import DateUtils from "../../../utils/DateUtils"
 
 class GenerateFinancialFromSaleFlow {
   
@@ -21,8 +22,8 @@ class GenerateFinancialFromSaleFlow {
       let dueDateAux = moment(payment.firstPaymentDate)
       for (let sequence = 1; sequence <= paymentCondition.quantityInstallments; sequence++) {
         const financial = {
-          movimentDate: new Date(),
-          dueDate: dueDateAux.toDate(),
+          movimentDate: DateUtils.toDateTimeUTC0(new Date()),
+          dueDate: DateUtils.toDateTimeUTC0(dueDateAux.toDate()),
           description: `Venda - ${sale.sequence}`,
           value: GetValueOfInstallmenFlowItem.get(sequence, paymentCondition.quantityInstallments, payment.value),
           type: 'RECEIPT',

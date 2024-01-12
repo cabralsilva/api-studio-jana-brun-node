@@ -23,7 +23,7 @@ class PrepareFinancialFromPayrollFlowItem {
             var financial = {
                 sequence: yield GetSequenceFlowItem_1.default.get(financial, offset),
                 description: employeePayroll.description,
-                movimentDate: moment(payroll.endDate),
+                movimentDate: DateUtils_1.default.toDateTimeUTC0(new Date()),
                 dueDate: DateUtils_1.default.toDateTimeUTC0(moment(payroll.targetDate).toDate()),
                 type: 'DEBIT',
                 installment: 1,
