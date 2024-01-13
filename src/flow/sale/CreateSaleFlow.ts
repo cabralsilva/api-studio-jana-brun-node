@@ -7,6 +7,7 @@ import { Http } from "../../config/Http"
 import { getMessage } from "../../config/i18n"
 import { ISale, SaleRepository } from "../../model/schema/ISale"
 import GenerateFinancialFromSaleFlow from "./financial/GenerateFinancialFromSaleFlow"
+import GetSequenceFlowItem from "./item/GetSequenceFlowItem"
 
 class CreateSaleFlow extends Http {
 
@@ -16,7 +17,8 @@ class CreateSaleFlow extends Http {
     const session = await mongoose.startSession()
     try {
       session.startTransaction()
-      const payload = { ...request.body }
+      const payload = { ...request.body } as ISale
+      payload.sequence = await GetSequenceFlowItem.get()
       const saleAfter = await this.crudSale.create(payload, { session, logger: false }) as ISale
       await GenerateFinancialFromSaleFlow.generate(saleAfter, session)
       await session.commitTransaction()

@@ -20,6 +20,7 @@ const Http_1 = require("../../config/Http");
 const i18n_1 = require("../../config/i18n");
 const ISale_1 = require("../../model/schema/ISale");
 const GenerateFinancialFromSaleFlow_1 = __importDefault(require("./financial/GenerateFinancialFromSaleFlow"));
+const GetSequenceFlowItem_1 = __importDefault(require("./item/GetSequenceFlowItem"));
 class CreateSaleFlow extends Http_1.Http {
     constructor() {
         super(...arguments);
@@ -31,6 +32,7 @@ class CreateSaleFlow extends Http_1.Http {
             try {
                 session.startTransaction();
                 const payload = Object.assign({}, request.body);
+                payload.sequence = yield GetSequenceFlowItem_1.default.get();
                 const saleAfter = yield this.crudSale.create(payload, { session, logger: false });
                 yield GenerateFinancialFromSaleFlow_1.default.generate(saleAfter, session);
                 yield session.commitTransaction();
