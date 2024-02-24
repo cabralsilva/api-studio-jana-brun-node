@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Grate_1 = require("../../../model/schema/Grate");
+const IGrate_1 = require("../../../model/schema/IGrate");
 const PriceTable_1 = require("../../../model/schema/PriceTable");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 class GetByIdFlowItem {
@@ -25,7 +25,7 @@ class GetByIdFlowItem {
                 for (var priceTableItem of priceTable.items) {
                     var gratesItems = [];
                     for (var grateItemId of priceTableItem.gratesItems) {
-                        var grateItemAux = yield Grate_1.GrateRepository.find({ "items._id": grateItemId }, { 'items.$': 1 });
+                        var grateItemAux = yield IGrate_1.GrateRepository.find({ "items._id": grateItemId }, { 'items.$': 1 });
                         if (Utils_1.default.isNotEmpty(grateItemAux)) {
                             gratesItems.push(grateItemAux[0].items[0]);
                         }

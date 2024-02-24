@@ -1,11 +1,6 @@
-import mongoose from "mongoose"
-import { GrateRepository, GrateSearch } from "../../../model/schema/Grate"
-import { GrateItemRepository } from "../../../model/schema/GrateItem"
+import { GrateRepository } from "../../../model/schema/IGrate"
 import { PriceTableRepository } from "../../../model/schema/PriceTable"
 import Utils from "../../../utils/Utils"
-import FindBySearchFlowItem from "../../grate/item/FindBySearchFlowItem"
-import FindOneByModelFlowItem from "../../grate/item/FindOneByModelFlowItem"
-import GetGrateItemByIdFlowItem from "../../grateItem/item/GetByIdFlowItem"
 
 class GetByIdFlowItem {
   async get(id: string, pop = undefined, sel = "") {

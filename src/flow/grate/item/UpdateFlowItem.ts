@@ -1,4 +1,4 @@
-import { GrateRepository } from "../../../model/schema/Grate";
+import { GrateRepository } from "../../../model/schema/IGrate";
 import { getMessage } from "../../../config/i18n";
 import Utils from "../../../utils/Utils";
 

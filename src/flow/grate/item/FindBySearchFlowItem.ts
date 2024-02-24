@@ -1,4 +1,4 @@
-import { GrateRepository, GrateSearch } from "../../../model/schema/Grate"
+import { GrateRepository, GrateSearch } from "../../../model/schema/IGrate"
 
 class FindByFilterFlowItem {
   async find(search: GrateSearch): Promise<any> {

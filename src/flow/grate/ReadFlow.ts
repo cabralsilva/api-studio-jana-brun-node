@@ -1,7 +1,7 @@
 import * as HttpStatus from 'http-status'
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { GrateSearch } from '../../model/schema/Grate'
+import { GrateSearch } from '../../model/schema/IGrate'
 import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
 import EnrichFindFlowItem from './item/EnrichFindFlowItem'

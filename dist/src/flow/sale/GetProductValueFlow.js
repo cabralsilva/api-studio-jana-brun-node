@@ -51,13 +51,13 @@ class GetProductValueFlow extends Http_1.Http {
                 var searchResultPriceTables = yield FindBySearchFlowItem_1.default.find(new PriceTable_1.PriceTableSearch({
                     effectiveDate: new Date(),
                     orderBy: 'created_at',
-                    order: 'desc'
+                    order: 'desc',
                 }));
                 if (Utils_1.default.isEmpty(searchResultPriceTables === null || searchResultPriceTables === void 0 ? void 0 : searchResultPriceTables.items)) {
                     throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.response.resourceNotFound", (0, i18n_1.getMessage)("message.price")));
                 }
                 let priceTable = searchResultPriceTables.items[0];
-                let itemPrice = GetPriceFlowItem_1.default.get(req.body, priceTable);
+                let itemPrice = yield GetPriceFlowItem_1.default.get(req.body, priceTable);
                 if (Utils_1.default.isEmpty(itemPrice)) {
                     throw new HttpError_1.default(HttpStatus.NOT_FOUND, (0, i18n_1.getMessage)("message.response.resourceNotFound", (0, i18n_1.getMessage)("message.price")));
                 }

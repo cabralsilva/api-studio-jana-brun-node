@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Grate_1 = require("../../../model/schema/Grate");
+const IGrate_1 = require("../../../model/schema/IGrate");
 const i18n_1 = require("../../../config/i18n");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
 class UpdateFlowItem {
     update(id, grate, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            const grateAfter = yield Grate_1.GrateRepository.findByIdAndUpdate(id, { $set: grate }, { returnDocument: 'after', session });
+            const grateAfter = yield IGrate_1.GrateRepository.findByIdAndUpdate(id, { $set: grate }, { returnDocument: 'after', session });
             if (Utils_1.default.isEmpty(grateAfter)) {
                 throw Error((0, i18n_1.getMessage)("message.registerNotFounded"));
             }

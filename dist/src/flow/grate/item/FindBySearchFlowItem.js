@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Grate_1 = require("../../../model/schema/Grate");
+const IGrate_1 = require("../../../model/schema/IGrate");
 class FindByFilterFlowItem {
     find(search) {
         return __awaiter(this, void 0, void 0, function* () {
             if (search.isPageable()) {
-                return yield search.findPageable(Grate_1.GrateRepository);
+                return yield search.findPageable(IGrate_1.GrateRepository);
             }
-            return yield search.findNoPageable(Grate_1.GrateRepository);
+            return yield search.findNoPageable(IGrate_1.GrateRepository);
         });
     }
 }

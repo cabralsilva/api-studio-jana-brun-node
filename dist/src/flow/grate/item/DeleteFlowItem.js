@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Grate_1 = require("../../../model/schema/Grate");
+const IGrate_1 = require("../../../model/schema/IGrate");
 class DeleteFlowItem {
     delete(id, session = undefined) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Grate_1.GrateRepository.findByIdAndRemove(id, { session });
+            return yield IGrate_1.GrateRepository.findByIdAndRemove(id, { session });
         });
     }
 }

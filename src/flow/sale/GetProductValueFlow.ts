@@ -17,7 +17,7 @@ class GetProductValueFlow extends Http {
         {
           effectiveDate: new Date(),
           orderBy: 'created_at',
-          order: 'desc'
+          order: 'desc',
         }
       ))
       if (Utils.isEmpty(searchResultPriceTables?.items)) {
@@ -25,7 +25,7 @@ class GetProductValueFlow extends Http {
       }
 
       let priceTable = searchResultPriceTables.items[0]
-      let itemPrice = GetPriceFlowItem.get(req.body, priceTable)
+      let itemPrice = await GetPriceFlowItem.get(req.body, priceTable)
 
       if (Utils.isEmpty(itemPrice)) {
         throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.response.resourceNotFound", getMessage("message.price")))

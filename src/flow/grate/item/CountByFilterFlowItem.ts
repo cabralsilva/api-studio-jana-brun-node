@@ -1,4 +1,4 @@
-import { GrateRepository } from "../../../model/schema/Grate"
+import { GrateRepository } from "../../../model/schema/IGrate"
 
 class CountByFilterFlowItem {
   async count(filters: any) {
