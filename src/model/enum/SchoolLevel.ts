@@ -16,6 +16,7 @@ enum SchoolLevel {
   FUNDAMENTAL_NINE = "FUNDAMENTAL_NINE",
   MEDIUM = "MEDIUM",
   GRADUATE = "GRADUATE",
+  OTHERS = "Outros",
 }
 
 export default SchoolLevel
