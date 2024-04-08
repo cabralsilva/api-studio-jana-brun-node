@@ -4,15 +4,27 @@ import { GrateRepository, GrateSearch } from "../../../model/schema/IGrate"
 
 class GetPriceFlowItem {
   private crudGrates = new CrudFlow<any>(GrateRepository)
- 
+
   async get(searcherPrice: any, priceTable: any): Promise<any> {
     let itemsOfPriceOfProduct = priceTable.items.filter((item: any) => item.product?._id == searcherPrice.product._id) as any[]
     let response = null
+
+    if (itemsOfPriceOfProduct.length === 0) {
+      return response
+    }
+
+
     let score = 0
+    const grateItens = itemsOfPriceOfProduct.flatMap((itemPrice: any) => itemPrice.gratesItems).map((grateItem: any) => grateItem)
+    if (grateItens.length === 0) {
+      return itemsOfPriceOfProduct[0]
+    }
+
 
     this.crudGrates.prepareSearch(new GrateSearch({
       "items._id": itemsOfPriceOfProduct.flatMap((itemPrice: any) => itemPrice.gratesItems).map((grateItem: any) => grateItem)
     }))
+
     const grates = await this.crudGrates.find({})
     for (var itemPrice of itemsOfPriceOfProduct) {
       let minScoreToCurrentItemPrice = grates.items.length
