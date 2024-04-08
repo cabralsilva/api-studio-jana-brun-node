@@ -17,14 +17,14 @@ const DaysOfWeek_1 = __importDefault(require("../../../model/enum/DaysOfWeek"));
 const IClass_1 = require("../../../model/schema/IClass");
 const IMatriculation_1 = require("../../../model/schema/IMatriculation");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
-const FindClassByFilterFlowItem_1 = __importDefault(require("../../class_OLD/item/FindClassByFilterFlowItem"));
+// import FindClassByFilterFlowItem from "../../class_OLD/item/FindClassByFilterFlowItem";
 const FindMatriculationBySearchFlowItem_1 = __importDefault(require("../../matriculation/item/FindMatriculationBySearchFlowItem"));
 const GetCurrentRulePaymentFlowItem_1 = __importDefault(require("./GetCurrentRulePaymentFlowItem"));
 const moment = require("moment");
 class CalculateRegularSalaryFlowItem {
     calculate(initDate, endDate, employee) {
         return __awaiter(this, void 0, void 0, function* () {
-            const classes = yield FindClassByFilterFlowItem_1.default.find(new IClass_1.ClassSearchOLD({
+            const classes = yield FindClassByFilterFlowItem.find(new IClass_1.ClassSearchOLD({
                 populate: 'rolePayments.employee',
                 endDateRange: [moment()],
                 employee: [employee]

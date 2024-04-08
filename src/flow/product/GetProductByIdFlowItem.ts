@@ -10,27 +10,6 @@ import { IProduct, ProductRepository, ProductSearch } from '../../model/schema/I
 
 class GetProductByIdFlowItem extends Http {
 
-  // async read(req, res) {
-  //   try {
-  //     if (Utils.isNotEmpty(req.params?.id)) {
-  //       const product = await GetByIdFlowItem.get(
-  //         req.params.id, {
-  //         path: 'grates',
-  //         model: 'grate'
-  //       });
-  //       if (Utils.isEmpty(product)) {
-  //         throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
-  //       }
-  //       return product
-  //     }
-
-  //     var resultSearch = await FindBySearchFlowItem.find(new ProductSearch(req.query)) as any
-  //     return EnrichFindFlowItem.enrich(resultSearch)
-  //   } catch (error) {
-  //     this.processError(error)
-  //   }
-  // }
-
   private searcherProduct = new CrudFlow<IProduct>(ProductRepository)
 
   public get = async (request: Request, response: Response): Promise<[number, any]> => {

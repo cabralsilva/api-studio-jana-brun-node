@@ -8,6 +8,7 @@ const HttpError_1 = __importDefault(require("./HttpError"));
 const i18n_1 = require("../config/i18n");
 class FlowHttp {
     processError(error) {
+        console.error(error);
         if (error instanceof HttpError_1.default) {
             throw error;
         }

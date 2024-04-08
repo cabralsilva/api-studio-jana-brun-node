@@ -1,14 +1,12 @@
+import { SearcherFlow } from 'c2-mongoose'
 import * as HttpStatus from 'http-status'
-import mongoose from 'mongoose'
+import { getMessage } from "../../config/i18n"
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { EmployeeSearch } from '../../model/schema/IEmployee'
-import { getMessage } from "../../config/i18n"
+import { EmployeeRepository } from '../../model/schema/IEmployee'
 import Utils from '../../utils/Utils'
-import EnrichFindFlowItem from './item/EnrichFindFlowItem'
-import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
+import EnrichSearchResponseFlowItem from '../item/EnrichSearchResponseFlowItem'
 import GetEmployeeByIdFlowItem from "./item/GetEmployeeByIdFlowItem"
-import PrepareEmployeeSearchTextFlowItem from './item/PrepareEmployeeSearchTextFlowItem'
 
 class ReadFlow extends FlowHttp {
 
@@ -34,11 +32,12 @@ class ReadFlow extends FlowHttp {
         }
         return employee
       }
-      
-      await PrepareEmployeeSearchTextFlowItem.prepare(req)
-      console.log(req.query)
-      var resultSearch = await FindBySearchFlowItem.find(new EmployeeSearch(req.query)) as any
-      return EnrichFindFlowItem.enrich(resultSearch)
+
+      const searcher = new SearcherFlow<any>(EmployeeRepository)
+      searcher.prepareSearch({ ...req.query })
+      var response = await searcher.search({})
+
+      return EnrichSearchResponseFlowItem.enrich2(response)
     } catch (error) {
       this.processError(error)
     }

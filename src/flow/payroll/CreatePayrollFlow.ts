@@ -7,7 +7,7 @@ import { Http } from "../../config/Http"
 import { getMessage } from "../../config/i18n"
 import { IPayroll, PayrollRepository } from "../../model/schema/IPayroll"
 import CreateFinancialFlowItem from "../financial/financial/item/CreateFinancialFlowItem"
-import PrepareFinancialFromPayrollFlowItem from "../payroll_OLD/item/PrepareFinancialFromPayrollFlowItem"
+import PrepareFinancialFromPayrollFlowItem from "./item/PrepareFinancialFromPayrollFlowItem"
 
 class CreatePayrollFlow extends Http {
 

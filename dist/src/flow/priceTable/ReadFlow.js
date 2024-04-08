@@ -35,14 +35,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const c2_mongoose_1 = require("c2-mongoose");
 const HttpStatus = __importStar(require("http-status"));
+const i18n_1 = require("../../config/i18n");
 const FlowHttp_1 = __importDefault(require("../../model/FlowHttp"));
 const HttpError_1 = __importDefault(require("../../model/HttpError"));
 const PriceTable_1 = require("../../model/schema/PriceTable");
-const i18n_1 = require("../../config/i18n");
 const Utils_1 = __importDefault(require("../../utils/Utils"));
-const EnrichFindFlowItem_1 = __importDefault(require("./item/EnrichFindFlowItem"));
-const FindBySearchFlowItem_1 = __importDefault(require("./item/FindBySearchFlowItem"));
+const EnrichSearchResponseFlowItem_1 = __importDefault(require("../item/EnrichSearchResponseFlowItem"));
 const GetByIdFlowItem_1 = __importDefault(require("./item/GetByIdFlowItem"));
 class ReadFlow extends FlowHttp_1.default {
     read(req, res) {
@@ -64,8 +64,10 @@ class ReadFlow extends FlowHttp_1.default {
                     }
                     return priceTable;
                 }
-                var resultSearch = yield FindBySearchFlowItem_1.default.find(new PriceTable_1.PriceTableSearch(req.query));
-                return EnrichFindFlowItem_1.default.enrich(resultSearch);
+                const searcher = new c2_mongoose_1.SearcherFlow(PriceTable_1.PriceTableRepository);
+                searcher.prepareSearch(Object.assign({}, req.query));
+                var response = yield searcher.search({});
+                return EnrichSearchResponseFlowItem_1.default.enrich2(response);
             }
             catch (error) {
                 console.log(error);

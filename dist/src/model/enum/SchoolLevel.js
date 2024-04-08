@@ -17,5 +17,8 @@ var SchoolLevel;
     SchoolLevel["FUNDAMENTAL_SEVEN"] = "FUNDAMENTAL_SEVEN";
     SchoolLevel["FUNDAMENTAL_EIGHT"] = "FUNDAMENTAL_EIGHT";
     SchoolLevel["FUNDAMENTAL_NINE"] = "FUNDAMENTAL_NINE";
+    SchoolLevel["MEDIUM"] = "MEDIUM";
+    SchoolLevel["GRADUATE"] = "GRADUATE";
+    SchoolLevel["OTHERS"] = "Outros";
 })(SchoolLevel || (SchoolLevel = {}));
 exports.default = SchoolLevel;

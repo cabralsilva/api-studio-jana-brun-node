@@ -1,18 +1,15 @@
+import { CrudFlow } from 'c2-mongoose'
+import { Request, Response } from 'express'
+import httpContext from 'express-http-context'
 import * as HttpStatus from 'http-status'
+import { getMessage } from "../../../config/i18n"
 import FlowHttp from '../../../model/FlowHttp'
 import HttpError from '../../../model/HttpError'
-import { FinancialRepository, FinancialSearch, FinancialSearchOLD } from '../../../model/schema/IFinancial'
-import { getMessage } from "../../../config/i18n"
-import Utils from '../../../utils/Utils'
-import EnrichFindFlowItem from './item/EnrichFindFlowItem'
-import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
-import GetByIdFlowItem from "./item/GetByIdFlowItem"
-import PrepareSearchPersonFlowItem from "./item/PrepareSearchPersonFlowItem"
-import { Request, Response } from 'express'
-import { CrudFlow } from 'c2-mongoose'
-import httpContext from 'express-http-context'
-import { IEmployee } from '../../../model/schema/IEmployee'
 import AccessProfile from '../../../model/enum/AccessProfile'
+import { IEmployee } from '../../../model/schema/IEmployee'
+import { FinancialRepository, FinancialSearch } from '../../../model/schema/IFinancial'
+import Utils from '../../../utils/Utils'
+import GetByIdFlowItem from "./item/GetByIdFlowItem"
 
 class ReadFlow extends FlowHttp {
 

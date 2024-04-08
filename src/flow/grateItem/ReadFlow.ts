@@ -1,9 +1,8 @@
 import * as HttpStatus from 'http-status'
+import { getMessage } from "../../config/i18n"
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { getMessage } from "../../config/i18n"
 import Utils from '../../utils/Utils'
-import EnrichFindFlowItem from './item/EnrichFindFlowItem'
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
 
 class ReadFlow extends FlowHttp {

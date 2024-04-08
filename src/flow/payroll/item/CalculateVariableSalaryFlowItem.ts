@@ -5,7 +5,7 @@ import { ClassSearchOLD } from "../../../model/schema/IClass";
 import { MatriculationSearchOLD } from "../../../model/schema/IMatriculation";
 import { PaymentByHourDetail, PaymentByPercentDetail, PaymentClass } from "../../../model/schema/IPayroll";
 import Utils from "../../../utils/Utils";
-import FindClassByFilterFlowItem from "../../class_OLD/item/FindClassByFilterFlowItem";
+// import FindClassByFilterFlowItem from "../../class_OLD/item/FindClassByFilterFlowItem";
 import FindMatriculationBySearchFlowItem from "../../matriculation/item/FindMatriculationBySearchFlowItem";
 import GetCurrentRulePaymentFlowItem from "./GetCurrentRulePaymentFlowItem";
 import moment = require("moment");

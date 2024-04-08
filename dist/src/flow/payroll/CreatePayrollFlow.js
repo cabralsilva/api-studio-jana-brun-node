@@ -20,7 +20,7 @@ const Http_1 = require("../../config/Http");
 const i18n_1 = require("../../config/i18n");
 const IPayroll_1 = require("../../model/schema/IPayroll");
 const CreateFinancialFlowItem_1 = __importDefault(require("../financial/financial/item/CreateFinancialFlowItem"));
-const PrepareFinancialFromPayrollFlowItem_1 = __importDefault(require("../payroll_OLD/item/PrepareFinancialFromPayrollFlowItem"));
+const PrepareFinancialFromPayrollFlowItem_1 = __importDefault(require("./item/PrepareFinancialFromPayrollFlowItem"));
 class CreatePayrollFlow extends Http_1.Http {
     constructor() {
         super(...arguments);

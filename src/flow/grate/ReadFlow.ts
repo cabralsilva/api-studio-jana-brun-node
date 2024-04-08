@@ -1,11 +1,11 @@
+import { SearcherFlow } from 'c2-mongoose'
 import * as HttpStatus from 'http-status'
+import { getMessage } from "../../config/i18n"
 import FlowHttp from '../../model/FlowHttp'
 import HttpError from '../../model/HttpError'
-import { GrateSearch } from '../../model/schema/IGrate'
-import { getMessage } from "../../config/i18n"
+import { GrateRepository, IGrate } from '../../model/schema/IGrate'
 import Utils from '../../utils/Utils'
-import EnrichFindFlowItem from './item/EnrichFindFlowItem'
-import FindBySearchFlowItem from "./item/FindBySearchFlowItem"
+import EnrichSearchResponseFlowItem from '../item/EnrichSearchResponseFlowItem'
 import GetByIdFlowItem from "./item/GetByIdFlowItem"
 
 class ReadFlow extends FlowHttp {
@@ -20,8 +20,12 @@ class ReadFlow extends FlowHttp {
         return grate
       }
 
-      var resultSearch = await FindBySearchFlowItem.find(new GrateSearch(req.query)) as any
-      return EnrichFindFlowItem.enrich(resultSearch)
+
+      const searcher = new SearcherFlow<IGrate>(GrateRepository)
+      searcher.prepareSearch({ ...req.query })
+      var response = await searcher.search({})
+
+      return EnrichSearchResponseFlowItem.enrich2(response)
     } catch (error) {
       this.processError(error)
     }

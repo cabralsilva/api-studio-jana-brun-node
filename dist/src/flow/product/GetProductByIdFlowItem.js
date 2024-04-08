@@ -45,26 +45,7 @@ const HttpError_1 = __importDefault(require("../../model/HttpError"));
 const IProduct_1 = require("../../model/schema/IProduct");
 class GetProductByIdFlowItem extends Http_1.Http {
     constructor() {
-        // async read(req, res) {
-        //   try {
-        //     if (Utils.isNotEmpty(req.params?.id)) {
-        //       const product = await GetByIdFlowItem.get(
-        //         req.params.id, {
-        //         path: 'grates',
-        //         model: 'grate'
-        //       });
-        //       if (Utils.isEmpty(product)) {
-        //         throw new HttpError(HttpStatus.NOT_FOUND, getMessage("message.registerNotFounded"))
-        //       }
-        //       return product
-        //     }
         super(...arguments);
-        //     var resultSearch = await FindBySearchFlowItem.find(new ProductSearch(req.query)) as any
-        //     return EnrichFindFlowItem.enrich(resultSearch)
-        //   } catch (error) {
-        //     this.processError(error)
-        //   }
-        // }
         this.searcherProduct = new c2_mongoose_1.CrudFlow(IProduct_1.ProductRepository);
         this.get = (request, response) => __awaiter(this, void 0, void 0, function* () {
             try {

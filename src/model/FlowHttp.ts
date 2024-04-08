@@ -5,6 +5,7 @@ import { getMessage } from '../config/i18n'
 class FlowHttp {
 
   processError(error) {
+    console.error(error)
 
     if (error instanceof HttpError) {
       throw error

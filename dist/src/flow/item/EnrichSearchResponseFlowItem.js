@@ -9,15 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const IGrate_1 = require("../../../model/schema/IGrate");
-class FindByFilterFlowItem {
-    find(search) {
+class EnrichSearchResponseFlowItem {
+    enrich(payload) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (search.pageable) {
-                return yield search.findPageable(IGrate_1.GrateRepository);
+            var response = {
+                total: payload.paging.total,
+                items: []
+            };
+            for (var item of payload.items) {
+                response.items.push(Object.assign({}, item._doc));
             }
-            return yield search.findNoPageable(IGrate_1.GrateRepository);
+            return response;
+        });
+    }
+    enrich2(payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var response = {
+                total: payload.paging.total,
+                items: payload.items
+            };
+            return response;
         });
     }
 }
-exports.default = new FindByFilterFlowItem;
+exports.default = new EnrichSearchResponseFlowItem;
