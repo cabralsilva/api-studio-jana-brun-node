@@ -23,7 +23,14 @@ class GetPriceFlowItem {
         return __awaiter(this, void 0, void 0, function* () {
             let itemsOfPriceOfProduct = priceTable.items.filter((item) => { var _a; return ((_a = item.product) === null || _a === void 0 ? void 0 : _a._id) == searcherPrice.product._id; });
             let response = null;
+            if (itemsOfPriceOfProduct.length === 0) {
+                return response;
+            }
             let score = 0;
+            const grateItens = itemsOfPriceOfProduct.flatMap((itemPrice) => itemPrice.gratesItems).map((grateItem) => grateItem);
+            if (grateItens.length === 0) {
+                return itemsOfPriceOfProduct[0];
+            }
             this.crudGrates.prepareSearch(new IGrate_1.GrateSearch({
                 "items._id": itemsOfPriceOfProduct.flatMap((itemPrice) => itemPrice.gratesItems).map((grateItem) => grateItem)
             }));

@@ -28,16 +28,11 @@ class CalculateRegularSalaryFlowItem {
     calculate(initDate, endDate, employee) {
         return __awaiter(this, void 0, void 0, function* () {
             this.crudClass.prepareSearch(new IClass_1.ClassSearch({
-                populate: 'rolePayments.employee',
+                populate: ['rolePayments.employee'],
                 endDateRange: [moment()],
                 employee: [employee]
             }));
             let classes = yield this.crudClass.find({});
-            // const classes = await FindClassByFilterFlowItem.find(new ClassSearchOLD({
-            //   populate: 'rolePayments.employee',
-            //   endDateRange: [moment()],
-            //   employee: [employee]
-            // }))
             var paymentClasses = [];
             for (var clazz of classes.items) {
                 var paymentClass = {
