@@ -1,22 +1,26 @@
 import { Moment } from "moment";
 import { getMessage } from "../../../config/i18n";
 import DaysOfWeek from "../../../model/enum/DaysOfWeek";
-import { ClassSearchOLD } from "../../../model/schema/IClass";
+import { ClassRepository, ClassSearch, IClass } from "../../../model/schema/IClass";
 import { MatriculationSearchOLD } from "../../../model/schema/IMatriculation";
 import { PaymentByHourDetail, PaymentByPercentDetail, PaymentClass } from "../../../model/schema/IPayroll";
 import Utils from "../../../utils/Utils";
-// import FindClassByFilterFlowItem from "../../class_OLD/item/FindClassByFilterFlowItem";
+import { CrudFlow } from "c2-mongoose";
 import FindMatriculationBySearchFlowItem from "../../matriculation/item/FindMatriculationBySearchFlowItem";
 import GetCurrentRulePaymentFlowItem from "./GetCurrentRulePaymentFlowItem";
 import moment = require("moment");
 
 class CalculateRegularSalaryFlowItem {
+  private crudClass = new CrudFlow<IClass>(ClassRepository)
+
   async calculate(initDate: Moment, endDate: Moment, employee: any): Promise<PaymentClass[]> {
-    const classes = await FindClassByFilterFlowItem.find(new ClassSearchOLD({
-      populate: 'rolePayments.employee',
+
+    this.crudClass.prepareSearch(new ClassSearch({
+      populate: ['rolePayments.employee'],
       endDateRange: [moment()],
       employee: [employee]
     }))
+    let classes = await this.crudClass.find({})
 
     var paymentClasses: PaymentClass[] = [];
 

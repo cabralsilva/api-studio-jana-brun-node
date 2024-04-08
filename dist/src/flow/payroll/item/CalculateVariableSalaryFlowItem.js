@@ -17,18 +17,27 @@ const DaysOfWeek_1 = __importDefault(require("../../../model/enum/DaysOfWeek"));
 const IClass_1 = require("../../../model/schema/IClass");
 const IMatriculation_1 = require("../../../model/schema/IMatriculation");
 const Utils_1 = __importDefault(require("../../../utils/Utils"));
-// import FindClassByFilterFlowItem from "../../class_OLD/item/FindClassByFilterFlowItem";
+const c2_mongoose_1 = require("c2-mongoose");
 const FindMatriculationBySearchFlowItem_1 = __importDefault(require("../../matriculation/item/FindMatriculationBySearchFlowItem"));
 const GetCurrentRulePaymentFlowItem_1 = __importDefault(require("./GetCurrentRulePaymentFlowItem"));
 const moment = require("moment");
 class CalculateRegularSalaryFlowItem {
+    constructor() {
+        this.crudClass = new c2_mongoose_1.CrudFlow(IClass_1.ClassRepository);
+    }
     calculate(initDate, endDate, employee) {
         return __awaiter(this, void 0, void 0, function* () {
-            const classes = yield FindClassByFilterFlowItem.find(new IClass_1.ClassSearchOLD({
+            this.crudClass.prepareSearch(new IClass_1.ClassSearch({
                 populate: 'rolePayments.employee',
                 endDateRange: [moment()],
                 employee: [employee]
             }));
+            let classes = yield this.crudClass.find({});
+            // const classes = await FindClassByFilterFlowItem.find(new ClassSearchOLD({
+            //   populate: 'rolePayments.employee',
+            //   endDateRange: [moment()],
+            //   employee: [employee]
+            // }))
             var paymentClasses = [];
             for (var clazz of classes.items) {
                 var paymentClass = {
